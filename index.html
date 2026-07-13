@@ -9,6 +9,14 @@
     />
     <link rel="icon" type="image/png" href="./assets/GPSMUSCAT_black.png" />
     <title>GPS Muscat | Gate Automation & Access Control</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
@@ -105,98 +113,101 @@
 
       <section class="section promo-section" aria-labelledby="promo-heading">
         <div class="container">
-          <div class="promo-header">
-            <div>
-              <p class="section-label">Promotions</p>
-              <h2 id="promo-heading">
-                Featured offers and highlighted products
-              </h2>
+          <div class="promo-shell">
+            <div class="promo-header">
+              <div class="promo-header-copy">
+                <p class="section-label">Promotions</p>
+                <h2 id="promo-heading">
+                  Featured offers and highlighted products
+                </h2>
+              </div>
+
+              <div class="promo-controls">
+                <button
+                  class="promo-btn"
+                  id="promoPrev"
+                  type="button"
+                  aria-label="Show previous promotion"
+                >
+                  ←
+                </button>
+                <button
+                  class="promo-btn"
+                  id="promoNext"
+                  type="button"
+                  aria-label="Show next promotion"
+                >
+                  →
+                </button>
+              </div>
             </div>
 
-            <div class="promo-controls">
-              <button
-                class="promo-btn"
-                id="promoPrev"
-                type="button"
-                aria-label="Show previous promotion"
-              >
-                ←
-              </button>
-              <button
-                class="promo-btn"
-                id="promoNext"
-                type="button"
-                aria-label="Show next promotion"
-              >
-                →
-              </button>
+            <div
+              class="promo-carousel"
+              id="promoCarousel"
+              role="region"
+              aria-label="Promotions carousel"
+              aria-live="polite"
+            >
+              <article class="promo-slide is-active" aria-hidden="false">
+                <div class="promo-content">
+                  <p class="promo-tag">Promotion 01</p>
+                  <h3>Sliding gate motor promotion</h3>
+                  <p>
+                    Highlight a special offer, featured brand, or popular gate
+                    motor kit available for direct inquiry.
+                  </p>
+                  <a class="btn btn-primary" href="#contact"
+                    >Ask About This Offer</a
+                  >
+                </div>
+
+                <div class="image-placeholder image-placeholder-promo">
+                  <span>Promotion image</span>
+                  <small
+                    >Use: motor kit, installed gate, or product close-up</small
+                  >
+                </div>
+              </article>
+
+              <article class="promo-slide" aria-hidden="true">
+                <div class="promo-content">
+                  <p class="promo-tag">Promotion 02</p>
+                  <h3>Boom barrier and parking access</h3>
+                  <p>
+                    Use this slide for a barrier system, seasonal project offer,
+                    or highlighted commercial access solution.
+                  </p>
+                  <a class="btn btn-primary" href="#contact">Request Details</a>
+                </div>
+
+                <div class="image-placeholder image-placeholder-promo">
+                  <span>Promotion image</span>
+                  <small>
+                    Use: boom barrier at entry point or clean product image
+                  </small>
+                </div>
+              </article>
+
+              <article class="promo-slide" aria-hidden="true">
+                <div class="promo-content">
+                  <p class="promo-tag">Promotion 03</p>
+                  <h3>Access control and door hardware</h3>
+                  <p>
+                    Feature fingerprint systems, remotes, locks, or accessories
+                    that you want customers to notice first.
+                  </p>
+                  <a class="btn btn-primary" href="#contact">Contact Sales</a>
+                </div>
+
+                <div class="image-placeholder image-placeholder-promo">
+                  <span>Promotion image</span>
+                  <small>
+                    Use: access control device, remote set, or lock hardware
+                  </small>
+                </div>
+              </article>
             </div>
-          </div>
-
-          <div
-            class="promo-carousel"
-            id="promoCarousel"
-            role="region"
-            aria-label="Promotions carousel"
-            aria-live="polite"
-          >
-            <article class="promo-slide is-active">
-              <div class="promo-content">
-                <p class="promo-tag">Promotion 01</p>
-                <h3>Sliding gate motor promotion</h3>
-                <p>
-                  Highlight a special offer, featured brand, or popular gate
-                  motor kit available for direct inquiry.
-                </p>
-                <a class="btn btn-primary" href="#contact"
-                  >Ask About This Offer</a
-                >
-              </div>
-              <div class="image-placeholder image-placeholder-promo">
-                <span>Promotion image</span>
-                <small
-                  >Use: motor kit, installed gate, or product close-up</small
-                >
-              </div>
-            </article>
-
-            <article class="promo-slide">
-              <div class="promo-content">
-                <p class="promo-tag">Promotion 02</p>
-                <h3>Boom barrier and parking access</h3>
-                <p>
-                  Use this slide for a barrier system, seasonal project offer,
-                  or highlighted commercial access solution.
-                </p>
-                <a class="btn btn-primary" href="#contact">Request Details</a>
-              </div>
-              <div class="image-placeholder image-placeholder-promo">
-                <span>Promotion image</span>
-                <small
-                  >Use: boom barrier at entry point or clean product
-                  image</small
-                >
-              </div>
-            </article>
-
-            <article class="promo-slide">
-              <div class="promo-content">
-                <p class="promo-tag">Promotion 03</p>
-                <h3>Access control and door hardware</h3>
-                <p>
-                  Feature fingerprint systems, remotes, locks, or accessories
-                  that you want customers to notice first.
-                </p>
-                <a class="btn btn-primary" href="#contact">Contact Sales</a>
-              </div>
-              <div class="image-placeholder image-placeholder-promo">
-                <span>Promotion image</span>
-                <small
-                  >Use: access control device, remote set, or lock
-                  hardware</small
-                >
-              </div>
-            </article>
           </div>
         </div>
       </section>
@@ -275,10 +286,10 @@
           <div class="section-visual">
             <div class="image-placeholder image-placeholder-wide">
               <span>Products section image placeholder</span>
-              <small
-                >Use: clean shelf display, organized accessories, or product
-                lineup</small
-              >
+              <small>
+                Use: clean shelf display, organized accessories, or product
+                lineup
+              </small>
             </div>
           </div>
         </div>
@@ -426,7 +437,6 @@
                   +968 9121 4949
                 </a>
               </p>
-
               <p><strong>Location:</strong> Al Khoud, Muscat, Oman</p>
               <p><strong>Hours:</strong> Sat-Thu, 9:00 AM - 5:00 PM</p>
             </article>
@@ -462,8 +472,8 @@
               </p>
               <p><strong>Location:</strong> Ghala, Muscat, Oman</p>
               <p>
-                <strong>Hours:</strong> Sat-Thu, 8:00 AM - 1:00 PM & 1:00 PM -
-                4:00 PM
+                <strong>Hours:</strong> Sat-Thu, 8:00 AM - 1:00 PM &amp; 1:00 PM
+                - 4:00 PM
               </p>
             </article>
           </div>
