@@ -1,6 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- =========================================================
+         DOCUMENT SETUP
+         Basic metadata, SEO description, favicon, fonts, and CSS.
+         ========================================================= -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
@@ -10,6 +14,7 @@
     <link rel="icon" type="image/png" href="./assets/GPSMUSCAT_black.png" />
     <title>GPS Muscat | Gate Automation & Access Control</title>
 
+    <!-- Preconnect improves Google Fonts loading performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,23 +22,31 @@
       rel="stylesheet"
     />
 
+    <!-- Main site stylesheet -->
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
+
   <body>
+    <!-- =========================================================
+         SITE HEADER
+         Sticky navigation bar with brand logo and mobile menu toggle.
+         ========================================================= -->
     <header class="site-header">
       <div class="container nav">
+        <!-- Brand logo / home link -->
         <a href="#home" class="logo" aria-label="GPS Muscat home">
           <span class="logo-mark">
             <img
-              src="./assets/GPSMUSCAT_Logo_black_blue_on_white.png"
+              src="./assets/GPSMUSCAT_Logo_black_blue_on_white_500x60.png"
               alt="GPS Muscat"
               class="logo-image"
               width="500"
-              height="500"
+              height="60"
             />
           </span>
         </a>
 
+        <!-- Mobile menu button -->
         <button
           class="menu-toggle"
           id="menuToggle"
@@ -45,6 +58,7 @@
           ☰
         </button>
 
+        <!-- Primary site navigation -->
         <nav class="site-nav" id="siteNav" aria-label="Main navigation">
           <ul class="nav-list">
             <li><a href="#about">About</a></li>
@@ -57,7 +71,16 @@
       </div>
     </header>
 
+    <!-- =========================================================
+         MAIN CONTENT
+         All visible marketing sections for the landing page.
+         ========================================================= -->
     <main>
+      <!-- =======================================================
+           HERO SECTION
+           Main value proposition, primary CTAs, hero visual, and
+           top-level product summary.
+           ======================================================= -->
       <section class="hero" id="home">
         <div class="container hero-grid">
           <div class="hero-copy">
@@ -88,12 +111,12 @@
           </div>
 
           <div class="hero-side">
+            <!-- Replace this placeholder with a real brand/product image -->
             <div class="image-placeholder image-placeholder-hero">
               <span>Hero image placeholder</span>
-              <small
-                >Use: sliding gate, boom barrier, or premium installation
-                photo</small
-              >
+              <small>
+                Use: sliding gate, boom barrier, or premium installation photo
+              </small>
             </div>
 
             <article class="hero-card">
@@ -111,6 +134,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           PROMOTIONS
+           Manual promo carousel with three featured offer slots.
+           ======================================================= -->
       <section class="section promo-section" aria-labelledby="promo-heading">
         <div class="container">
           <div class="promo-shell">
@@ -157,16 +184,16 @@
                     Highlight a special offer, featured brand, or popular gate
                     motor kit available for direct inquiry.
                   </p>
-                  <a class="btn btn-primary" href="#contact"
-                    >Ask About This Offer</a
-                  >
+                  <a class="btn btn-primary" href="#contact">
+                    Ask About This Offer
+                  </a>
                 </div>
 
                 <div class="image-placeholder image-placeholder-promo">
                   <span>Promotion image</span>
-                  <small
-                    >Use: motor kit, installed gate, or product close-up</small
-                  >
+                  <small>
+                    Use: motor kit, installed gate, or product close-up
+                  </small>
                 </div>
               </article>
 
@@ -178,7 +205,9 @@
                     Use this slide for a barrier system, seasonal project offer,
                     or highlighted commercial access solution.
                   </p>
-                  <a class="btn btn-primary" href="#contact">Request Details</a>
+                  <a class="btn btn-primary" href="#contact">
+                    Request Details
+                  </a>
                 </div>
 
                 <div class="image-placeholder image-placeholder-promo">
@@ -212,6 +241,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           ABOUT
+           Short company positioning and business summary.
+           ======================================================= -->
       <section class="section" id="about">
         <div class="container narrow">
           <p class="section-label">About Us</p>
@@ -226,6 +259,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           PRODUCTS
+           Primary supply categories with room for a supporting image.
+           ======================================================= -->
       <section class="section alt" id="products">
         <div class="container">
           <p class="section-label">Product Categories</p>
@@ -258,7 +295,7 @@
             </article>
 
             <article class="card">
-              <h3>Door Locks & Hardware</h3>
+              <h3>Door Locks &amp; Hardware</h3>
               <p>
                 Wicket door locks, smart locks, EM locks, bolt locks, striker
                 locks, brackets, cylinders, and lock accessories.
@@ -274,7 +311,7 @@
             </article>
 
             <article class="card">
-              <h3>Accessories & Support Items</h3>
+              <h3>Accessories &amp; Support Items</h3>
               <p>
                 Photocells, loop sensors, flash lights, power supplies,
                 batteries, cables, cabinets, brackets, connectors, and related
@@ -295,6 +332,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           BRANDS
+           Brand credibility and supported manufacturer categories.
+           ======================================================= -->
       <section class="section" id="brands">
         <div class="container">
           <p class="section-label">Brands</p>
@@ -310,7 +351,7 @@
             </article>
 
             <article class="feature">
-              <h3>Access & Entry Systems</h3>
+              <h3>Access &amp; Entry Systems</h3>
               <p>
                 Access control, intercom, and entry-related products from brands
                 such as Panasonic, Dahua, Fermax, Fanvil, and other compatible
@@ -329,6 +370,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           APPLICATIONS
+           Use-case based product positioning for customer types.
+           ======================================================= -->
       <section class="section alt" id="applications">
         <div class="container">
           <p class="section-label">Applications</p>
@@ -374,6 +419,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           FEATURES
+           Brief business advantages and customer-facing differentiators.
+           ======================================================= -->
       <section class="section" id="features">
         <div class="container">
           <p class="section-label">Why Choose Us</p>
@@ -407,6 +456,10 @@
         </div>
       </section>
 
+      <!-- =======================================================
+           CONTACT
+           Branch-level contact details with phone and WhatsApp links.
+           ======================================================= -->
       <section class="section alt" id="contact">
         <div class="container">
           <div class="narrow">
@@ -481,6 +534,10 @@
       </section>
     </main>
 
+    <!-- =========================================================
+         SITE FOOTER
+         Company summary, internal links, and copyright.
+         ========================================================= -->
     <footer class="site-footer">
       <div class="container footer-grid">
         <div class="footer-block">
@@ -507,6 +564,7 @@
       </div>
     </footer>
 
+    <!-- Main site behavior -->
     <script src="./js/script.js"></script>
   </body>
 </html>
