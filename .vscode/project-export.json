@@ -1,0 +1,6 @@
+{
+  "forceInclude": [],
+  "forceExclude": [
+    "README.md"
+  ]
+}
