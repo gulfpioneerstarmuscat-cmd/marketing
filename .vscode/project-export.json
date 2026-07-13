@@ -1,6 +1,7 @@
 {
   "forceInclude": [],
   "forceExclude": [
-    "README.md"
+    "README.md",
+    "CNAME"
   ]
 }
