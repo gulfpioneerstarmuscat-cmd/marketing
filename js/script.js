@@ -89,3 +89,39 @@ if (promoSlides.length && promoPrev && promoNext) {
 
   showPromo(currentPromo);
 }
+
+const backToTopButton = document.getElementById("backToTop");
+const siteFooter = document.querySelector(".site-footer");
+
+if (backToTopButton) {
+  const defaultBottom = window.innerWidth <= 860 ? 16 : 24;
+  const footerGap = 16;
+
+  const updateBackToTopButton = () => {
+    backToTopButton.classList.toggle("is-visible", window.scrollY > 300);
+
+    if (!siteFooter) return;
+
+    const footerRect = siteFooter.getBoundingClientRect();
+    const overlap =
+      window.innerHeight - footerRect.top + defaultBottom + footerGap;
+
+    if (overlap > 0) {
+      backToTopButton.style.bottom = `${defaultBottom + overlap}px`;
+    } else {
+      backToTopButton.style.bottom = `${defaultBottom}px`;
+    }
+  };
+
+  backToTopButton.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+
+  window.addEventListener("scroll", updateBackToTopButton);
+  window.addEventListener("resize", updateBackToTopButton);
+
+  updateBackToTopButton();
+}

@@ -735,6 +735,49 @@ h3 {
   outline-offset: 3px;
 }
 
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(15, 82, 184, 0.24);
+  z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition:
+    opacity var(--transition),
+    visibility var(--transition),
+    transform var(--transition),
+    background-color var(--transition),
+    bottom 0.12s linear;
+}
+
+.back-to-top:hover {
+  background: var(--primary-dark);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:focus-visible {
+  outline: 2px solid rgba(15, 82, 184, 0.45);
+  outline-offset: 3px;
+}
+
 /* =========================================================
    11. RESPONSIVE: TABLET
    Two-column content reduction and stacked promo layout.
@@ -947,6 +990,14 @@ h3 {
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
   }
 }
 
