@@ -108,22 +108,23 @@
 .promo-header {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px;
-  align-items: end;
-  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
 }
 
 .promo-header-copy {
-  max-width: 620px;
+  max-width: 100%;
 }
 
 .promo-header h2 {
-  max-width: 10ch;
+  max-width: none;
   margin-bottom: 0;
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 0.98;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .promo-controls {
@@ -598,7 +599,8 @@
 
   .promo-header h2 {
     max-width: none;
-    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    font-size: clamp(0.95rem, 3.8vw, 1.35rem);
+    white-space: nowrap;
   }
 
   .promo-controls {

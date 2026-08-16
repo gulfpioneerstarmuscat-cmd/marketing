@@ -158,6 +158,32 @@
   width: 100%;
 }
 
+/* Standout Promotions Nav Button */
+.site-nav a.nav-btn-promotions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  background: linear-gradient(135deg, #1f6fff 0%, #0f52b8 100%);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 14px rgba(15, 82, 184, 0.35);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.site-nav a.nav-btn-promotions::after {
+  display: none !important;
+}
+
+.site-nav a.nav-btn-promotions:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15, 82, 184, 0.5);
+  background: linear-gradient(135deg, #2b77ff 0%, #1159cc 100%);
+}
+
 .menu-toggle {
   display: none;
   align-items: center;
