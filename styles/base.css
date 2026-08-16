@@ -1,0 +1,166 @@
+/* =========================================================
+   GPS MUSCAT BASE & LAYOUT STYLES
+   CSS resets, core element defaults, responsive containers,
+   and standard section utilities.
+   ========================================================= */
+
+@import url("./tokens.css");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at top right,
+      var(--bg-gradient-top),
+      transparent 28%
+    ),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-gradient-bottom) 100%);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------
+   GLOBAL CONTAINERS & SECTIONS
+   --------------------------------------------------------- */
+.container {
+  width: min(100% - 32px, var(--max-width));
+  margin: 0 auto;
+}
+
+.narrow {
+  max-width: 760px;
+}
+
+.section {
+  padding: 84px 0;
+}
+
+.section.alt {
+  background: linear-gradient(180deg, var(--surface-alt) 0%, #edf4ff 100%);
+}
+
+/* ---------------------------------------------------------
+   TYPOGRAPHY
+   --------------------------------------------------------- */
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--text);
+}
+
+h1 {
+  margin-bottom: 18px;
+  font-size: clamp(2.6rem, 4.8vw, 4.6rem);
+  max-width: 12ch;
+  font-weight: 800;
+}
+
+h2 {
+  margin-bottom: 16px;
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  font-weight: 700;
+}
+
+h3 {
+  margin-bottom: 12px;
+  font-size: 1.12rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.hero-text,
+.section p,
+.card p,
+.feature p,
+.contact-card p,
+.footer-block p,
+.promo-content p {
+  color: var(--muted);
+}
+
+.hero-text {
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+
+.section p,
+.card p,
+.feature p,
+.contact-card p,
+.footer-block p,
+.promo-content p {
+  max-width: 62ch;
+}
+
+/* ---------------------------------------------------------
+   EYEBROW & BADGES
+   --------------------------------------------------------- */
+.eyebrow,
+.section-label,
+.promo-tag {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  color: var(--primary-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(15, 82, 184, 0.1);
+  border: 1px solid rgba(15, 82, 184, 0.14);
+  border-radius: var(--radius-pill);
+}
+
+/* ---------------------------------------------------------
+   KEYBOARD FOCUS STATES
+   --------------------------------------------------------- */
+.site-nav a:focus-visible,
+.footer-block a:focus-visible,
+.footer-bottom a:focus-visible,
+.btn:focus-visible,
+.menu-toggle:focus-visible,
+.promo-btn:focus-visible,
+.contact-card a:focus-visible,
+.modal-close:focus-visible {
+  outline: 2px solid rgba(15, 82, 184, 0.55);
+  outline-offset: 3px;
+}

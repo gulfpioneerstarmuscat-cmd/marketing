@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect width="200" height="60" rx="8" fill="none"/>
+  <text x="25" y="42" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="34" fill="#dc2626" letter-spacing="4">DEA</text>
+  <text x="110" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="16" fill="#1b2533" letter-spacing="1">SYSTEM</text>
+</svg>

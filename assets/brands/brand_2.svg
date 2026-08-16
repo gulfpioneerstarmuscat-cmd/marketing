@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect width="200" height="60" rx="8" fill="none"/>
+  <text x="15" y="42" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="32" fill="#0f52b8" letter-spacing="4">CAME</text>
+  <circle cx="170" cy="30" r="14" fill="none" stroke="#1b2533" stroke-width="4"/>
+  <path d="M164 30h12" stroke="#0f52b8" stroke-width="4" stroke-linecap="round"/>
+</svg>
