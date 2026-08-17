@@ -14,6 +14,7 @@ export function initQuoteModal() {
   const openModal = (productCategory = "") => {
     quoteModal.classList.add("is-open");
     quoteModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
     document.body.style.overflow = "hidden";
 
     if (productCategory && form) {
@@ -32,6 +33,7 @@ export function initQuoteModal() {
   const closeModal = () => {
     quoteModal.classList.remove("is-open");
     quoteModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
     document.body.style.overflow = "";
     if (formStatus) {
       formStatus.style.display = "none";

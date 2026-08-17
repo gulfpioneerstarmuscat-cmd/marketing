@@ -296,10 +296,89 @@ export function initCarousel() {
       });
 
       setupControls();
+      setupPromoLightbox(validPromos);
     })
     .catch((err) => {
       console.warn("Live promo data fetch fallback:", err);
       // Fallback to static slides in HTML
       setupControls();
+      setupPromoLightbox();
     });
+
+  // Mobile Fullscreen Lightbox & Gallery Bar Handler
+  function setupPromoLightbox(promosList = []) {
+    const lightbox = document.getElementById("promo-lightbox");
+    const closeBtn = document.getElementById("promo-lightbox-close");
+    const backdrop = document.getElementById("promo-lightbox-backdrop");
+    const mainImg = document.getElementById("promo-lightbox-img");
+    const tagEl = document.getElementById("promo-lightbox-tag");
+    const titleEl = document.getElementById("promo-lightbox-title");
+    const galleryBar = document.getElementById("promo-lightbox-gallery");
+
+    if (!lightbox || !closeBtn || !mainImg) return;
+
+    let activeIndex = 0;
+
+    const closeLightbox = () => {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      document.body.style.overflow = "";
+    };
+
+    const updateLightboxSlide = (index) => {
+      if (!promosList.length) return;
+      activeIndex = (index + promosList.length) % promosList.length;
+      const promo = promosList[activeIndex];
+
+      mainImg.src = `./assets/promo/img/${promo.image}`;
+      mainImg.alt = promo.title || promo.product || "Promotion Poster";
+      if (tagEl) tagEl.textContent = promo.tag || `Promotion 0${activeIndex + 1}`;
+      if (titleEl) titleEl.textContent = promo.title || promo.product || "";
+
+      // Render thumbnail bar items
+      if (galleryBar) {
+        galleryBar.innerHTML = "";
+        promosList.forEach((item, idx) => {
+          const thumbBtn = document.createElement("button");
+          thumbBtn.className = `promo-lightbox-thumb ${idx === activeIndex ? "is-active" : ""}`;
+          thumbBtn.type = "button";
+          thumbBtn.setAttribute("aria-label", `View promotion ${idx + 1}`);
+          thumbBtn.innerHTML = `<img src="./assets/promo/img/${item.image}" alt="Promo thumbnail ${idx + 1}" />`;
+          thumbBtn.addEventListener("click", () => updateLightboxSlide(idx));
+          galleryBar.appendChild(thumbBtn);
+        });
+      }
+    };
+
+    const openLightbox = (index = 0) => {
+      if (window.innerWidth > 768) return; // Mobile phone feature only
+      updateLightboxSlide(index);
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      document.body.style.overflow = "hidden";
+    };
+
+    closeBtn.onclick = closeLightbox;
+    if (backdrop) backdrop.onclick = closeLightbox;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("is-open")) {
+        closeLightbox();
+      }
+    });
+
+    // Attach click triggers to poster graphic frames
+    const mediaFrames = promoCarousel.querySelectorAll(".visual-graphic-promo, .promo-story-image");
+    mediaFrames.forEach((frame) => {
+      frame.style.cursor = "pointer";
+      frame.title = "Tap to expand poster";
+      frame.onclick = () => {
+        if (window.innerWidth <= 768) {
+          openLightbox(currentPromo);
+        }
+      };
+    });
+  }
 }

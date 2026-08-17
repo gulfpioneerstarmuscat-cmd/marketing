@@ -11,8 +11,20 @@ export function initNavigation() {
 
   if (!menuToggle || !siteNav) return;
 
+  let navBackdrop = document.getElementById("nav-backdrop");
+  if (!navBackdrop) {
+    navBackdrop = document.createElement("div");
+    navBackdrop.id = "nav-backdrop";
+    navBackdrop.className = "nav-backdrop";
+    document.body.appendChild(navBackdrop);
+  }
+
   const setMenuState = (isOpen) => {
     siteNav.classList.toggle("is-open", isOpen);
+    if (navBackdrop) {
+      navBackdrop.classList.toggle("is-open", isOpen);
+    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
     menuToggle.setAttribute("aria-expanded", String(isOpen));
     if (isOpen) {
       menuToggle.setAttribute("aria-label", "Close navigation menu");
@@ -27,6 +39,11 @@ export function initNavigation() {
     setMenuState(!isOpen);
   });
 
+  // Close drawer on backdrop click
+  if (navBackdrop) {
+    navBackdrop.addEventListener("click", () => setMenuState(false));
+  }
+
   // Close drawer on link click
   navLinks.forEach((link) => {
     link.addEventListener("click", () => setMenuState(false));
@@ -35,7 +52,9 @@ export function initNavigation() {
   // Close menu on outside click
   document.addEventListener("click", (event) => {
     const clickedOutside =
-      !siteNav.contains(event.target) && !menuToggle.contains(event.target);
+      !siteNav.contains(event.target) &&
+      !menuToggle.contains(event.target) &&
+      (!navBackdrop || !navBackdrop.contains(event.target));
     if (clickedOutside && siteNav.classList.contains("is-open")) {
       setMenuState(false);
     }
