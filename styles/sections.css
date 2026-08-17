@@ -71,7 +71,7 @@
    2. PROMOTIONS CAROUSEL SECTION (WITH 9:16 STORY POSTER LAYOUT)
    --------------------------------------------------------- */
 .promo-section {
-  padding-top: 0;
+  padding-top: 54px;
 }
 
 .promo-shell {
@@ -575,6 +575,14 @@
     padding: 52px 0;
   }
 
+  .promo-section {
+    padding-top: 30px;
+  }
+
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+
   .hero,
   .hero-section {
     padding-top: 42px;
@@ -693,6 +701,14 @@
   .hero-section,
   .section {
     padding: 44px 0;
+  }
+
+  .promo-section {
+    padding-top: 24px;
+  }
+
+  section[id] {
+    scroll-margin-top: 68px;
   }
 
   .hero-card,

@@ -184,6 +184,12 @@
   background: linear-gradient(135deg, #2b77ff 0%, #1159cc 100%);
 }
 
+.site-nav a.nav-btn-promotions.is-active {
+  color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(31, 111, 255, 0.5), 0 6px 20px rgba(15, 82, 184, 0.5);
+  background: linear-gradient(135deg, #2b77ff 0%, #1159cc 100%);
+}
+
 .menu-toggle {
   display: none;
   align-items: center;
