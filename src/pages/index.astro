@@ -3,11 +3,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import BrandMarquee from '../components/BrandMarquee.astro';
 import PromotionsCarousel from '../components/PromotionsCarousel.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import BrandMarquee from '../components/BrandMarquee.astro';
 import ProductCatalog from '../components/ProductCatalog.astro';
 import ApplicationsSection from '../components/ApplicationsSection.astro';
-import WhyChooseUs from '../components/WhyChooseUs.astro';
 import Footer from '../components/Footer.astro';
 
 const pageTitle = "GPS Muscat | Gate Automation, Boom Barriers & Access Control in Oman";
@@ -18,13 +18,25 @@ const pageDescription = "Official technical supplier of Italian sliding and swin
   <Header />
 
   <main class="flex-1">
+    <!-- 1. Home / Hero Equipment Showcase -->
     <Hero />
-    <BrandMarquee />
+
+    <!-- 2. Active Offers / 9:16 Story Promotions Carousel (Placed directly after Home) -->
     <PromotionsCarousel />
-    <ProductCatalog />
-    <ApplicationsSection />
+
+    <!-- 3. About Us / Authority & Muscat Warehouses -->
     <WhyChooseUs />
+
+    <!-- 4. Authorized Partner Brands Ribbon -->
+    <BrandMarquee />
+
+    <!-- 5. 6-Category Technical Equipment Catalog -->
+    <ProductCatalog />
+
+    <!-- 6. Application Scenarios (Residential, Commercial, Industrial) -->
+    <ApplicationsSection />
   </main>
 
+  <!-- 7. Contact Us / Branch Locations & Direct Triggers -->
   <Footer />
 </BaseLayout>

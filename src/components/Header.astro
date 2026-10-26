@@ -6,9 +6,9 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 sm:h-18">
       
-      <!-- Logo Branding (Clean & Uncluttered) -->
+      <!-- Far Left: Logo Branding (Clean & Uncluttered) -->
       <a
-        href="/"
+        href="#home"
         class="flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-lg py-1 transition-opacity hover:opacity-90"
         aria-label="GPS Muscat Homepage"
       >
@@ -32,19 +32,10 @@
         />
       </a>
 
-      <!-- Desktop Navigation Links -->
+      <!-- Middle: Primary Navigation Links -->
       <nav class="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main navigation">
-        <a href="#products" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-          Products
-        </a>
-        <a href="#gate-automation" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-          Gate Motors
-        </a>
-        <a href="#access-control" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-          Access Control
-        </a>
-        <a href="#brands" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-          Brands
+        <a href="#home" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
+          Home
         </a>
         <a href="#promotions" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors flex items-center gap-1.5">
           <span>Offers</span>
@@ -53,12 +44,18 @@
             <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
           </span>
         </a>
+        <a href="#about" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
+          About Us
+        </a>
+        <a href="#products" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
+          Brands / Products
+        </a>
         <a href="#contact" class="text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
-          Branches
+          Contact Us
         </a>
       </nav>
 
-      <!-- Desktop Right Controls: WhatsApp, Theme Toggle, Quote Button -->
+      <!-- Far Right Controls: WhatsApp, Theme Toggle, Quote Button (CTA) -->
       <div class="hidden sm:flex items-center gap-3">
         
         <!-- Discreet WhatsApp Quick Action (Routes to branch footer selector) -->
@@ -93,7 +90,7 @@
 
         <!-- Polished Minimal "Get Quote" Button -->
         <a
-          href="#quote"
+          href="#contact"
           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 shadow-sm active:scale-95 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
         >
           <span>Get Quote</span>
@@ -142,26 +139,23 @@
     </div>
   </div>
 
-  <!-- Mobile Drawer Menu -->
+  <!-- Mobile Drawer Menu (Matching exact menu order) -->
   <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-1.5 transition-colors">
-    <a href="#products" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
-      Products & Equipment
-    </a>
-    <a href="#gate-automation" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
-      Gate Motors & Automation
-    </a>
-    <a href="#access-control" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
-      Access Control & Locks
-    </a>
-    <a href="#brands" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
-      Partner Brands
+    <a href="#home" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
+      Home
     </a>
     <a href="#promotions" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 flex items-center justify-between">
-      <span>Active Promotions</span>
-      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">Live Offers</span>
+      <span>Active Offers</span>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">Live</span>
+    </a>
+    <a href="#about" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
+      About Us
+    </a>
+    <a href="#products" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
+      Brands / Products
     </a>
     <a href="#contact" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80">
-      Branch Locations (Al Khoudh & Ghala)
+      Contact Us (Branches)
     </a>
 
     <!-- Mobile Fast Contact Trigger -->
