@@ -1,5 +1,47 @@
 ---
 // src/components/Hero.astro - High-Impact Entrance & Automation Showcase
+
+// Single Source of Truth for the Hero Spec Visualizer Tabs
+const heroTabs = {
+  sliding: {
+    category: "Heavy-Duty Sliding Operators",
+    capacity: "400kg – 2,000kg",
+    title: "Industrial & Villa Motor Kits",
+    desc: "Highly Efficent top of the line Sliding Gate Motors. Complete kits including nylon or steel rack, dual photocell pair, flashing beacon, and 2 rolling-code remotes.",
+    stat1: { label: "Duty Rating", val: "Intensive Cycle" },
+    stat2: { label: "Climate Rating", val: "-20°C to +65°C" },
+    stat3: { label: "Gearbox Type", val: "Bronze / Oil Bath" },
+    stat4: { label: "Supported Brands", val: "Beninca, BFT, CAME" },
+    link: "#gate-automation",
+    btnText: "View Gate Automation Specifications"
+  },
+  barriers: {
+    category: "Automatic Boom Barriers",
+    capacity: "Up to 6-Meter Arms",
+    title: "High-Speed Commercial & Compound Barriers",
+    desc: "Fast-acting 1.5s to 4s automatic traffic barrier cabinets. Includes straight, 90° articulated folding for underground basements, and LED arm warning strips.",
+    stat1: { label: "Opening Speed", val: "1.5s - 4.0s Fast" },
+    stat2: { label: "Duty Rating", val: "100% Continuous" },
+    stat3: { label: "Safety Profile", val: "Loop + Pressure Edge" },
+    stat4: { label: "Supported Brands", val: "BFT, Roger, DEA, CAME" },
+    link: "#boom-barriers",
+    btnText: "View Barrier Specifications"
+  },
+  access: {
+    category: "Integrated Access Control",
+    capacity: "10,000 User Capacity",
+    title: "Biometric Scanners, RFID & EM Locks",
+    desc: "Waterproof IP68 metal standalone PIN & card readers, long-range windshield UHF tags, and 280kg/500kg magnetic locks with fail-safe power supply backup.",
+    stat1: { label: "Ingress Rating", val: "IP68 Weatherproof" },
+    stat2: { label: "Holding Force", val: "280kg / 500kg Locks" },
+    stat3: { label: "Auth Modes", val: "Fingerprint, Card, PIN" },
+    stat4: { label: "Supported Brands", val: "Hikvision, Standalone" },
+    link: "#access-control",
+    btnText: "View Access Control Specifications"
+  }
+};
+
+const initialTab = heroTabs.sliding;
 ---
 
 <section class="relative pt-10 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-32 overflow-hidden transition-colors">
@@ -139,46 +181,45 @@
             </button>
           </div>
 
-          <!-- Dynamic Specification Card View -->
+          <!-- Dynamic Specification Card View (Rendered directly from Single Source of Truth) -->
           <div id="hero-spec-content" class="space-y-4">
-            <!-- Populated dynamically via script below -->
             <div class="space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">Heavy-Duty Sliding Operators</span>
-                <span class="text-xs font-bold text-slate-900 dark:text-white">600kg – 2,500kg</span>
+                <span class="text-xs font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">{initialTab.category}</span>
+                <span class="text-xs font-bold text-slate-900 dark:text-white">{initialTab.capacity}</span>
               </div>
-              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Oil-Bath Industrial & Villa Motor Kits</h3>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">{initialTab.title}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                High-torque mechanical reduction with internal cooling fan. Complete kits including steel rack, dual photocell pair, flashing beacon, and 2 rolling-code remotes.
+                {initialTab.desc}
               </p>
             </div>
 
             <!-- Metric Badges Grid -->
             <div class="grid grid-cols-2 gap-3 pt-2">
               <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800">
-                <span class="text-[10px] font-mono text-slate-400 uppercase block">Duty Rating</span>
-                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">Intensive Cycle</span>
+                <span class="text-[10px] font-mono text-slate-400 uppercase block">{initialTab.stat1.label}</span>
+                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">{initialTab.stat1.val}</span>
               </div>
               <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800">
-                <span class="text-[10px] font-mono text-slate-400 uppercase block">Climate Rating</span>
-                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">-20°C to +65°C</span>
+                <span class="text-[10px] font-mono text-slate-400 uppercase block">{initialTab.stat2.label}</span>
+                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">{initialTab.stat2.val}</span>
               </div>
               <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800">
-                <span class="text-[10px] font-mono text-slate-400 uppercase block">Gearbox Type</span>
-                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">Bronze / Oil Bath</span>
+                <span class="text-[10px] font-mono text-slate-400 uppercase block">{initialTab.stat3.label}</span>
+                <span class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 block">{initialTab.stat3.val}</span>
               </div>
               <div class="p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800">
-                <span class="text-[10px] font-mono text-slate-400 uppercase block">Supported Brands</span>
-                <span class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mt-0.5 block">Beninca, BFT, CAME</span>
+                <span class="text-[10px] font-mono text-slate-400 uppercase block">{initialTab.stat4.label}</span>
+                <span class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mt-0.5 block">{initialTab.stat4.val}</span>
               </div>
             </div>
 
             <!-- Inquire Button Routing to Branch Selector -->
             <a
-              href="#gate-automation"
+              href={initialTab.link}
               class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 font-bold text-xs border border-cyan-500/30 transition-all"
             >
-              <span>View Gate Automation Specifications</span>
+              <span>{initialTab.btnText}</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
@@ -203,55 +244,16 @@
 
 </section>
 
-<script is:inline>
-  // Interactive Hero Equipment Tab Switcher
+<script is:inline define:vars={{ heroTabs }}>
+  // Interactive Hero Equipment Tab Switcher (Uses heroTabs from server frontmatter)
   (function() {
-    const tabs = {
-      sliding: {
-        category: "Heavy-Duty Sliding Operators",
-        capacity: "600kg – 2,500kg",
-        title: "Oil-Bath Industrial & Villa Motor Kits",
-        desc: "High-torque mechanical reduction with internal cooling fan. Complete kits including steel rack, dual photocell pair, flashing beacon, and 2 rolling-code remotes.",
-        stat1: { label: "Duty Rating", val: "Intensive Cycle" },
-        stat2: { label: "Climate Rating", val: "-20°C to +65°C" },
-        stat3: { label: "Gearbox Type", val: "Bronze / Oil Bath" },
-        stat4: { label: "Supported Brands", val: "Beninca, BFT, CAME" },
-        link: "#gate-automation",
-        btnText: "View Gate Automation Specifications"
-      },
-      barriers: {
-        category: "Automatic Boom Barriers",
-        capacity: "Up to 6-Meter Arms",
-        title: "High-Speed Commercial & Compound Barriers",
-        desc: "Fast-acting 1.5s to 4s automatic traffic barrier cabinets. Includes straight, 90° articulated folding for underground basements, and LED arm warning strips.",
-        stat1: { label: "Opening Speed", val: "1.5s - 4.0s Fast" },
-        stat2: { label: "Duty Rating", val: "100% Continuous" },
-        stat3: { label: "Safety Profile", val: "Loop + Pressure Edge" },
-        stat4: { label: "Supported Brands", val: "BFT, Roger, DEA, CAME" },
-        link: "#boom-barriers",
-        btnText: "View Barrier Specifications"
-      },
-      access: {
-        category: "Integrated Access Control",
-        capacity: "10,000 User Capacity",
-        title: "Biometric Scanners, RFID & Electromagnetic Locks",
-        desc: "Waterproof IP68 metal standalone PIN & card readers, long-range windshield UHF tags, and 280kg/500kg magnetic locks with fail-safe power supply backup.",
-        stat1: { label: "Ingress Rating", val: "IP68 Weatherproof" },
-        stat2: { label: "Holding Force", val: "280kg / 500kg Locks" },
-        stat3: { label: "Auth Modes", val: "Fingerprint, Card, PIN" },
-        stat4: { label: "Supported Brands", val: "Hikvision, Standalone" },
-        link: "#access-control",
-        btnText: "View Access Control Specifications"
-      }
-    };
-
     const container = document.getElementById('hero-spec-content');
     const tabBtns = document.querySelectorAll('.hero-tab-btn');
 
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const tabKey = btn.getAttribute('data-tab');
-        const data = tabs[tabKey];
+        const data = heroTabs[tabKey];
         if (!data || !container) return;
 
         // Update active tab button style
