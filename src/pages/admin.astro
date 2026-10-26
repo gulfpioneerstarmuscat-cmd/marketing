@@ -1,0 +1,533 @@
+---
+// src/pages/admin.astro - Staff Promotions Management Portal (Password Protected)
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { initialPromotions } from '../data/promotions';
+
+const pageTitle = "Staff Portal | GPS Muscat Promotions Manager";
+const pageDescription = "Internal staff portal for managing marketing promotions and story posters.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  
+  <!-- Main Admin Container -->
+  <div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    
+    <!-- Top Administrative Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        <!-- Brand & Title -->
+        <div class="flex items-center gap-3">
+          <img
+            src="/assets/logo/GPSMUSCAT_Logo_white_500x60.svg"
+            alt="GPS Muscat"
+            class="h-6 w-auto object-contain"
+          />
+          <div class="h-4 w-px bg-slate-700"></div>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            Promotions Admin Portal
+          </span>
+        </div>
+
+        <!-- Controls: Site link & Logout -->
+        <div class="flex items-center gap-3">
+          <a
+            href="/"
+            class="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-800 transition"
+          >
+            <span>‹ Return to Public Site</span>
+          </a>
+          <button
+            id="admin-logout-btn"
+            type="button"
+            class="hidden text-xs font-medium text-rose-400 hover:text-rose-300 px-3 py-1.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10 transition"
+          >
+            Log Out
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Authentication View (Shown when not authenticated) -->
+    <section id="auth-section" class="flex-1 flex items-center justify-center p-4">
+      <div class="w-full max-w-md bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2 mb-6">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto mb-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h1 class="text-xl font-bold text-white">Staff Authentication</h1>
+          <p class="text-xs text-slate-400">Please enter your authorized username and password to manage active promotions.</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="admin-login-form" class="space-y-4">
+          <div>
+            <label for="admin-user" class="block text-xs font-semibold uppercase text-slate-300 mb-1.5">Username</label>
+            <input
+              id="admin-user"
+              type="text"
+              required
+              autocomplete="username"
+              placeholder="e.g. admin"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm text-white placeholder-slate-600 outline-none transition"
+            />
+          </div>
+
+          <div>
+            <label for="admin-pass" class="block text-xs font-semibold uppercase text-slate-300 mb-1.5">Password</label>
+            <input
+              id="admin-pass"
+              type="password"
+              required
+              autocomplete="current-password"
+              placeholder="••••••••••••"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm text-white placeholder-slate-600 outline-none transition"
+            />
+          </div>
+
+          <div id="auth-error" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-lg text-center font-medium"></div>
+
+          <button
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.01] active:scale-95"
+          >
+            Access Management Dashboard
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-slate-800/80 text-center">
+          <p class="text-[11px] text-slate-400">
+            Default credentials for setup: <code class="text-cyan-400 font-mono">admin</code> / <code class="text-cyan-400 font-mono">gpsmuscat2026</code>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Dashboard View (Shown after authentication) -->
+    <main id="dashboard-section" class="hidden flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Dashboard Top Banner -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-slate-900 border border-slate-800">
+        <div>
+          <h2 class="text-xl font-bold text-white">Live Promotions Engine</h2>
+          <p class="text-xs text-slate-400 mt-1">Add, deactivate, or update 9:16 promotional story posters without touching any code.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Database: Connected & Ready
+          </span>
+        </div>
+      </div>
+
+      <!-- Dashboard Layout Grid (Form on Left/Top, Active List on Right/Bottom) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Form: Add New Promotion -->
+        <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-7 space-y-6">
+          <div class="border-b border-slate-800 pb-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              <span>Create New Promotion</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Fill in the offer details and upload the promotional poster.</p>
+          </div>
+
+          <form id="new-promo-form" class="space-y-4">
+            <!-- Promo Title -->
+            <div>
+              <label for="promo-title" class="block text-xs font-semibold text-slate-300 mb-1">Promotion Title *</label>
+              <input
+                id="promo-title"
+                type="text"
+                required
+                placeholder="e.g. Beninca 600kg Sliding Gate Motor Kit"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white placeholder-slate-600 outline-none"
+              />
+            </div>
+
+            <!-- Product Category & Tag -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="promo-category" class="block text-xs font-semibold text-slate-300 mb-1">Target Category *</label>
+                <select
+                  id="promo-category"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white outline-none"
+                >
+                  <option value="Gate Automation">Gate Automation (Motors)</option>
+                  <option value="Boom Barriers">Boom Barriers & Parking</option>
+                  <option value="Access Control">Access Control & Biometrics</option>
+                  <option value="Door Locks">Door Locks & Hardware</option>
+                  <option value="Glass Door">Glass Door Automation</option>
+                  <option value="Accessories">Accessories & Support</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="promo-tag" class="block text-xs font-semibold text-slate-300 mb-1">Offer Tag / Badge</label>
+                <input
+                  id="promo-tag"
+                  type="text"
+                  placeholder="e.g. Special Offer, Ramadan Kit"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white placeholder-slate-600 outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Validity Date & Subtitle -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="promo-validity" class="block text-xs font-semibold text-slate-300 mb-1">Valid Till Date</label>
+                <input
+                  id="promo-validity"
+                  type="text"
+                  placeholder="e.g. 30 Nov 2026 or Until Stock Last"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white placeholder-slate-600 outline-none"
+                />
+              </div>
+
+              <div>
+                <label for="promo-product" class="block text-xs font-semibold text-slate-300 mb-1">Equipment Name</label>
+                <input
+                  id="promo-product"
+                  type="text"
+                  placeholder="e.g. Heavy-Duty Sliding Motor"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white placeholder-slate-600 outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label for="promo-desc" class="block text-xs font-semibold text-slate-300 mb-1">Offer Description *</label>
+              <textarea
+                id="promo-desc"
+                rows="3"
+                required
+                placeholder="Include key kit items, motor capacity, remotes included, or warranty details..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-xs text-white placeholder-slate-600 outline-none resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Image Poster Upload with Live Preview -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">Promotional Poster (9:16 Story Format) *</label>
+              <div class="border-2 border-dashed border-slate-800 hover:border-cyan-500/50 rounded-xl p-4 text-center cursor-pointer transition relative group bg-slate-950/60">
+                <input
+                  id="promo-image-file"
+                  type="file"
+                  accept="image/png, image/jpeg, image/webp"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <div id="upload-prompt" class="space-y-1.5 py-4">
+                  <svg class="w-8 h-8 text-cyan-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <p class="text-xs font-medium text-slate-300">Click or Drag & Drop image here</p>
+                  <p class="text-[10px] text-slate-400">PNG, JPG, or WebP</p>
+                </div>
+                <!-- Image Preview Thumbnail -->
+                <div id="upload-preview-wrap" class="hidden flex items-center justify-center py-2">
+                  <img id="upload-preview-img" src="" alt="Preview" class="h-44 w-auto object-contain rounded-lg shadow-lg border border-slate-700" />
+                </div>
+              </div>
+            </div>
+
+            <div id="promo-form-status" class="hidden p-3 rounded-xl text-xs font-medium text-center"></div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.01] active:scale-95"
+            >
+              Publish Promotion Instantly
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Side: Active Promotions List -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>Active Promotions (<span id="promo-count">4</span>)</span>
+            </h3>
+            <button
+              id="reset-defaults-btn"
+              type="button"
+              class="text-[11px] text-slate-400 hover:text-cyan-400 underline"
+            >
+              Reset to Defaults
+            </button>
+          </div>
+
+          <!-- Dynamic Cards Container -->
+          <div id="promos-list" class="space-y-3">
+            <!-- Populated via client-side JavaScript -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</BaseLayout>
+
+<script is:inline define:vars={{ initialPromotions }}>
+  // Session Authentication & Promotions Engine Manager
+  const AUTH_KEY = 'gpsmuscat_admin_auth';
+  const PROMO_STORAGE_KEY = 'gpsmuscat_live_promos';
+
+  // DOM Elements
+  const authSection = document.getElementById('auth-section');
+  const dashboardSection = document.getElementById('dashboard-section');
+  const loginForm = document.getElementById('admin-login-form');
+  const authError = document.getElementById('auth-error');
+  const logoutBtn = document.getElementById('admin-logout-btn');
+
+  const newPromoForm = document.getElementById('new-promo-form');
+  const promoImageInput = document.getElementById('promo-image-file');
+  const uploadPrompt = document.getElementById('upload-prompt');
+  const uploadPreviewWrap = document.getElementById('upload-preview-wrap');
+  const uploadPreviewImg = document.getElementById('upload-preview-img');
+  const promoFormStatus = document.getElementById('promo-form-status');
+  const promosListContainer = document.getElementById('promos-list');
+  const promoCountSpan = document.getElementById('promo-count');
+  const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
+
+  let currentUploadedImageBase64 = '';
+
+  // Check Existing Auth Session
+  function checkAuth() {
+    const isAuth = sessionStorage.getItem(AUTH_KEY) === 'true';
+    if (isAuth) {
+      authSection.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+      logoutBtn.classList.remove('hidden');
+      renderPromotions();
+    } else {
+      authSection.classList.remove('hidden');
+      dashboardSection.classList.add('hidden');
+      logoutBtn.classList.add('hidden');
+    }
+  }
+
+  // Handle Login
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value.trim();
+
+      // Official Admin Credentials
+      if (user === 'admin' && pass === 'gpsmuscat2026') {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        authError.classList.add('hidden');
+        checkAuth();
+      } else {
+        authError.textContent = 'Invalid username or password. Please try again.';
+        authError.classList.remove('hidden');
+      }
+    });
+  }
+
+  // Handle Logout
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem(AUTH_KEY);
+      checkAuth();
+    });
+  }
+
+  // Image Upload File Handler
+  if (promoImageInput) {
+    promoImageInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          currentUploadedImageBase64 = event.target.result;
+          uploadPreviewImg.src = currentUploadedImageBase64;
+          uploadPrompt.classList.add('hidden');
+          uploadPreviewWrap.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Load Promotions from LocalStorage or Defaults
+  function getPromotions() {
+    try {
+      const stored = localStorage.getItem(PROMO_STORAGE_KEY);
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return initialPromotions;
+  }
+
+  function savePromotions(promos) {
+    localStorage.setItem(PROMO_STORAGE_KEY, JSON.stringify(promos));
+    renderPromotions();
+  }
+
+  // Render Promotions in Admin List
+  function renderPromotions() {
+    const promos = getPromotions();
+    if (promoCountSpan) promoCountSpan.textContent = promos.length;
+    if (!promosListContainer) return;
+
+    promosListContainer.innerHTML = '';
+
+    if (promos.length === 0) {
+      promosListContainer.innerHTML = `
+        <div class="p-8 text-center bg-slate-900 border border-slate-800 rounded-xl text-slate-400 text-xs">
+          No promotions currently configured. Use the form on the left to add one.
+        </div>
+      `;
+      return;
+    }
+
+    promos.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = "flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition gap-4";
+      card.innerHTML = `
+        <div class="flex items-center gap-3.5 min-w-0">
+          <img
+            src="${p.image}"
+            alt="${p.title}"
+            class="h-14 w-10 object-cover rounded-lg bg-slate-950 border border-slate-800 flex-shrink-0"
+          />
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full ${p.active ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-slate-800 text-slate-400'}">
+                ${p.tag || 'Offer'}
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">
+                ${p.validTill ? '⏳ ' + p.validTill : 'Active'}
+              </span>
+            </div>
+            <h4 class="text-xs font-bold text-white truncate mt-1">${p.title}</h4>
+            <p class="text-[11px] text-slate-400 truncate">${p.description}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button
+            type="button"
+            data-toggle-id="${p.id}"
+            class="px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition ${p.active ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}"
+          >
+            ${p.active ? 'Active' : 'Inactive'}
+          </button>
+          <button
+            type="button"
+            data-delete-id="${p.id}"
+            class="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition"
+            title="Delete Promotion"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+      promosListContainer.appendChild(card);
+    });
+
+    // Attach Toggle & Delete Listeners
+    promosListContainer.querySelectorAll('[data-toggle-id]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-toggle-id');
+        const list = getPromotions();
+        const item = list.find(x => x.id === id);
+        if (item) {
+          item.active = !item.active;
+          savePromotions(list);
+        }
+      });
+    });
+
+    promosListContainer.querySelectorAll('[data-delete-id]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-delete-id');
+        if (confirm('Are you sure you want to remove this promotion?')) {
+          let list = getPromotions();
+          list = list.filter(x => x.id !== id);
+          savePromotions(list);
+        }
+      });
+    });
+  }
+
+  // Handle New Promo Form Submission
+  if (newPromoForm) {
+    newPromoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('promo-title').value.trim();
+      const category = document.getElementById('promo-category').value;
+      const tag = document.getElementById('promo-tag').value.trim() || 'Special Offer';
+      const validity = document.getElementById('promo-validity').value.trim() || 'Until Stock Last';
+      const product = document.getElementById('promo-product').value.trim() || title;
+      const desc = document.getElementById('promo-desc').value.trim();
+
+      if (!currentUploadedImageBase64) {
+        promoFormStatus.textContent = 'Please choose a poster image for the promotion.';
+        promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-amber-500/10 text-amber-400 border border-amber-500/20';
+        promoFormStatus.classList.remove('hidden');
+        return;
+      }
+
+      const newPromo = {
+        id: 'promo_' + Date.now(),
+        product,
+        title,
+        tag,
+        description: desc,
+        validTill: validity,
+        ctaText: 'Inquire Now',
+        ctaCategory: category,
+        image: currentUploadedImageBase64,
+        active: true
+      };
+
+      const promos = getPromotions();
+      promos.unshift(newPromo);
+      savePromotions(promos);
+
+      // Reset Form
+      newPromoForm.reset();
+      currentUploadedImageBase64 = '';
+      uploadPreviewWrap.classList.add('hidden');
+      uploadPrompt.classList.remove('hidden');
+
+      promoFormStatus.textContent = '✓ Promotion published successfully! It is now live.';
+      promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      promoFormStatus.classList.remove('hidden');
+
+      setTimeout(() => {
+        promoFormStatus.classList.add('hidden');
+      }, 4000);
+    });
+  }
+
+  // Reset to Defaults
+  if (resetDefaultsBtn) {
+    resetDefaultsBtn.addEventListener('click', () => {
+      if (confirm('Reset promotions to initial factory default list?')) {
+        savePromotions(initialPromotions);
+      }
+    });
+  }
+
+  // Initialize
+  checkAuth();
+</script>
