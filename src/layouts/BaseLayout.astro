@@ -134,17 +134,15 @@ const localBusinessSchema = {
     <!-- Main Content Slot -->
     <slot />
 
-    <!-- Floating WhatsApp Quick Connect Button -->
+    <!-- Floating WhatsApp Quick Connect Button (Routes to Branch Selector in Footer) -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 group">
       <!-- Tooltip -->
       <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-900 dark:bg-slate-800 text-slate-100 text-xs font-medium px-3 py-1.5 rounded-lg shadow-xl whitespace-nowrap border border-slate-700">
-        Chat with Al Khoudh (+968 9121 4949)
+        Contact Branches (Al Khoudh & Ghala)
       </span>
       <a
-        href="https://wa.me/96891214949?text=Hello%20GPS%20Muscat,%20I%20would%20like%20to%20inquire%20about%20gate%20automation%20and%20access%20control%20solutions."
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Direct WhatsApp inquiry with GPS Muscat"
+        href="#contact"
+        aria-label="Contact Our Branches in Muscat"
         class="flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95"
       >
         <svg class="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
