@@ -1,0 +1,140 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "GPS Muscat | Gate Automation & Access Control Solutions in Oman",
+  description = "Premier supplier of automatic sliding & swing gate motors, boom barriers, access control systems, magnetic door locks, and security hardware in Muscat, Oman.",
+  image = "/assets/logo/GPSMUSCAT_Logo_black_blue_on_white_500x60.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://www.gpsmuscat.com");
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "GPS Muscat (Gulf Pioneer Star)",
+  "description": "Leading technical supplier of gate automation, boom barriers, access control systems, and security accessories in Muscat, Oman.",
+  "url": "https://www.gpsmuscat.com",
+  "logo": "https://www.gpsmuscat.com/assets/logo/GPSMUSCAT_Logo_black_blue_on_white_500x60.png",
+  "telephone": "+96891214949",
+  "email": "gulfpioneerstarmuscat@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Muscat",
+    "addressCountry": "OM"
+  },
+  "department": [
+    {
+      "@type": "LocalBusiness",
+      "name": "GPS Muscat - Al Khoudh Branch",
+      "telephone": "+96891214949",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Al Khoudh, Muscat",
+        "addressCountry": "OM"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "GPS Muscat - Ghala Branch",
+      "telephone": "+96897440010",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ghala, Muscat",
+        "addressCountry": "OM"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "08:00",
+          "closes": "16:00"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="gate automation Oman, sliding gate motor Muscat, boom barrier Muscat, swing gate motor, access control Oman, BFT Somfy Came Muscat, Beninca Muscat, Roger technology Oman" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  </head>
+  <body class="min-h-full flex flex-col justify-between bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-white">
+    <!-- Ambient Background Light Effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10" aria-hidden="true">
+      <div class="absolute -top-48 -left-48 w-[32rem] h-[32rem] bg-cyan-600/15 rounded-full blur-[128px]"></div>
+      <div class="absolute top-1/4 -right-48 w-[28rem] h-[28rem] bg-sky-600/10 rounded-full blur-[128px]"></div>
+      <div class="absolute -bottom-48 left-1/3 w-[36rem] h-[36rem] bg-blue-700/10 rounded-full blur-[140px]"></div>
+    </div>
+
+    <!-- Main Content Slot -->
+    <slot />
+
+    <!-- Floating WhatsApp Quick Connect Button -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 group">
+      <!-- Tooltip -->
+      <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-900 border border-slate-700 text-xs font-medium text-slate-200 px-3 py-1.5 rounded-lg shadow-xl whitespace-nowrap">
+        Chat with Al Khoudh (+968 9121 4949)
+      </span>
+      <a
+        href="https://wa.me/96891214949?text=Hello%20GPS%20Muscat,%20I%20would%20like%20to%20inquire%20about%20gate%20automation%20and%20access%20control%20solutions."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Direct WhatsApp inquiry with GPS Muscat"
+        class="flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95"
+      >
+        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.12-.23-.19-.48-.31Z" />
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

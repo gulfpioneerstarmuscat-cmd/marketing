@@ -1,138 +1,188 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
-const title = "GPS Muscat | Gate Automation & Access Control (Redesign In Progress)";
-const description = "Phase 1 Redesign & Rebuild of GPS Muscat Marketing Website using Astro & Tailwind CSS.";
+const pageTitle = "GPS Muscat | Gate Automation & Access Control Supplier in Oman";
+const pageDescription = "Technical supplier of gate automation equipment, sliding & swing motors, boom barriers, access control, EM locks, and accessories in Muscat, Oman.";
 ---
 
-<!doctype html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-		<style>
-			body {
-				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-			}
-		</style>
-	</head>
-	<body class="min-h-full flex flex-col justify-between selection:bg-cyan-500 selection:text-white">
-		<!-- Background glow effects -->
-		<div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-			<div class="absolute -top-40 -left-40 w-96 h-96 bg-cyan-600/20 rounded-full blur-3xl"></div>
-			<div class="absolute top-1/3 -right-40 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl"></div>
-			<div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl"></div>
-		</div>
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
 
-		<!-- Header -->
-		<header class="border-b border-slate-800/80 backdrop-blur-md bg-slate-950/60 sticky top-0 z-50">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="bg-white px-3 py-1.5 rounded-lg shadow-sm">
-						<img src="/assets/logo/GPSMUSCAT_Logo_black_blue_on_white_500x60.png" alt="GPS Muscat Logo" class="h-8 w-auto object-contain" />
-					</div>
-					<span class="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-						v2.0 Redesign
-					</span>
-				</div>
-				<div class="flex items-center gap-3">
-					<span class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
-						<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-						Branch: redesign
-					</span>
-				</div>
-			</div>
-		</header>
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Hero Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-6 text-left">
+            <!-- Eyebrow Badge -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-400">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span>Gate Automation & Access Control Supplier in Muscat</span>
+            </div>
 
-		<!-- Main Hero Content -->
-		<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex flex-col items-center justify-center text-center">
-			<!-- Status Pill -->
-			<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-300 shadow-inner mb-8">
-				<span class="flex h-2 w-2 relative">
-					<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-					<span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-				</span>
-				<span>Phase 1 Verified: Astro SSG + Tailwind CSS Engine Active</span>
-			</div>
+            <!-- Primary Marketing Heading -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              Sliding gates, swing gates, boom barriers, & <br class="hidden sm:inline" />
+              <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">
+                access control solutions.
+              </span>
+            </h1>
 
-			<!-- Main Heading -->
-			<h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl">
-				Next-Gen Architecture for <br />
-				<span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">
-					GPS Muscat
-				</span>
-			</h1>
+            <!-- Descriptive Subtitle -->
+            <p class="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+              GPS Muscat is a specialized technical supplier delivering commercial and residential entrance automation, high-cycle parking barriers, biometrics, and security accessories across Oman.
+            </p>
 
-			<!-- Subtitle -->
-			<p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl leading-relaxed">
-				Oman's premier supplier of gate automation equipment, swing & sliding motors, boom barriers, and access control solutions is undergoing a full rebuild.
-			</p>
+            <!-- Call to Actions -->
+            <div class="pt-2 flex flex-wrap items-center gap-4">
+              <!-- Primary WhatsApp Al Khoudh -->
+              <a
+                href="https://wa.me/96891214949?text=Hello%20GPS%20Muscat,%20I%20would%20like%20to%20request%20pricing%20and%20availability%20for%20gate%20motors%20and%20access%20systems."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02] active:scale-95"
+              >
+                <span>WhatsApp Inquiry (+968 9121 4949)</span>
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.12-.23-.19-.48-.31Z" />
+                </svg>
+              </a>
 
-			<!-- Architecture Stack Badges -->
-			<div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-3xl">
-				<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 text-left hover:border-slate-700 transition">
-					<p class="text-xs font-mono text-cyan-400">01 / Engine</p>
-					<h3 class="text-base font-semibold text-white mt-1">Astro SSG</h3>
-					<p class="text-xs text-slate-400 mt-1">Static Site Generation with zero JS overhead by default.</p>
-				</div>
-				<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 text-left hover:border-slate-700 transition">
-					<p class="text-xs font-mono text-sky-400">02 / Styling</p>
-					<h3 class="text-base font-semibold text-white mt-1">Tailwind CSS</h3>
-					<p class="text-xs text-slate-400 mt-1">Utility-first modern styling with hardware-accelerated transitions.</p>
-				</div>
-				<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 text-left hover:border-slate-700 transition">
-					<p class="text-xs font-mono text-indigo-400">03 / Target Host</p>
-					<h3 class="text-base font-semibold text-white mt-1">GitHub Pages</h3>
-					<p class="text-xs text-slate-400 mt-1">Custom domain <code class="text-indigo-300 font-mono text-xs">gpsmuscat.com</code> preserved in public/CNAME.</p>
-				</div>
-				<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 text-left hover:border-slate-700 transition">
-					<p class="text-xs font-mono text-emerald-400">04 / Forms</p>
-					<h3 class="text-base font-semibold text-white mt-1">Web3Forms API</h3>
-					<p class="text-xs text-slate-400 mt-1">Serverless email routing with real-time client validation.</p>
-				</div>
-			</div>
+              <!-- Secondary Call Ghala -->
+              <a
+                href="tel:+96897440010"
+                class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-95"
+              >
+                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                <span>Call Ghala Branch</span>
+              </a>
+            </div>
 
-			<!-- Environment Checklist Card -->
-			<div class="mt-12 w-full max-w-2xl bg-slate-900/40 border border-slate-800 rounded-2xl p-6 text-left shadow-2xl backdrop-blur-sm">
-				<h2 class="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-4 flex items-center justify-between">
-					<span>Phase 1 Verification Status</span>
-					<span class="text-xs font-mono text-emerald-400 font-normal">All Checks Passed</span>
-				</h2>
-				<ul class="space-y-3 text-sm text-slate-300 font-mono">
-					<li class="flex items-center gap-3">
-						<span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">✓</span>
-						<span>Isolated local git branch: <strong class="text-white">redesign</strong> (main branch untouched)</span>
-					</li>
-					<li class="flex items-center gap-3">
-						<span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">✓</span>
-						<span>Legacy monolithic files purged from root</span>
-					</li>
-					<li class="flex items-center gap-3">
-						<span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">✓</span>
-						<span>Static brand assets & CNAME preserved in <code class="text-cyan-400">public/</code></span>
-					</li>
-					<li class="flex items-center gap-3">
-						<span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">✓</span>
-						<span>Astro framework + Tailwind CSS Vite pipeline initialized</span>
-					</li>
-				</ul>
-			</div>
-		</main>
+            <!-- Trust Micro-Badges -->
+            <div class="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-400">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span> Italian & European Motors
+              </span>
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span> 2 Physical Branches in Muscat
+              </span>
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-400 font-bold">✓</span> Same-Day Order Pickup
+              </span>
+            </div>
+          </div>
 
-		<!-- Footer -->
-		<footer class="border-t border-slate-800/80 py-8 bg-slate-950/80 text-xs text-slate-500 text-center">
-			<div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-				<p>© {new Date().getFullYear()} GPS Muscat (Gulf Pioneer Star). All rights reserved.</p>
-				<p class="font-mono text-slate-400">Ready for Phase 2: Design Tokens & Layout Architecture</p>
-			</div>
-		</footer>
-	</body>
-</html>
+          <!-- Hero Side Card: Core Products Highlight -->
+          <div class="lg:col-span-5">
+            <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 relative overflow-hidden">
+              <div class="absolute -top-12 -right-12 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                  <h2 class="text-base font-bold text-white">Core Technical Focus</h2>
+                  <p class="text-xs text-slate-400 mt-0.5">Muscat Stock & Direct Supply</p>
+                </div>
+                <span class="text-[11px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-full">
+                  6 Categories
+                </span>
+              </div>
+
+              <!-- Product Highlights List -->
+              <ul class="space-y-3.5 text-xs text-slate-300">
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-cyan-500/10 text-cyan-400 mt-0.5 font-bold">01</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Gate Automation Motors</h3>
+                    <p class="text-slate-400 text-[11px]">Sliding motors (600kg to 2500kg), swing arms & underground systems.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-sky-500/10 text-sky-400 mt-0.5 font-bold">02</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Automatic Boom Barriers</h3>
+                    <p class="text-slate-400 text-[11px]">High-cycle parking barriers, up to 6m arms, springs & loop sensors.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-indigo-500/10 text-indigo-400 mt-0.5 font-bold">03</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Access Control & Biometrics</h3>
+                    <p class="text-slate-400 text-[11px]">RFID cards, biometric scanners, UHF long-range readers & GSM triggers.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-emerald-500/10 text-emerald-400 mt-0.5 font-bold">04</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Door Locks & Hardware</h3>
+                    <p class="text-slate-400 text-[11px]">Electromagnetic (EM) locks, electric strikes, drop bolts & bracket sets.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-amber-500/10 text-amber-400 mt-0.5 font-bold">05</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Glass Door Drives & Radars</h3>
+                    <p class="text-slate-400 text-[11px]">Automatic sliding glass operators, microwave radars & safety beams.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-800/40 transition">
+                  <span class="p-1.5 rounded-md bg-rose-500/10 text-rose-400 mt-0.5 font-bold">06</span>
+                  <div>
+                    <h3 class="font-semibold text-slate-100">Accessories, Power & Remotes</h3>
+                    <p class="text-slate-400 text-[11px]">Photocells, warning flashing lamps, 12V/24V power supplies & remotes.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Phase 2 Verification Card Section -->
+    <section class="py-12 border-t border-slate-800/80 bg-slate-900/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-card rounded-2xl p-6 sm:p-8 max-w-4xl mx-auto text-left">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+            <div>
+              <p class="text-xs font-mono text-cyan-400 uppercase tracking-wider">Milestone Verification</p>
+              <h2 class="text-lg font-bold text-white mt-0.5">Phase 2: Master Layout & Global Shell Completed</h2>
+            </div>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+              ✓ Ready for Phase 3
+            </span>
+          </div>
+          
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300 font-mono">
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-cyan-400 font-bold block mb-1">01 / Master BaseLayout</span>
+              <p class="text-slate-400 text-[11px]">Complete SEO head, LocalBusiness JSON-LD schema, ambient glows, and floating WhatsApp widget.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-cyan-400 font-bold block mb-1">02 / Header & Mobile Drawer</span>
+              <p class="text-slate-400 text-[11px]">Sticky glassmorphic navbar with GPS Muscat logo, quick WhatsApp actions, and zero visible admin buttons.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-cyan-400 font-bold block mb-1">03 / Branch Footer</span>
+              <p class="text-slate-400 text-[11px]">Al Khoudh & Ghala locations, working hours, brand credentials strip (Beninca, BFT, CAME, etc.).</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="text-cyan-400 font-bold block mb-1">04 / Up Next: Phase 3</span>
+              <p class="text-slate-400 text-[11px]">Data modeling for products, brands, and the password-protected no-code `/admin` promotions portal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
