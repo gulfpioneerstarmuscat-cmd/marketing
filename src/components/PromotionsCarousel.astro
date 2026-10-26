@@ -6,7 +6,7 @@ import { initialPromotions } from '../data/promotions';
 const activePromos = initialPromotions.filter(p => p.active);
 ---
 
-<section id="promotions" class="py-16 sm:py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30 transition-colors">
+<section class="py-16 sm:py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30 transition-colors">
   
   <!-- Subtle Ambient Glow -->
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
@@ -16,7 +16,8 @@ const activePromos = initialPromotions.filter(p => p.active);
     <!-- Section Header with Controls -->
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
       <div class="max-w-2xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
+        <!-- Eyebrow Pill with Exact Scroll Margin -->
+        <div id="promotions" class="scroll-mt-[84px] sm:scroll-mt-[96px] inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
           <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
           <span>Limited-Time Equipment Deals</span>
         </div>

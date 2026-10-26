@@ -3,7 +3,7 @@
 import { productCategories } from '../data/products';
 ---
 
-<section id="products" class="py-16 sm:py-24 relative overflow-hidden transition-colors">
+<section id="catalog" class="py-16 sm:py-24 relative overflow-hidden transition-colors">
   
   <!-- Subtle Ambient Glow -->
   <div class="absolute top-1/3 right-0 w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
@@ -13,7 +13,7 @@ import { productCategories } from '../data/products';
     
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
+      <div class="scroll-mt-[84px] sm:scroll-mt-[96px] inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
         <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
         <span>Commercial & Residential Inventory</span>
       </div>
@@ -79,7 +79,7 @@ import { productCategories } from '../data/products';
       {productCategories.map((cat, idx) => (
         <article
           id={cat.id}
-          class="product-category-card flex flex-col justify-between rounded-2xl glass-card border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-7 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 group relative"
+          class="scroll-mt-[84px] sm:scroll-mt-[96px] product-category-card flex flex-col justify-between rounded-2xl glass-card border border-slate-200/80 dark:border-slate-800/80 p-6 sm:p-7 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 group relative"
           data-category={cat.id}
         >
           <!-- Top Category Header -->
