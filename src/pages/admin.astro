@@ -1,7 +1,6 @@
 ---
-// src/pages/admin.astro - Staff Promotions Management Portal
+// src/pages/admin.astro - Staff Promotions Management Portal (100% Supabase Powered)
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { initialPromotions } from '../data/promotions';
 
 const pageTitle = "Staff Portal | GPS Muscat Promotions Manager";
 const pageDescription = "Internal staff portal for managing marketing promotions and story posters.";
@@ -373,44 +372,11 @@ const pageDescription = "Internal staff portal for managing marketing promotions
                 </div>
               </div>
 
-              <!-- Quick Stock Demo Presets -->
-              <div class="mt-2.5">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 mb-1">Quick Select Stock Sample Poster:</p>
-                <div class="grid grid-cols-4 gap-2">
-                  <button
-                    type="button"
-                    class="sample-poster-btn p-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-cyan-500 transition text-center"
-                    data-sample-src="/assets/promo/img/powersupply_promo.jpeg"
-                  >
-                    <img src="/assets/promo/img/powersupply_promo.jpeg" alt="PSU" class="h-10 w-full object-cover rounded" />
-                    <span class="block text-[9px] text-slate-500 truncate mt-0.5">PSU</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="sample-poster-btn p-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-cyan-500 transition text-center"
-                    data-sample-src="/assets/promo/img/remoteblack_promo.jpeg"
-                  >
-                    <img src="/assets/promo/img/remoteblack_promo.jpeg" alt="Remote" class="h-10 w-full object-cover rounded" />
-                    <span class="block text-[9px] text-slate-500 truncate mt-0.5">Remote B</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="sample-poster-btn p-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-cyan-500 transition text-center"
-                    data-sample-src="/assets/promo/img/remoteblue_promo.jpeg"
-                  >
-                    <img src="/assets/promo/img/remoteblue_promo.jpeg" alt="Remote" class="h-10 w-full object-cover rounded" />
-                    <span class="block text-[9px] text-slate-500 truncate mt-0.5">Remote BL</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="sample-poster-btn p-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-cyan-500 transition text-center"
-                    data-sample-src="/assets/promo/img/smartlock_promo.jpeg"
-                  >
-                    <img src="/assets/promo/img/smartlock_promo.jpeg" alt="Lock" class="h-10 w-full object-cover rounded" />
-                    <span class="block text-[9px] text-slate-500 truncate mt-0.5">Smart Lock</span>
-                  </button>
-                </div>
-              </div>
+              <!-- Storage Notice Hint -->
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2.5 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+                <span>Poster file will be uploaded directly to Supabase Storage (<strong class="text-slate-700 dark:text-slate-300">promotions</strong> bucket).</span>
+              </p>
             </div>
 
             <div id="promo-form-status" class="hidden p-3 rounded-xl text-xs font-medium text-center"></div>
@@ -418,9 +384,9 @@ const pageDescription = "Internal staff portal for managing marketing promotions
             <!-- Submit Button -->
             <button
               type="submit"
-              class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-lg shadow-cyan-500/20 active:scale-95 transition-all"
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer"
             >
-              Publish Promotion Instantly
+              Upload & Publish to Supabase
             </button>
           </form>
         </div>
@@ -431,17 +397,21 @@ const pageDescription = "Internal staff portal for managing marketing promotions
             <div>
               <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span>Configured Story Promotions</span>
+                <span>Live Supabase Promotions</span>
               </h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Toggle visibility or click posters to view fullscreen.</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Toggle visibility or click trash icon to permanently remove.</p>
             </div>
             
             <button
-              id="reset-defaults-btn"
+              id="refresh-promos-btn"
               type="button"
-              class="text-xs text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 underline font-medium"
+              class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition font-medium cursor-pointer"
+              title="Reload promotions from Supabase"
             >
-              Reset Defaults
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              <span>Refresh List</span>
             </button>
           </div>
 
@@ -507,7 +477,7 @@ const pageDescription = "Internal staff portal for managing marketing promotions
   const promosListContainer = document.getElementById('promos-list');
   const statActiveCount = document.getElementById('stat-active-count');
   const statTotalCount = document.getElementById('stat-total-count');
-  const resetDefaultsBtn = document.getElementById('reset-defaults-btn');
+  const refreshPromosBtn = document.getElementById('refresh-promos-btn');
 
   // Modal elements
   const posterModal = document.getElementById('poster-modal');
@@ -517,7 +487,6 @@ const pageDescription = "Internal staff portal for managing marketing promotions
   const closePosterModal = document.getElementById('close-poster-modal');
 
   let selectedFileForUpload: File | null = null;
-  let selectedPresetImageUrl = '';
   let cachedPromotions: PromotionRecord[] = [];
 
   // Password Visibility Toggle
@@ -686,29 +655,11 @@ const pageDescription = "Internal staff portal for managing marketing promotions
   if (clearImageBtn) {
     clearImageBtn.addEventListener('click', () => {
       selectedFileForUpload = null;
-      selectedPresetImageUrl = '';
       if (promoImageInput) promoImageInput.value = '';
       uploadPreviewWrap?.classList.add('hidden');
       uploadPrompt?.classList.remove('hidden');
     });
   }
-
-  // Quick Select Stock Poster Presets
-  document.querySelectorAll('.sample-poster-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const src = btn.getAttribute('data-sample-src');
-      if (src) {
-        selectedPresetImageUrl = src;
-        selectedFileForUpload = null;
-        if (promoImageInput) promoImageInput.value = '';
-        if (uploadPreviewImg) {
-          uploadPreviewImg.src = src;
-          uploadPrompt?.classList.add('hidden');
-          uploadPreviewWrap?.classList.remove('hidden');
-        }
-      }
-    });
-  });
 
   // Modal Close
   if (closePosterModal && posterModal) {
@@ -762,22 +713,19 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
     promosListContainer.innerHTML = '';
 
-    // Empty state with Seed Button
+    // Empty state
     if (cachedPromotions.length === 0) {
       promosListContainer.innerHTML = `
-        <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 space-y-3">
-          <p>No promotions in your database yet.</p>
-          <button
-            id="seed-catalog-btn"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 font-semibold text-xs transition"
-          >
-            <span>📥 Seed Factory 4 Initial Promotions</span>
-          </button>
+        <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 space-y-2">
+          <div class="w-10 h-10 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <p class="font-semibold text-slate-700 dark:text-slate-200">No posters stored in Supabase yet</p>
+          <p class="text-[11px] max-w-sm mx-auto text-slate-500 dark:text-slate-400">Use the form on the left to upload your first 9:16 vertical poster image. It will upload directly into your Supabase Storage bucket.</p>
         </div>
       `;
-
-      document.getElementById('seed-catalog-btn')?.addEventListener('click', seedInitialPromotions);
       return;
     }
 
@@ -929,29 +877,6 @@ const pageDescription = "Internal staff portal for managing marketing promotions
     });
   }
 
-  // Seed Initial 4 Sample Promotions
-  async function seedInitialPromotions() {
-    if (!confirm('Import the 4 default catalog promotions to your Supabase database?')) return;
-    try {
-      const itemsToSeed = initialPromotions.map((p, idx) => ({
-        title: p.title,
-        description: p.description,
-        image_url: p.image,
-        tag: p.tag || 'Offer',
-        valid_till: p.validTill || 'Active',
-        cta_category: p.ctaCategory || 'Gate Automation',
-        active: p.active,
-        sort_order: idx
-      }));
-
-      const { error } = await supabase.from('promotions').insert(itemsToSeed);
-      if (error) throw error;
-      await loadPromotionsFromSupabase();
-    } catch (e: any) {
-      alert('Error seeding promotions: ' + e.message);
-    }
-  }
-
   // Handle New Promo Form Submission (Enforces 15-stored cap)
   if (newPromoForm) {
     newPromoForm.addEventListener('submit', async (e) => {
@@ -979,9 +904,9 @@ const pageDescription = "Internal staff portal for managing marketing promotions
       const validity = validityInput?.value.trim() || 'Until Stock Last';
       const desc = descInput?.value.trim() || '';
 
-      if (!selectedFileForUpload && !selectedPresetImageUrl) {
+      if (!selectedFileForUpload) {
         if (promoFormStatus) {
-          promoFormStatus.textContent = 'Please choose a poster file or select one of the stock samples.';
+          promoFormStatus.textContent = 'Please choose a 9:16 vertical poster image file to upload.';
           promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20';
           promoFormStatus.classList.remove('hidden');
         }
@@ -991,16 +916,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
       const submitBtn = newPromoForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Uploading & Saving to Supabase...';
+        submitBtn.textContent = 'Uploading to Supabase Storage...';
       }
 
       try {
-        let finalImageUrl = selectedPresetImageUrl;
-
-        // Upload file to Supabase Storage if local file was chosen
-        if (selectedFileForUpload) {
-          finalImageUrl = await uploadPosterImage(selectedFileForUpload);
-        }
+        // Upload image file directly to Supabase Storage
+        const finalImageUrl = await uploadPosterImage(selectedFileForUpload);
 
         // Active status: active if under 10 live limit, otherwise saved as hidden
         const activeCount = cachedPromotions.filter(p => p.active).length;
@@ -1022,14 +943,13 @@ const pageDescription = "Internal staff portal for managing marketing promotions
         // Reset form
         newPromoForm.reset();
         selectedFileForUpload = null;
-        selectedPresetImageUrl = '';
         uploadPreviewWrap?.classList.add('hidden');
         uploadPrompt?.classList.remove('hidden');
 
         if (promoFormStatus) {
           promoFormStatus.textContent = willBeActive
-            ? '✓ Poster uploaded and published live on website!'
-            : '✓ Poster uploaded and saved as Hidden (live cap 10/10 is full).';
+            ? '✓ Poster uploaded to Supabase Storage and published live on website!'
+            : '✓ Poster uploaded to Supabase Storage and saved as Hidden (live cap 10/10 is full).';
           promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
           promoFormStatus.classList.remove('hidden');
         }
@@ -1042,23 +962,23 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
       } catch (err: any) {
         if (promoFormStatus) {
-          promoFormStatus.textContent = 'Failed to save promotion: ' + err.message;
+          promoFormStatus.textContent = 'Failed to upload/save promotion: ' + err.message;
           promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20';
           promoFormStatus.classList.remove('hidden');
         }
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Publish Promotion Instantly';
+          submitBtn.textContent = 'Upload & Publish to Supabase';
         }
       }
     });
   }
 
-  // Reset to Defaults (Restores Initial 4)
-  if (resetDefaultsBtn) {
-    resetDefaultsBtn.addEventListener('click', () => {
-      seedInitialPromotions();
+  // Refresh Promotions Button
+  if (refreshPromosBtn) {
+    refreshPromosBtn.addEventListener('click', () => {
+      loadPromotionsFromSupabase();
     });
   }
 
