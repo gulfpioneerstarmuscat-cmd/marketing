@@ -334,7 +334,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
           </button>
           <a
             id="quote-success-wa-btn"
-            href="https://wa.me/96891214949"
+            href="https://api.whatsapp.com/send?phone=96891214949"
             target="_blank"
             rel="noopener noreferrer"
             class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-xs sm:text-sm shadow-md transition"
@@ -519,6 +519,20 @@ _Sent from gpsmuscat.com_`;
       };
     }
 
+    // Helper to generate reliable WhatsApp URL (prevents wa.me DNS timeouts & app protocol hangs)
+    function getWhatsAppUrl(phone, text = '') {
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const encodedText = text ? encodeURIComponent(text) : '';
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // On desktop, directly navigate to web.whatsapp.com so it asks to log in or opens chat directly!
+      if (isMobile) {
+        return `https://api.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+      } else {
+        return `https://web.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+      }
+    }
+
     // Direct WhatsApp Button
     if (directWaBtn) {
       directWaBtn.addEventListener('click', () => {
@@ -527,8 +541,8 @@ _Sent from gpsmuscat.com_`;
           showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
           return;
         }
-        const encoded = encodeURIComponent(data.waText);
-        window.open(`https://wa.me/${data.targetPhone}?text=${encoded}`, '_blank');
+        const waUrl = getWhatsAppUrl(data.targetPhone, data.waText);
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
       });
     }
 
@@ -582,8 +596,7 @@ _Sent from gpsmuscat.com_`;
           }
 
           if (successWaBtn) {
-            const encoded = encodeURIComponent(data.waText);
-            successWaBtn.href = `https://wa.me/${data.targetPhone}?text=${encoded}`;
+            successWaBtn.href = getWhatsAppUrl(data.targetPhone, data.waText);
           }
 
         } catch (err) {
