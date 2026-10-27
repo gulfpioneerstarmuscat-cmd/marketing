@@ -14,72 +14,72 @@ export const partnerBrands: Brand[] = [
     id: "beninca",
     name: "Beninca",
     logo: "/assets/brands/Beninca.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "Sliding & Swing Gate Motors, Underground Systems & Electronics",
-    badge: "Made in Italy"
+    badge: "Made In Italy"
   },
   {
     id: "bft",
     name: "BFT",
     logo: "/assets/brands/BFT.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "High-Cycle Boom Barriers, Gate Motors & Access Control",
-    badge: "Automation Pioneer"
+    badge: "Made In Italy"
   },
   {
     id: "came",
     name: "CAME",
     logo: "/assets/brands/CAME.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "Automatic Barriers, Turnstiles & Sliding Entrance Operators",
-    badge: "European Leader"
+    badge: "Made In Italy"
   },
   {
     id: "dea",
     name: "DEA System",
     logo: "/assets/brands/DEA.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "Heavy Industrial Gate Drives & Electronic Control Modules",
-    badge: "Heavy Duty"
+    badge: "Made In Italy"
   },
   {
     id: "roger",
     name: "Roger Technology",
     logo: "/assets/brands/ROGER.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "Brushless Motor Automation & Super-Intensive Duty Barriers",
-    badge: "Brushless Tech"
+    badge: "Made In Italy"
   },
   {
     id: "somfy",
     name: "Somfy",
     logo: "/assets/brands/Somfy.svg",
-    origin: "France",
+    origin: "Made In France",
     specialty: "Smart Connected Gate Motors & Villa Automation Solutions",
-    badge: "Smart Home"
+    badge: "Made In France"
   },
   {
     id: "hikvision",
     name: "Hikvision",
     logo: "/assets/brands/HIKVISION.svg",
-    origin: "International",
+    origin: "Made In China",
     specialty: "Biometric Access Control, Face Terminals & RFID Controllers",
-    badge: "Security Standard"
+    badge: "Made In China"
   },
   {
     id: "rib",
     name: "RIB",
     logo: "/assets/brands/RIB.svg",
-    origin: "Italy",
+    origin: "Made In Italy",
     specialty: "Extra Heavy-Duty Industrial Sliding Gate Automation",
-    badge: "Industrial Grade"
+    badge: "Made In Italy"
   },
   {
-    id: "9-automation",
-    name: "Automation Solutions",
+    id: "aale",
+    name: "AALE",
     logo: "/assets/brands/9.svg",
-    origin: "International",
-    specialty: "Entrance Accessories, Transmitters, Relays & Hardware",
-    badge: "Component Supply"
+    origin: "Made By Us",
+    specialty: "Custom Electronic Gate Automation Accessories & Hardware",
+    badge: "Made By Us"
   }
 ];
