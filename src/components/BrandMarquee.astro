@@ -33,20 +33,23 @@ const marqueeItems = [...partnerBrands, ...partnerBrands];
     <div class="flex gap-6 w-max animate-marquee hover:[animation-play-state:paused] py-2">
       {marqueeItems.map((brand) => (
         <div
-          class="flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-md shrink-0 group min-w-[155px] sm:min-w-[185px]"
+          class="relative flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl glass-card bg-linear-to-b from-white via-cyan-50/20 to-sky-50/30 dark:from-slate-900/90 dark:via-slate-900/80 dark:to-cyan-950/40 border border-slate-200/80 dark:border-cyan-500/25 hover:border-cyan-500/50 dark:hover:border-cyan-400/60 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-cyan-500/10 shrink-0 group min-w-[155px] sm:min-w-[185px] overflow-hidden"
         >
-          <!-- Brand Logo Graphic Container (Enlarged) -->
-          <div class="h-13 sm:h-16 w-32 sm:w-40 flex items-center justify-center p-1.5 bg-white/75 dark:bg-white/10 rounded-xl border border-slate-200/60 dark:border-white/10 group-hover:scale-105 transition-transform duration-300">
+          <!-- Subtle Brand Gradient Hue Glow Overlay -->
+          <div class="absolute inset-0 bg-linear-to-br from-sky-500/5 via-cyan-500/5 to-blue-600/10 dark:from-sky-500/10 dark:via-cyan-500/10 dark:to-blue-600/20 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity"></div>
+
+          <!-- Brand Logo Graphic Container (Enlarged with Brand Blue Gradient Hue & High-Contrast Light Plaque in both modes) -->
+          <div class="relative z-10 h-13 sm:h-16 w-32 sm:w-40 flex items-center justify-center p-2 rounded-xl bg-linear-to-br from-white via-sky-50/80 to-cyan-50/90 dark:from-white dark:via-sky-50/95 dark:to-cyan-50/90 border border-slate-200/70 dark:border-white/20 shadow-xs group-hover:scale-105 transition-transform duration-300">
             <img
               src={brand.logo}
               alt={brand.name}
-              class="max-h-9 sm:max-h-11 max-w-full object-contain filter dark:brightness-110"
+              class="max-h-9 sm:max-h-11 max-w-full object-contain"
               loading="lazy"
             />
           </div>
 
           <!-- Region / Origin only below the logo -->
-          <span class="mt-2.5 text-[11px] sm:text-xs font-mono font-bold tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors uppercase">
+          <span class="relative z-10 mt-2.5 text-[11px] sm:text-xs font-mono font-bold tracking-wider text-slate-500 dark:text-cyan-400/90 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors uppercase">
             {brand.origin}
           </span>
         </div>
