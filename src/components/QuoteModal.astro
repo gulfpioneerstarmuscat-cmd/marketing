@@ -278,7 +278,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
         <!-- 7. Action Buttons (Big, High-Contrast, Accessible for all ages) -->
         <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
           
-          <!-- Primary Submit Button -->
+          <!-- Primary Submit Button (Web3Forms - Commented out for now, kept for future use)
           <button
             type="submit"
             id="quote-submit-btn"
@@ -290,6 +290,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
               <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
+          -->
 
           <!-- WhatsApp Direct Option -->
           <button
@@ -297,10 +298,10 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
             id="quote-whatsapp-direct-btn"
             class="w-full h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
           >
+            <span>Sent Quotation Through</span>
             <svg class="w-5 h-5 fill-current text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24">
               <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.12-.23-.19-.48-.31Z" />
             </svg>
-            <span>Or Quick Chat on WhatsApp</span>
           </button>
 
           <p class="text-center text-[11px] text-slate-400">
@@ -546,7 +547,16 @@ _Sent from gpsmuscat.com_`;
       });
     }
 
-    // Submit Handler
+    // Form Submit Handler (Routes to WhatsApp; Web3Forms code preserved below for future use)
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        directWaBtn?.click();
+      });
+    }
+
+    /*
+    // Web3Forms Submit Handler (Commented out for now - kept for future use)
     if (form) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -565,9 +575,9 @@ _Sent from gpsmuscat.com_`;
           return;
         }
 
-        submitBtn.disabled = true;
-        btnSpinner.classList.remove('hidden');
-        btnText.textContent = 'Sending...';
+        if (submitBtn) submitBtn.disabled = true;
+        if (btnSpinner) btnSpinner.classList.remove('hidden');
+        if (btnText) btnText.textContent = 'Sending...';
         clearAlert();
 
         const accessKey = form.querySelector('input[name="access_key"]')?.value;
@@ -600,14 +610,15 @@ _Sent from gpsmuscat.com_`;
           }
 
         } catch (err) {
-          showAlert('Could not send online. Please tap the green "Quick Chat on WhatsApp" button below to reach us immediately.', 'error');
+          showAlert('Could not send online. Please tap the green WhatsApp button below to reach us immediately.', 'error');
         } finally {
-          submitBtn.disabled = false;
-          btnSpinner.classList.add('hidden');
-          btnText.textContent = 'Send Quotation Request';
+          if (submitBtn) submitBtn.disabled = false;
+          if (btnSpinner) btnSpinner.classList.add('hidden');
+          if (btnText) btnText.textContent = 'Send Quotation Request';
         }
       });
     }
+    */
 
     function showAlert(msg, type = 'error') {
       if (!alertBox) return;
