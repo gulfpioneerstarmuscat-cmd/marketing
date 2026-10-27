@@ -76,11 +76,9 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
                 name="title"
                 class="w-full h-11 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
               >
-                <option value="Mr.">Mr. (الفاضل)</option>
-                <option value="Eng.">Eng. (المهندس)</option>
-                <option value="Sheikh">Sheikh (الشيخ)</option>
-                <option value="Mrs.">Mrs. (الفاضلة)</option>
-                <option value="Dr.">Dr. (الدكتور)</option>
+                <option value="">(Blank)</option>
+                <option value="Mr.">Mr.</option>
+                <option value="Mrs.">Mrs.</option>
               </select>
             </div>
             <!-- First Name -->
@@ -474,9 +472,10 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
 
     // Extract Form Data
     function getCleanFormData() {
-      const title = document.getElementById('quote-title')?.value || 'Mr.';
+      const title = document.getElementById('quote-title')?.value || '';
       const firstName = document.getElementById('quote-first-name')?.value.trim() || '';
       const lastName = document.getElementById('quote-last-name')?.value.trim() || '';
+      const fullName = title ? `${title} ${firstName} ${lastName}` : `${firstName} ${lastName}`;
       const phone = document.getElementById('quote-phone')?.value.trim() || '';
       const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
       const email = document.getElementById('quote-email')?.value.trim() || '';
@@ -493,7 +492,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
       const waText = 
 `*QUOTATION REQUEST - GPS MUSCAT*
 ----------------------------------------
-*Name:* ${title} ${firstName} ${lastName}
+*Name:* ${fullName}
 *Phone:* +968 ${phone}
 ${altWhatsapp ? `*Alt WhatsApp:* +968 ${altWhatsapp}\n` : ''}${email ? `*Email:* ${email}\n` : ''}*Location:* ${region} - ${address1}
 ${address2 ? `*Villa / Details:* ${address2}\n` : ''}*Equipment:* ${category}
@@ -505,6 +504,7 @@ _Sent from gpsmuscat.com_`;
         title,
         firstName,
         lastName,
+        fullName,
         phone,
         altWhatsapp,
         email,
@@ -578,7 +578,7 @@ _Sent from gpsmuscat.com_`;
           successState.classList.remove('hidden');
 
           if (successMsg) {
-            successMsg.textContent = `Thank you ${data.title} ${data.firstName}! We received your request for ${data.category}. We will call or WhatsApp you on +968 ${data.phone}.`;
+            successMsg.textContent = `Thank you ${data.fullName}! We received your request for ${data.category}. We will call or WhatsApp you on +968 ${data.phone}.`;
           }
 
           if (successWaBtn) {
