@@ -127,17 +127,19 @@ import { productCategories } from '../data/products';
 
           </div>
 
-          <!-- Bottom CTA Action (Cleanly routes to Branch Selector) -->
+          <!-- Bottom CTA Action (Opens Quote Modal with pre-selected category) -->
           <div class="pt-6 mt-6 border-t border-slate-200/80 dark:border-slate-800/80">
-            <a
-              href="#contact"
-              class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-linear-to-r dark:from-sky-500 dark:to-cyan-500 dark:hover:from-sky-400 dark:hover:to-cyan-400 text-white dark:text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95"
+            <button
+              type="button"
+              data-open-quote-modal
+              data-quote-category={cat.title}
+              class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-linear-to-r dark:from-sky-500 dark:to-cyan-500 dark:hover:from-sky-400 dark:hover:to-cyan-400 text-white dark:text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95 cursor-pointer"
             >
-              <span>Inquire for Branch Pricing</span>
+              <span>Get Quotation for this Equipment</span>
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
-            </a>
+            </button>
           </div>
 
         </article>

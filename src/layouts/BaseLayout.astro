@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import QuoteModal from '../components/QuoteModal.astro';
 
 interface Props {
   title?: string;
@@ -154,5 +155,7 @@ const localBusinessSchema = {
         </a>
       </div>
     )}
+    <!-- Interactive Quotation Modal -->
+    <QuoteModal />
   </body>
 </html>

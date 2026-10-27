@@ -88,16 +88,17 @@
           </svg>
         </button>
 
-        <!-- Polished Minimal "Get Quote" Button -->
-        <a
-          href="#contact"
-          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 shadow-sm active:scale-95 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+        <!-- Polished Minimal "Get Quote" Button (Triggers QuoteModal) -->
+        <button
+          type="button"
+          data-open-quote-modal
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 shadow-sm active:scale-95 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 cursor-pointer"
         >
           <span>Get Quote</span>
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
-        </a>
+        </button>
 
       </div>
 
@@ -158,8 +159,19 @@
       Contact Us (Branches)
     </a>
 
-    <!-- Mobile Fast Contact Trigger -->
-    <div class="pt-4 mt-2 border-t border-slate-200 dark:border-slate-800">
+    <!-- Mobile Fast Contact & Quote Triggers -->
+    <div class="pt-4 mt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
+      <button
+        type="button"
+        data-open-quote-modal
+        class="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-950 text-xs font-bold shadow-md active:scale-95 transition-all cursor-pointer"
+      >
+        <span>Request Equipment Quote</span>
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
       <a
         href="#contact"
         class="mobile-nav-link flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold"

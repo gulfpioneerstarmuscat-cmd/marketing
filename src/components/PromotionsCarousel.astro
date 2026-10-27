@@ -163,16 +163,17 @@ const activePromos = initialPromotions.filter(p => p.active);
       <div class="p-3 w-full text-center space-y-2">
         <h4 id="lightbox-title" class="text-sm font-bold text-white"></h4>
         <p id="lightbox-desc" class="text-xs text-slate-300"></p>
-        <a
-          href="#contact"
+        <button
+          type="button"
           id="lightbox-inquire-btn"
-          class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 text-slate-950 font-bold text-xs shadow-lg mt-2"
+          data-open-quote-modal
+          class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs shadow-lg mt-2 cursor-pointer transition-all active:scale-95"
         >
-          <span>Contact Branch for this Promotion</span>
+          <span>Get Quote for this Promotion</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
           </svg>
-        </a>
+        </button>
       </div>
     </div>
   </div>
