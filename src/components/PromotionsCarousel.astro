@@ -9,7 +9,7 @@ const activePromos = initialPromotions.filter(p => p.active);
 <section class="py-16 sm:py-24 relative overflow-hidden bg-slate-100/50 dark:bg-slate-900/30 transition-colors">
   
   <!-- Subtle Ambient Glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-75 bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
     
@@ -17,12 +17,12 @@ const activePromos = initialPromotions.filter(p => p.active);
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
       <div class="max-w-2xl">
         <!-- Eyebrow Pill with Exact Scroll Margin -->
-        <div id="promotions" class="scroll-mt-[84px] sm:scroll-mt-[96px] inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
+        <div id="promotions" class="scroll-mt-21 sm:scroll-mt-24 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
           <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
           <span>Limited-Time Equipment Deals</span>
         </div>
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Active Promotions & <span class="bg-gradient-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">Special Bundles</span>
+          Active Promotions & <span class="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">Special Bundles</span>
         </h2>
         <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed">
           Explore our latest motor kits, power accessories, and biometric hardware offers. Available for direct walk-in pickup at Al Khoudh & Ghala.
@@ -62,10 +62,10 @@ const activePromos = initialPromotions.filter(p => p.active);
     >
       {activePromos.map((promo) => (
         <article
-          class="promo-card flex-shrink-0 w-[260px] sm:w-[290px] snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10"
+          class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10"
         >
           <!-- 9:16 Vertical Poster Container -->
-          <div class="relative aspect-[9/16] w-full overflow-hidden bg-slate-950">
+          <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
             <img
               src={promo.image}
               alt={promo.title}
@@ -74,7 +74,7 @@ const activePromos = initialPromotions.filter(p => p.active);
             />
             
             <!-- Gradient Overlay for Crisp Text Readability -->
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
 
             <!-- Top Floating Badges -->
             <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
@@ -118,7 +118,7 @@ const activePromos = initialPromotions.filter(p => p.active);
               <div class="pt-2">
                 <a
                   href="#contact"
-                  class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95"
+                  class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95"
                 >
                   <span>Inquire for Branch Price</span>
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +147,7 @@ const activePromos = initialPromotions.filter(p => p.active);
   </div>
 
   <!-- Fullscreen 9:16 Poster Lightbox Modal -->
-  <div id="promo-lightbox" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div id="promo-lightbox" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md items-center justify-center p-4">
     <div class="relative max-w-sm w-full glass-card rounded-2xl overflow-hidden p-3 border border-slate-700/80 shadow-2xl flex flex-col items-center">
       <button
         id="close-lightbox"
@@ -166,7 +166,7 @@ const activePromos = initialPromotions.filter(p => p.active);
         <a
           href="#contact"
           id="lightbox-inquire-btn"
-          class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 text-slate-950 font-bold text-xs shadow-lg mt-2"
+          class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 text-slate-950 font-bold text-xs shadow-lg mt-2"
         >
           <span>Contact Branch for this Promotion</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -219,6 +219,7 @@ const activePromos = initialPromotions.filter(p => p.active);
             lightboxTitle.textContent = title;
             lightboxDesc.textContent = desc;
             lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
           }
         });
       });
@@ -227,15 +228,20 @@ const activePromos = initialPromotions.filter(p => p.active);
     if (closeLightbox && lightbox) {
       closeLightbox.addEventListener('click', () => {
         lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
       });
       lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) lightbox.classList.add('hidden');
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+        }
       });
     }
 
     if (lightboxInquireBtn && lightbox) {
       lightboxInquireBtn.addEventListener('click', () => {
         lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
       });
     }
 
@@ -248,10 +254,10 @@ const activePromos = initialPromotions.filter(p => p.active);
         
         if (activeOnly.length > 0 && carousel) {
           carousel.innerHTML = activeOnly.map(promo => `
-            <article class="promo-card flex-shrink-0 w-[260px] sm:w-[290px] snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
-              <div class="relative aspect-[9/16] w-full overflow-hidden bg-slate-950">
+            <article class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
+              <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
                 <img src="${promo.image}" alt="${promo.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                 <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
                   <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${promo.tag || 'Offer'}</span>
                   <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-slate-200 border border-white/10">⏳ ${promo.validTill || 'Active'}</span>
@@ -264,7 +270,7 @@ const activePromos = initialPromotions.filter(p => p.active);
                   <h3 class="text-base font-bold text-white leading-snug line-clamp-2">${promo.title}</h3>
                   <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${promo.description}</p>
                   <div class="pt-2">
-                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
+                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
                       <span>Inquire for Branch Price</span>
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
