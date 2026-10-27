@@ -38,6 +38,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
         <!-- Controls: Site link, Theme Toggle & Logout -->
         <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Active User Badge -->
+          <span id="admin-user-badge" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span id="admin-user-email"></span>
+          </span>
+
           <!-- Public Site Link -->
           <a
             href="/"
@@ -46,7 +52,7 @@ const pageDescription = "Internal staff portal for managing marketing promotions
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
             </svg>
-            <span class="hidden sm:inline">View Live Site</span>
+            <span class="hidden sm:inline">Live Site</span>
           </a>
 
           <!-- Minimalist Theme Toggle Button -->
@@ -69,7 +75,7 @@ const pageDescription = "Internal staff portal for managing marketing promotions
           <button
             id="admin-logout-btn"
             type="button"
-            class="hidden text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-500 px-3 py-1.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10 transition"
+            class="hidden text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-500 px-3 py-1.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10 transition cursor-pointer"
           >
             Sign Out
           </button>
@@ -179,12 +185,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
         <!-- Quick Fill Helper for Demo / Setup -->
         <div class="mt-6 pt-5 border-t border-slate-200/80 dark:border-slate-800/80 text-center">
           <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-center gap-1.5 flex-wrap">
-            <span>Setup Credentials:</span>
+            <span>Staff Username:</span>
             <button id="auto-fill-btn" type="button" class="inline-flex items-center gap-1 text-cyan-600 dark:text-cyan-400 font-mono font-medium hover:underline bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
-              Auto-fill demo login
+              Use 'gpsadmin'
             </button>
           </p>
         </div>
@@ -195,14 +201,17 @@ const pageDescription = "Internal staff portal for managing marketing promotions
     <!-- Dashboard View (Shown after authentication) -->
     <main id="dashboard-section" class="hidden flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
-      <!-- Top Metrics & Status -->
+      <!-- Top Metrics & Capacity Status -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         
         <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
           <div>
-            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Active Live Posters</p>
-            <h3 id="stat-active-count" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">4</h3>
-            <p class="text-[11px] text-cyan-600 dark:text-cyan-400 mt-0.5 font-medium">Displayed in Carousel</p>
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Live on Website</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+              <span id="stat-active-count">0</span>
+              <span class="text-xs font-semibold text-slate-400">/ 10 max</span>
+            </h3>
+            <p class="text-[11px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">Deactivate to replace</p>
           </div>
           <div class="w-11 h-11 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 flex items-center justify-center text-lg">
             🏷️
@@ -211,9 +220,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
         <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
           <div>
-            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Total Configured</p>
-            <h3 id="stat-total-count" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">4</h3>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">Stored in Browser Cache</p>
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Total Stored</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+              <span id="stat-total-count">0</span>
+              <span class="text-xs font-semibold text-slate-400">/ 15 max</span>
+            </h3>
+            <p class="text-[11px] text-cyan-600 dark:text-cyan-400 mt-0.5 font-medium">Delete to free slot</p>
           </div>
           <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-lg">
             📦
@@ -222,12 +234,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
         <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
           <div>
-            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Website Engine</p>
-            <h3 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 flex items-center gap-1.5">
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Cloud Storage & DB</p>
+            <h3 id="stat-cloud-status" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live & Synchronized
+              Supabase Connected
             </h3>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Instant Homepage Updates</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Bucket: 'promotions'</p>
           </div>
           <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center text-lg">
             ⚡
@@ -465,10 +477,9 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
 </BaseLayout>
 
-<script is:inline define:vars={{ initialPromotions }}>
-  // Session Authentication & Promotions Engine Manager
-  const AUTH_KEY = 'gpsmuscat_admin_auth';
-  const PROMO_STORAGE_KEY = 'gpsmuscat_live_promos';
+<script>
+  import { supabase, MAX_LIVE_PROMOTIONS, MAX_STORED_PROMOTIONS, uploadPosterImage, deletePosterImage, type PromotionRecord } from '../lib/supabase';
+  import { initialPromotions } from '../data/promotions';
 
   // DOM Elements
   const authSection = document.getElementById('auth-section');
@@ -479,15 +490,18 @@ const pageDescription = "Internal staff portal for managing marketing promotions
   const autoFillBtn = document.getElementById('auto-fill-btn');
   const adminThemeToggle = document.getElementById('admin-theme-toggle');
   const togglePassBtn = document.getElementById('toggle-password-btn');
-  const adminPassInput = document.getElementById('admin-pass');
+  const adminPassInput = document.getElementById('admin-pass') as HTMLInputElement | null;
+  const adminUserInput = document.getElementById('admin-user') as HTMLInputElement | null;
   const eyeIconShow = document.getElementById('eye-icon-show');
   const eyeIconHide = document.getElementById('eye-icon-hide');
+  const adminUserBadge = document.getElementById('admin-user-badge');
+  const adminUserEmail = document.getElementById('admin-user-email');
 
-  const newPromoForm = document.getElementById('new-promo-form');
-  const promoImageInput = document.getElementById('promo-image-file');
+  const newPromoForm = document.getElementById('new-promo-form') as HTMLFormElement | null;
+  const promoImageInput = document.getElementById('promo-image-file') as HTMLInputElement | null;
   const uploadPrompt = document.getElementById('upload-prompt');
   const uploadPreviewWrap = document.getElementById('upload-preview-wrap');
-  const uploadPreviewImg = document.getElementById('upload-preview-img');
+  const uploadPreviewImg = document.getElementById('upload-preview-img') as HTMLImageElement | null;
   const clearImageBtn = document.getElementById('clear-image-btn');
   const promoFormStatus = document.getElementById('promo-form-status');
   const promosListContainer = document.getElementById('promos-list');
@@ -497,12 +511,14 @@ const pageDescription = "Internal staff portal for managing marketing promotions
 
   // Modal elements
   const posterModal = document.getElementById('poster-modal');
-  const modalPosterImg = document.getElementById('modal-poster-img');
+  const modalPosterImg = document.getElementById('modal-poster-img') as HTMLImageElement | null;
   const modalPosterTitle = document.getElementById('modal-poster-title');
   const modalPosterTag = document.getElementById('modal-poster-tag');
   const closePosterModal = document.getElementById('close-poster-modal');
 
-  let currentUploadedImageBase64 = '';
+  let selectedFileForUpload: File | null = null;
+  let selectedPresetImageUrl = '';
+  let cachedPromotions: PromotionRecord[] = [];
 
   // Password Visibility Toggle
   if (togglePassBtn && adminPassInput) {
@@ -530,67 +546,136 @@ const pageDescription = "Internal staff portal for managing marketing promotions
     });
   }
 
-  // Auto-fill Demo Login Link
-  if (autoFillBtn) {
+  // Auto-fill Username helper
+  if (autoFillBtn && adminUserInput) {
     autoFillBtn.addEventListener('click', () => {
-      document.getElementById('admin-user').value = 'admin';
-      document.getElementById('admin-pass').value = 'gpsmuscat2026';
+      adminUserInput.value = 'gpsadmin';
+      if (adminPassInput) adminPassInput.focus();
     });
   }
 
-  // Check Existing Auth Session
-  function checkAuth() {
-    const isAuth = sessionStorage.getItem(AUTH_KEY) === 'true';
-    if (isAuth) {
-      authSection.classList.add('hidden');
-      dashboardSection.classList.remove('hidden');
-      logoutBtn.classList.remove('hidden');
-      renderPromotions();
-    } else {
-      authSection.classList.remove('hidden');
-      dashboardSection.classList.add('hidden');
-      logoutBtn.classList.add('hidden');
+  // Check Supabase Authentication Session
+  async function checkAuth() {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (session && !error) {
+        authSection?.classList.add('hidden');
+        dashboardSection?.classList.remove('hidden');
+        logoutBtn?.classList.remove('hidden');
+        if (adminUserBadge && adminUserEmail) {
+          adminUserBadge.classList.remove('hidden');
+          adminUserEmail.textContent = session.user.email || 'gpsadmin';
+        }
+        await loadPromotionsFromSupabase();
+      } else {
+        authSection?.classList.remove('hidden');
+        dashboardSection?.classList.add('hidden');
+        logoutBtn?.classList.add('hidden');
+        if (adminUserBadge) adminUserBadge.classList.add('hidden');
+      }
+    } catch (e) {
+      console.warn('Session check error:', e);
     }
   }
 
-  // Handle Login
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const user = document.getElementById('admin-user').value.trim();
-      const pass = document.getElementById('admin-pass').value.trim();
+  // Listen to Auth State changes
+  supabase.auth.onAuthStateChange((_event, session) => {
+    if (session) {
+      authSection?.classList.add('hidden');
+      dashboardSection?.classList.remove('hidden');
+      logoutBtn?.classList.remove('hidden');
+      if (adminUserBadge && adminUserEmail) {
+        adminUserBadge.classList.remove('hidden');
+        adminUserEmail.textContent = session.user.email || 'gpsadmin';
+      }
+      loadPromotionsFromSupabase();
+    } else {
+      authSection?.classList.remove('hidden');
+      dashboardSection?.classList.add('hidden');
+      logoutBtn?.classList.add('hidden');
+      if (adminUserBadge) adminUserBadge.classList.add('hidden');
+    }
+  });
 
-      // Official Admin Credentials
-      if (user === 'admin' && pass === 'gpsmuscat2026') {
-        sessionStorage.setItem(AUTH_KEY, 'true');
+  // Handle Supabase Sign-In
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawUser = adminUserInput?.value.trim() || '';
+      const pass = adminPassInput?.value.trim() || '';
+
+      if (!rawUser || !pass) return;
+
+      // Normalize username: if user inputs 'gpsadmin' or 'admin', append domain
+      let email = rawUser;
+      if (!email.includes('@')) {
+        email = `${email}@gpsmuscat.com`;
+      }
+
+      if (authError) {
         authError.classList.add('hidden');
-        checkAuth();
-      } else {
-        authError.textContent = 'Invalid username or password. Please try again.';
-        authError.classList.remove('hidden');
+        authError.textContent = '';
+      }
+
+      const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verifying credentials...';
+      }
+
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password: pass
+        });
+
+        if (error) {
+          if (authError) {
+            authError.textContent = error.message.includes('Invalid login') 
+              ? 'Invalid username or password. Please try again.'
+              : error.message;
+            authError.classList.remove('hidden');
+          }
+        } else {
+          await checkAuth();
+        }
+      } catch (err: any) {
+        if (authError) {
+          authError.textContent = err.message || 'Authentication failed. Please check network connection.';
+          authError.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Access Management Dashboard';
+        }
       }
     });
   }
 
-  // Handle Logout
+  // Handle Sign-Out
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem(AUTH_KEY);
+    logoutBtn.addEventListener('click', async () => {
+      await supabase.auth.signOut();
       checkAuth();
     });
   }
 
-  // Image Upload File Handler
+  // Handle Image File Selection
   if (promoImageInput) {
     promoImageInput.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
       if (file) {
+        selectedFileForUpload = file;
+        selectedPresetImageUrl = '';
         const reader = new FileReader();
         reader.onload = (event) => {
-          currentUploadedImageBase64 = event.target.result;
-          uploadPreviewImg.src = currentUploadedImageBase64;
-          uploadPrompt.classList.add('hidden');
-          uploadPreviewWrap.classList.remove('hidden');
+          if (uploadPreviewImg && event.target?.result) {
+            uploadPreviewImg.src = event.target.result as string;
+            uploadPrompt?.classList.add('hidden');
+            uploadPreviewWrap?.classList.remove('hidden');
+          }
         };
         reader.readAsDataURL(file);
       }
@@ -600,33 +685,36 @@ const pageDescription = "Internal staff portal for managing marketing promotions
   // Clear / Change Image Handler
   if (clearImageBtn) {
     clearImageBtn.addEventListener('click', () => {
-      currentUploadedImageBase64 = '';
+      selectedFileForUpload = null;
+      selectedPresetImageUrl = '';
       if (promoImageInput) promoImageInput.value = '';
-      uploadPreviewWrap.classList.add('hidden');
-      uploadPrompt.classList.remove('hidden');
+      uploadPreviewWrap?.classList.add('hidden');
+      uploadPrompt?.classList.remove('hidden');
     });
   }
 
-  // Quick Select Stock Poster Samples
+  // Quick Select Stock Poster Presets
   document.querySelectorAll('.sample-poster-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const src = btn.getAttribute('data-sample-src');
       if (src) {
-        currentUploadedImageBase64 = src;
-        uploadPreviewImg.src = src;
-        uploadPrompt.classList.add('hidden');
-        uploadPreviewWrap.classList.remove('hidden');
+        selectedPresetImageUrl = src;
+        selectedFileForUpload = null;
+        if (promoImageInput) promoImageInput.value = '';
+        if (uploadPreviewImg) {
+          uploadPreviewImg.src = src;
+          uploadPrompt?.classList.add('hidden');
+          uploadPreviewWrap?.classList.remove('hidden');
+        }
       }
     });
   });
 
   // Modal Close
-  if (closePosterModal) {
+  if (closePosterModal && posterModal) {
     closePosterModal.addEventListener('click', () => {
       posterModal.classList.add('hidden');
     });
-  }
-  if (posterModal) {
     posterModal.addEventListener('click', (e) => {
       if (e.target === posterModal) {
         posterModal.classList.add('hidden');
@@ -634,40 +722,66 @@ const pageDescription = "Internal staff portal for managing marketing promotions
     });
   }
 
-  // Load Promotions from LocalStorage or Defaults
-  function getPromotions() {
+  // Load Promotions from Supabase Table
+  async function loadPromotionsFromSupabase() {
+    if (!promosListContainer) return;
+    promosListContainer.innerHTML = `
+      <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 animate-pulse">
+        Fetching live posters from Supabase...
+      </div>
+    `;
+
     try {
-      const stored = localStorage.getItem(PROMO_STORAGE_KEY);
-      if (stored) return JSON.parse(stored);
-    } catch (e) {}
-    return initialPromotions;
+      const { data, error } = await supabase
+        .from('promotions')
+        .select('*')
+        .order('active', { ascending: false })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      cachedPromotions = data || [];
+      renderPromotionsList();
+    } catch (e: any) {
+      console.error('Error loading promotions from Supabase:', e);
+      promosListContainer.innerHTML = `
+        <div class="p-6 text-center rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs">
+          Failed to load promotions: ${e.message}. Please verify Supabase connection.
+        </div>
+      `;
+    }
   }
 
-  function savePromotions(promos) {
-    localStorage.setItem(PROMO_STORAGE_KEY, JSON.stringify(promos));
-    renderPromotions();
-  }
+  // Render Promotions in Admin List with 10-live and 15-stored enforcement
+  function renderPromotionsList() {
+    const activeCount = cachedPromotions.filter(p => p.active).length;
+    const storedCount = cachedPromotions.length;
 
-  // Render Promotions in Admin List
-  function renderPromotions() {
-    const promos = getPromotions();
-    const activeOnly = promos.filter(p => p.active);
-    if (statActiveCount) statActiveCount.textContent = activeOnly.length;
-    if (statTotalCount) statTotalCount.textContent = promos.length;
+    if (statActiveCount) statActiveCount.textContent = `${activeCount}`;
+    if (statTotalCount) statTotalCount.textContent = `${storedCount}`;
     if (!promosListContainer) return;
 
     promosListContainer.innerHTML = '';
 
-    if (promos.length === 0) {
+    // Empty state with Seed Button
+    if (cachedPromotions.length === 0) {
       promosListContainer.innerHTML = `
-        <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80">
-          No promotions currently configured. Use the form on the left to publish one.
+        <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 space-y-3">
+          <p>No promotions in your database yet.</p>
+          <button
+            id="seed-catalog-btn"
+            type="button"
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 font-semibold text-xs transition"
+          >
+            <span>📥 Seed Factory 4 Initial Promotions</span>
+          </button>
         </div>
       `;
+
+      document.getElementById('seed-catalog-btn')?.addEventListener('click', seedInitialPromotions);
       return;
     }
 
-    promos.forEach((p) => {
+    cachedPromotions.forEach((p) => {
       const card = document.createElement('div');
       card.className = "flex items-center justify-between p-4 rounded-xl glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/30 transition gap-4";
       card.innerHTML = `
@@ -675,18 +789,18 @@ const pageDescription = "Internal staff portal for managing marketing promotions
           <!-- Thumbnail with Zoom Trigger -->
           <button
             type="button"
-            data-zoom-src="${p.image}"
+            data-zoom-src="${p.image_url}"
             data-zoom-title="${p.title}"
             data-zoom-tag="${p.tag || ''}"
-            class="zoom-trigger relative group/thumb flex-shrink-0 cursor-zoom-in"
+            class="zoom-trigger relative shrink-0 cursor-zoom-in"
             title="Click to view full poster"
           >
             <img
-              src="${p.image}"
+              src="${p.image_url}"
               alt="${p.title}"
-              class="h-16 w-11 object-cover rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm transition group-hover/thumb:scale-105"
+              class="h-16 w-11 object-cover rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm transition hover:scale-105"
             />
-            <span class="absolute inset-0 bg-cyan-950/40 rounded-lg opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center text-white text-[10px] transition">
+            <span class="absolute inset-0 bg-cyan-950/40 rounded-lg opacity-0 hover:opacity-100 flex items-center justify-center text-white text-[10px] transition">
               🔍
             </span>
           </button>
@@ -697,10 +811,10 @@ const pageDescription = "Internal staff portal for managing marketing promotions
                 ${p.tag || 'Offer'}
               </span>
               <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
-                ${p.validTill ? '⏳ ' + p.validTill : 'Active'}
+                ${p.valid_till ? '⏳ ' + p.valid_till : 'Active'}
               </span>
               <span class="text-[10px] text-cyan-700 dark:text-cyan-400/80 font-mono hidden sm:inline">
-                ${p.ctaCategory || ''}
+                ${p.cta_category || ''}
               </span>
             </div>
             <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate mt-1">${p.title}</h4>
@@ -709,11 +823,12 @@ const pageDescription = "Internal staff portal for managing marketing promotions
         </div>
 
         <!-- Controls: Status Toggle Switch & Delete -->
-        <div class="flex items-center gap-3 flex-shrink-0">
+        <div class="flex items-center gap-3 shrink-0">
           <button
             type="button"
             data-toggle-id="${p.id}"
             class="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold transition flex items-center gap-1.5 ${p.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'}"
+            title="${p.active ? 'Click to hide from website' : 'Click to display live on website'}"
           >
             <span class="w-1.5 h-1.5 rounded-full ${p.active ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
             ${p.active ? 'Active' : 'Hidden'}
@@ -722,8 +837,9 @@ const pageDescription = "Internal staff portal for managing marketing promotions
           <button
             type="button"
             data-delete-id="${p.id}"
-            class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition"
-            title="Delete Promotion"
+            data-image-url="${p.image_url}"
+            class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition cursor-pointer"
+            title="Delete Poster (frees 1 storage slot)"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -734,107 +850,218 @@ const pageDescription = "Internal staff portal for managing marketing promotions
       promosListContainer.appendChild(card);
     });
 
-    // Attach Zoom Preview Listeners
-    promosListContainer.querySelectorAll('.zoom-trigger').forEach(btn => {
+    // Zoom Lightbox Handlers
+    promosListContainer.querySelectorAll('.zoom-trigger').forEach((btn) => {
       btn.addEventListener('click', () => {
         const src = btn.getAttribute('data-zoom-src');
         const title = btn.getAttribute('data-zoom-title');
         const tag = btn.getAttribute('data-zoom-tag');
         if (modalPosterImg && posterModal) {
-          modalPosterImg.src = src;
-          modalPosterTitle.textContent = title;
-          modalPosterTag.textContent = tag;
+          modalPosterImg.src = src || '';
+          if (modalPosterTitle) modalPosterTitle.textContent = title || '';
+          if (modalPosterTag) modalPosterTag.textContent = tag || '';
           posterModal.classList.remove('hidden');
         }
       });
     });
 
-    // Attach Toggle & Delete Listeners
-    promosListContainer.querySelectorAll('[data-toggle-id]').forEach(btn => {
-      btn.addEventListener('click', () => {
+    // Active Toggle Handlers (Enforces 10-live cap)
+    promosListContainer.querySelectorAll('[data-toggle-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-toggle-id');
-        const list = getPromotions();
-        const item = list.find(x => x.id === id);
-        if (item) {
-          item.active = !item.active;
-          savePromotions(list);
+        const item = cachedPromotions.find(x => x.id === id);
+        if (!item) return;
+
+        // If currently inactive and user wants to activate, check 10-live limit
+        const activeCount = cachedPromotions.filter(p => p.active).length;
+        if (!item.active && activeCount >= MAX_LIVE_PROMOTIONS) {
+          alert(`Live display limit reached (${activeCount}/${MAX_LIVE_PROMOTIONS} active).\n\nPlease deactivate or delete an active poster first before setting this one live.`);
+          return;
+        }
+
+        const newStatus = !item.active;
+        (btn as HTMLButtonElement).disabled = true;
+
+        try {
+          const { error } = await supabase
+            .from('promotions')
+            .update({ active: newStatus })
+            .eq('id', id);
+
+          if (error) throw error;
+          item.active = newStatus;
+          renderPromotionsList();
+        } catch (err: any) {
+          alert('Could not update status: ' + err.message);
+        } finally {
+          (btn as HTMLButtonElement).disabled = false;
         }
       });
     });
 
-    promosListContainer.querySelectorAll('[data-delete-id]').forEach(btn => {
-      btn.addEventListener('click', () => {
+    // Delete Handlers (Frees 1 storage slot in 15 max)
+    promosListContainer.querySelectorAll('[data-delete-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-delete-id');
-        if (confirm('Are you sure you want to remove this promotion?')) {
-          let list = getPromotions();
-          list = list.filter(x => x.id !== id);
-          savePromotions(list);
+        const imageUrl = btn.getAttribute('data-image-url') || '';
+        if (!id) return;
+
+        if (confirm('Are you sure you want to delete this poster permanently?\n\nThis will remove it from the website and free up 1 slot in your 15-poster storage.')) {
+          (btn as HTMLButtonElement).disabled = true;
+          try {
+            const { error } = await supabase
+              .from('promotions')
+              .delete()
+              .eq('id', id);
+
+            if (error) throw error;
+            if (imageUrl) await deletePosterImage(imageUrl);
+
+            cachedPromotions = cachedPromotions.filter(x => x.id !== id);
+            renderPromotionsList();
+          } catch (err: any) {
+            alert('Could not delete promotion: ' + err.message);
+          } finally {
+            (btn as HTMLButtonElement).disabled = false;
+          }
         }
       });
     });
   }
 
-  // Handle New Promo Form Submission
-  if (newPromoForm) {
-    newPromoForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const title = document.getElementById('promo-title').value.trim();
-      const category = document.getElementById('promo-category').value;
-      const tag = document.getElementById('promo-tag').value.trim() || 'Special Offer';
-      const validity = document.getElementById('promo-validity').value.trim() || 'Until Stock Last';
-      const product = document.getElementById('promo-product').value.trim() || title;
-      const desc = document.getElementById('promo-desc').value.trim();
+  // Seed Initial 4 Sample Promotions
+  async function seedInitialPromotions() {
+    if (!confirm('Import the 4 default catalog promotions to your Supabase database?')) return;
+    try {
+      const itemsToSeed = initialPromotions.map((p, idx) => ({
+        title: p.title,
+        description: p.description,
+        image_url: p.image,
+        tag: p.tag || 'Offer',
+        valid_till: p.validTill || 'Active',
+        cta_category: p.ctaCategory || 'Gate Automation',
+        active: p.active,
+        sort_order: idx
+      }));
 
-      if (!currentUploadedImageBase64) {
-        promoFormStatus.textContent = 'Please choose or upload a poster image for the promotion.';
-        promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-        promoFormStatus.classList.remove('hidden');
+      const { error } = await supabase.from('promotions').insert(itemsToSeed);
+      if (error) throw error;
+      await loadPromotionsFromSupabase();
+    } catch (e: any) {
+      alert('Error seeding promotions: ' + e.message);
+    }
+  }
+
+  // Handle New Promo Form Submission (Enforces 15-stored cap)
+  if (newPromoForm) {
+    newPromoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Check 15-stored hard cap
+      if (cachedPromotions.length >= MAX_STORED_PROMOTIONS) {
+        if (promoFormStatus) {
+          promoFormStatus.textContent = `Storage limit reached (${cachedPromotions.length}/${MAX_STORED_PROMOTIONS} posters). Please delete an existing poster from the list before uploading a new one.`;
+          promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20';
+          promoFormStatus.classList.remove('hidden');
+        }
         return;
       }
 
-      const newPromo = {
-        id: 'promo_' + Date.now(),
-        product,
-        title,
-        tag,
-        description: desc,
-        validTill: validity,
-        ctaText: 'Inquire Now',
-        ctaCategory: category,
-        image: currentUploadedImageBase64,
-        active: true
-      };
+      const titleInput = document.getElementById('promo-title') as HTMLInputElement | null;
+      const categoryInput = document.getElementById('promo-category') as HTMLSelectElement | null;
+      const tagInput = document.getElementById('promo-tag') as HTMLInputElement | null;
+      const validityInput = document.getElementById('promo-validity') as HTMLInputElement | null;
+      const descInput = document.getElementById('promo-desc') as HTMLTextAreaElement | null;
 
-      const promos = getPromotions();
-      promos.unshift(newPromo);
-      savePromotions(promos);
+      const title = titleInput?.value.trim() || '';
+      const category = categoryInput?.value || 'Gate Automation';
+      const tag = tagInput?.value.trim() || 'Special Offer';
+      const validity = validityInput?.value.trim() || 'Until Stock Last';
+      const desc = descInput?.value.trim() || '';
 
-      // Reset Form
-      newPromoForm.reset();
-      currentUploadedImageBase64 = '';
-      uploadPreviewWrap.classList.add('hidden');
-      uploadPrompt.classList.remove('hidden');
+      if (!selectedFileForUpload && !selectedPresetImageUrl) {
+        if (promoFormStatus) {
+          promoFormStatus.textContent = 'Please choose a poster file or select one of the stock samples.';
+          promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20';
+          promoFormStatus.classList.remove('hidden');
+        }
+        return;
+      }
 
-      promoFormStatus.textContent = '✓ Promotion published successfully! It is now live.';
-      promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
-      promoFormStatus.classList.remove('hidden');
+      const submitBtn = newPromoForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Uploading & Saving to Supabase...';
+      }
 
-      setTimeout(() => {
-        promoFormStatus.classList.add('hidden');
-      }, 4000);
-    });
-  }
+      try {
+        let finalImageUrl = selectedPresetImageUrl;
 
-  // Reset to Defaults
-  if (resetDefaultsBtn) {
-    resetDefaultsBtn.addEventListener('click', () => {
-      if (confirm('Reset promotions to initial factory default list?')) {
-        savePromotions(initialPromotions);
+        // Upload file to Supabase Storage if local file was chosen
+        if (selectedFileForUpload) {
+          finalImageUrl = await uploadPosterImage(selectedFileForUpload);
+        }
+
+        // Active status: active if under 10 live limit, otherwise saved as hidden
+        const activeCount = cachedPromotions.filter(p => p.active).length;
+        const willBeActive = activeCount < MAX_LIVE_PROMOTIONS;
+
+        const { data, error } = await supabase.from('promotions').insert({
+          title,
+          description: desc,
+          image_url: finalImageUrl,
+          tag,
+          valid_till: validity,
+          cta_category: category,
+          active: willBeActive,
+          sort_order: cachedPromotions.length
+        }).select().single();
+
+        if (error) throw error;
+
+        // Reset form
+        newPromoForm.reset();
+        selectedFileForUpload = null;
+        selectedPresetImageUrl = '';
+        uploadPreviewWrap?.classList.add('hidden');
+        uploadPrompt?.classList.remove('hidden');
+
+        if (promoFormStatus) {
+          promoFormStatus.textContent = willBeActive
+            ? '✓ Poster uploaded and published live on website!'
+            : '✓ Poster uploaded and saved as Hidden (live cap 10/10 is full).';
+          promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
+          promoFormStatus.classList.remove('hidden');
+        }
+
+        await loadPromotionsFromSupabase();
+
+        setTimeout(() => {
+          promoFormStatus?.classList.add('hidden');
+        }, 4500);
+
+      } catch (err: any) {
+        if (promoFormStatus) {
+          promoFormStatus.textContent = 'Failed to save promotion: ' + err.message;
+          promoFormStatus.className = 'p-3 rounded-xl text-xs font-medium text-center bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20';
+          promoFormStatus.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Publish Promotion Instantly';
+        }
       }
     });
   }
 
-  // Initialize
+  // Reset to Defaults (Restores Initial 4)
+  if (resetDefaultsBtn) {
+    resetDefaultsBtn.addEventListener('click', () => {
+      seedInitialPromotions();
+    });
+  }
+
+  // Initialize Auth
   checkAuth();
 </script>

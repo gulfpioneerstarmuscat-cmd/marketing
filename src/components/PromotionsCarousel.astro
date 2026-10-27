@@ -180,16 +180,18 @@ const activePromos = initialPromotions.filter(p => p.active);
 
 </section>
 
-<script is:inline define:vars={{ initialPromotions }}>
-  // Client-Side Carousel Controls & Live Sync with LocalStorage
-  (function() {
+<script>
+  import { getActivePromotions, type PromotionRecord } from '../lib/supabase';
+
+  // Client-Side Carousel Controls & Live Supabase Sync
+  function initPromotionsCarousel() {
     const carousel = document.getElementById('promo-carousel-container');
     const prevBtn = document.getElementById('promo-prev-btn');
     const nextBtn = document.getElementById('promo-next-btn');
 
     // Lightbox Elements
     const lightbox = document.getElementById('promo-lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxDesc = document.getElementById('lightbox-desc');
     const closeLightbox = document.getElementById('close-lightbox');
@@ -197,14 +199,14 @@ const activePromos = initialPromotions.filter(p => p.active);
 
     // Arrow Navigation
     if (prevBtn && carousel) {
-      prevBtn.addEventListener('click', () => {
+      prevBtn.onclick = () => {
         carousel.scrollBy({ left: -310, behavior: 'smooth' });
-      });
+      };
     }
     if (nextBtn && carousel) {
-      nextBtn.addEventListener('click', () => {
+      nextBtn.onclick = () => {
         carousel.scrollBy({ left: 310, behavior: 'smooth' });
-      });
+      };
     }
 
     // Attach Lightbox Listeners
@@ -216,9 +218,9 @@ const activePromos = initialPromotions.filter(p => p.active);
           const title = btn.getAttribute('data-lightbox-title');
           const desc = btn.getAttribute('data-lightbox-desc');
           if (lightbox && lightboxImg) {
-            lightboxImg.src = src;
-            lightboxTitle.textContent = title;
-            lightboxDesc.textContent = desc;
+            lightboxImg.src = src || '';
+            if (lightboxTitle) lightboxTitle.textContent = title || '';
+            if (lightboxDesc) lightboxDesc.textContent = desc || '';
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
           }
@@ -227,49 +229,52 @@ const activePromos = initialPromotions.filter(p => p.active);
     }
 
     if (closeLightbox && lightbox) {
-      closeLightbox.addEventListener('click', () => {
+      closeLightbox.onclick = () => {
         lightbox.classList.add('hidden');
         lightbox.classList.remove('flex');
-      });
-      lightbox.addEventListener('click', (e) => {
+      };
+      lightbox.onclick = (e) => {
         if (e.target === lightbox) {
           lightbox.classList.add('hidden');
           lightbox.classList.remove('flex');
         }
-      });
+      };
     }
 
     if (lightboxInquireBtn && lightbox) {
-      lightboxInquireBtn.addEventListener('click', () => {
+      lightboxInquireBtn.onclick = () => {
         lightbox.classList.add('hidden');
         lightbox.classList.remove('flex');
-      });
+      };
     }
 
-    // Client-side Live Sync Check with LocalStorage
-    try {
-      const stored = localStorage.getItem('gpsmuscat_live_promos');
-      if (stored) {
-        const livePromos = JSON.parse(stored);
-        const activeOnly = livePromos.filter(p => p.active);
-        
-        if (activeOnly.length > 0 && carousel) {
-          carousel.innerHTML = activeOnly.map(promo => `
+    function escapeHtml(str: string): string {
+      const p = document.createElement('p');
+      p.textContent = str || '';
+      return p.innerHTML;
+    }
+
+    // Live Sync with Supabase (up to 10 active posters)
+    async function syncLivePromotions() {
+      try {
+        const livePromos = await getActivePromotions();
+        if (livePromos && livePromos.length > 0 && carousel) {
+          carousel.innerHTML = livePromos.map((promo: PromotionRecord) => `
             <article class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
               <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
-                <img src="${promo.image}" alt="${promo.title}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                 <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${promo.tag || 'Offer'}</span>
-                  <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-slate-200 border border-white/10">⏳ ${promo.validTill || 'Active'}</span>
+                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${escapeHtml(promo.tag || 'Offer')}</span>
+                  <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-slate-200 border border-white/10">⏳ ${escapeHtml(promo.valid_till || 'Active')}</span>
                 </div>
-                <button type="button" data-lightbox-src="${promo.image}" data-lightbox-title="${promo.title}" data-lightbox-tag="${promo.tag}" data-lightbox-desc="${promo.description}" class="promo-zoom-btn absolute bottom-24 right-3.5 w-9 h-9 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer" title="View full poster" aria-label="View Full Poster">
+                <button type="button" data-lightbox-src="${escapeHtml(promo.image_url)}" data-lightbox-title="${escapeHtml(promo.title)}" data-lightbox-tag="${escapeHtml(promo.tag || '')}" data-lightbox-desc="${escapeHtml(promo.description || '')}" class="promo-zoom-btn absolute bottom-24 right-3.5 w-9 h-9 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer" title="View full poster" aria-label="View Full Poster">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
                 </button>
                 <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 space-y-2 text-left">
-                  <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">${promo.ctaCategory}</span>
-                  <h3 class="text-base font-bold text-white leading-snug line-clamp-2">${promo.title}</h3>
-                  <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${promo.description}</p>
+                  <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">${escapeHtml(promo.cta_category || 'Equipment Offer')}</span>
+                  <h3 class="text-base font-bold text-white leading-snug line-clamp-2">${escapeHtml(promo.title)}</h3>
+                  <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${escapeHtml(promo.description)}</p>
                   <div class="pt-2">
                     <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
                       <span>Inquire for Branch Price</span>
@@ -280,10 +285,23 @@ const activePromos = initialPromotions.filter(p => p.active);
               </div>
             </article>
           `).join('');
+
+          // Re-attach handlers to new elements
+          attachLightboxHandlers();
         }
+      } catch (err) {
+        console.warn('Live promotions fetch skipped, using pre-rendered fallback:', err);
       }
-    } catch (e) {}
+    }
 
     attachLightboxHandlers();
-  })();
+    syncLivePromotions();
+  }
+
+  // Initialize on load and on Astro view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPromotionsCarousel);
+  } else {
+    initPromotionsCarousel();
+  }
 </script>
