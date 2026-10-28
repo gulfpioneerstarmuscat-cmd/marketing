@@ -59,6 +59,14 @@ export const partnerBrands: Brand[] = [
     badge: "Made In France"
   },
   {
+    id: "smatec",
+    name: "Smatec",
+    logo: "/assets/brands/smatec.svg",
+    origin: "Our Brand",
+    specialty: "Smart Access Control System",
+    badge: "Our Brand"
+  },
+  {
     id: "hikvision",
     name: "Hikvision",
     logo: "/assets/brands/HIKVISION.svg",
@@ -78,8 +86,8 @@ export const partnerBrands: Brand[] = [
     id: "aale",
     name: "AALE",
     logo: "/assets/brands/9.svg",
-    origin: "Made By Us",
+    origin: "Our Brand",
     specialty: "Custom Electronic Gate Automation Accessories & Hardware",
-    badge: "Made By Us"
+    badge: "Our Brand"
   }
 ];
