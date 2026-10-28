@@ -292,15 +292,32 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
           </button>
           -->
 
-          <!-- WhatsApp Direct Option -->
-          <button
-            type="button"
-            id="quote-whatsapp-direct-btn"
-            class="w-full h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
-          >
-            <span>Sent Quotation Through</span>
-            <img src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-5 h-5 object-contain" />
-          </button>
+          <!-- Action Buttons: Clear (20%) + WhatsApp Direct (80%) -->
+          <div class="flex items-center gap-2">
+            <!-- Clear Form Button (20% width) -->
+            <button
+              type="button"
+              id="quote-clear-btn"
+              title="Clear all form fields"
+              class="w-1/5 min-w-[70px] h-11 flex items-center justify-center gap-1.5 px-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-600 dark:text-rose-400 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>Clear</span>
+            </button>
+
+            <!-- WhatsApp Direct Option (80% width) -->
+            <button
+              type="button"
+              id="quote-whatsapp-direct-btn"
+              class="flex-1 h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
+            >
+              <span id="quote-wa-btn-spinner" class="hidden w-4 h-4 border-2 border-emerald-600 dark:border-emerald-400 border-t-transparent rounded-full animate-spin"></span>
+              <span id="quote-wa-btn-text">Sent Quotation Through</span>
+              <img id="quote-wa-btn-logo" src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-5 h-5 object-contain" />
+            </button>
+          </div>
 
           <p class="text-center text-[11px] text-slate-400">
             Official GPS Muscat Supplier • Direct Counter Pricing
@@ -366,6 +383,10 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
     const successCloseBtn = document.getElementById('quote-success-close-btn');
     const successWaBtn = document.getElementById('quote-success-wa-btn');
     const directWaBtn = document.getElementById('quote-whatsapp-direct-btn');
+    const clearBtn = document.getElementById('quote-clear-btn');
+    const waBtnSpinner = document.getElementById('quote-wa-btn-spinner');
+    const waBtnText = document.getElementById('quote-wa-btn-text');
+    const waBtnLogo = document.getElementById('quote-wa-btn-logo');
     const toggleExtraBtn = document.getElementById('quote-toggle-extra-contact');
     const extraContactFields = document.getElementById('quote-extra-contact-fields');
     const extraContactIcon = document.getElementById('extra-contact-icon');
@@ -612,6 +633,31 @@ _Sent from gpsmuscat.com_`;
       form.addEventListener('change', saveQuoteDraft);
     }
 
+    // Clear Form Button Click (Resets fields, draft, and collapses extra contacts)
+    if (clearBtn && form) {
+      clearBtn.addEventListener('click', () => {
+        form.reset();
+        clearQuoteDraft();
+        clearAlert();
+
+        if (extraContactFields && !extraContactFields.classList.contains('hidden')) {
+          extraContactFields.classList.add('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '+';
+        }
+
+        const alKhoudhRadio = document.querySelector('input[name="preferred_branch"][value="Al Khoudh Branch"]');
+        if (alKhoudhRadio) {
+          alKhoudhRadio.checked = true;
+          alKhoudhRadio.dispatchEvent(new Event('change'));
+        }
+
+        showAlert('All fields have been cleared.', 'success');
+        setTimeout(() => {
+          clearAlert();
+        }, 2000);
+      });
+    }
+
     // Helper to generate reliable WhatsApp URL (Direct native app on mobile, WhatsApp Web on desktop)
     function getWhatsAppUrl(phone, text = '') {
       const cleanPhone = phone.replace(/[^0-9]/g, '');
@@ -633,6 +679,20 @@ _Sent from gpsmuscat.com_`;
           showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
           return;
         }
+
+        // Show instant visual feedback: "Redirecting to WhatsApp..."
+        if (waBtnSpinner) waBtnSpinner.classList.remove('hidden');
+        if (waBtnText) waBtnText.textContent = 'Redirecting to WhatsApp...';
+        if (waBtnLogo) waBtnLogo.classList.add('hidden');
+        directWaBtn.classList.add('pointer-events-none', 'opacity-85');
+
+        // Restore button state after 3.5s so returning to the tab resets cleanly
+        setTimeout(() => {
+          if (waBtnSpinner) waBtnSpinner.classList.add('hidden');
+          if (waBtnText) waBtnText.textContent = 'Sent Quotation Through';
+          if (waBtnLogo) waBtnLogo.classList.remove('hidden');
+          directWaBtn.classList.remove('pointer-events-none', 'opacity-85');
+        }, 3500);
 
         // Clear stored draft upon successful quotation submission
         clearQuoteDraft();
