@@ -1,0 +1,368 @@
+---
+// src/components/PromotionsCarousel.astro - 9:16 Story Promotions Carousel (100% Supabase Powered)
+import { getActivePromotions, type PromotionRecord } from '../lib/supabase';
+
+// Fetch live active promotions directly from Supabase (SSG pre-render)
+let activePromos: PromotionRecord[] = [];
+try {
+  activePromos = await getActivePromotions();
+} catch (e) {
+  activePromos = [];
+}
+---
+
+<section id="promotions-section" class="pt-10 pb-14 sm:pt-12 sm:pb-16 relative overflow-hidden bg-slate-100/40 dark:bg-slate-900/30 border-t border-slate-200/70 dark:border-slate-800/70 transition-colors">
+  
+  <!-- Subtle Ambient Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-75 bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    
+    <!-- Section Header with Controls -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-6">
+      <div class="max-w-2xl">
+        <!-- Eyebrow Pill with Exact Scroll Margin -->
+        <div id="promotions" class="scroll-mt-21 sm:scroll-mt-24 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+          <span>Limited-Time Equipment Deals</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Active Promotions & <span class="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">Special Bundles</span>
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed">
+          Explore our latest motor kits, power accessories, and biometric hardware offers. Available for direct walk-in pickup at Al Khoudh & Ghala.
+        </p>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <div id="promo-nav-arrows" class={`flex items-center gap-2 self-start md:self-end ${activePromos.length === 0 ? 'hidden' : ''}`}>
+        <button
+          id="promo-prev-btn"
+          type="button"
+          aria-label="Previous Promotion"
+          class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/40 transition active:scale-95 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button
+          id="promo-next-btn"
+          type="button"
+          aria-label="Next Promotion"
+          class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/40 transition active:scale-95 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 9:16 Story Carousel Scroll Container -->
+    <div
+      id="promo-carousel-container"
+      class="flex gap-5 sm:gap-6 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x snap-mandatory no-scrollbar"
+      style="scrollbar-width: none; -ms-overflow-style: none;"
+    >
+      {activePromos.length > 0 ? (
+        activePromos.map((promo, idx) => (
+          <article
+            class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10"
+          >
+            <!-- 9:16 Vertical Poster Container -->
+            <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
+              <img
+                src={promo.image_url}
+                alt={promo.title}
+                loading={idx < 3 ? "eager" : "lazy"}
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              
+              <!-- Gradient Overlay for Crisp Text Readability -->
+              <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+
+              <!-- Top Floating Badges -->
+              <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">
+                  {promo.tag || 'Offer'}
+                </span>
+                <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-slate-200 border border-white/10">
+                  ⏳ {promo.valid_till || 'Active'}
+                </span>
+              </div>
+
+              <!-- Zoom Lightbox Trigger Icon (Top Right on Hover) -->
+              <button
+                type="button"
+                data-lightbox-src={promo.image_url}
+                data-lightbox-title={promo.title}
+                data-lightbox-tag={promo.tag}
+                data-lightbox-desc={promo.description}
+                class="promo-zoom-btn absolute bottom-24 right-3.5 w-9 h-9 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer"
+                title="View full poster"
+                aria-label="View Full Poster"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                </svg>
+              </button>
+
+              <!-- Bottom Content Inside Poster -->
+              <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 space-y-2 text-left">
+                <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">
+                  {promo.cta_category || 'Equipment Offer'}
+                </span>
+                <h3 class="text-base font-bold text-white leading-snug line-clamp-2 min-h-11">
+                  {promo.title}
+                </h3>
+                <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-8">
+                  {promo.description}
+                </p>
+
+                <!-- Inquire CTA Button -->
+                <div class="pt-2">
+                  <a
+                    href="#contact"
+                    class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95"
+                  >
+                    <span>Inquire for Branch Price</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </article>
+        ))
+      ) : (
+        <div id="promo-empty-state" class="w-full p-8 sm:p-12 text-center rounded-2xl glass-card border border-slate-200/80 dark:border-slate-800/80 my-2">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1">New Equipment Deals Arriving Soon</h3>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-4">
+            Visit our branches in Al Khoudh & Ghala or contact our sales engineers directly for current stock pricing and custom automation bundles.
+          </p>
+          <a
+            href="#contact"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-semibold transition"
+          >
+            <span>Contact Sales Team</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+        </div>
+      )}
+    </div>
+
+    <!-- Live Sync Notice & Staff Tip -->
+    <div class="mt-6 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>Stocked in Muscat Warehouses • Inquire for Technical Sizing</span>
+      </div>
+      <p class="hidden sm:block text-[11px] font-mono">
+        Swipe or use arrows to view all offers
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Fullscreen 9:16 Poster Lightbox Modal -->
+  <div id="promo-lightbox" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md items-center justify-center p-4">
+    <div class="relative max-w-sm w-full glass-card rounded-2xl overflow-hidden p-3 border border-slate-700/80 shadow-2xl flex flex-col items-center">
+      <button
+        id="close-lightbox"
+        type="button"
+        class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-slate-800 transition"
+        aria-label="Close Lightbox"
+      >
+        ✕
+      </button>
+      
+      <img id="lightbox-img" src="" alt="Poster Full View" class="w-full h-auto max-h-[75vh] object-contain rounded-xl" />
+      
+      <div class="p-3 w-full text-center space-y-2">
+        <h4 id="lightbox-title" class="text-sm font-bold text-white"></h4>
+        <p id="lightbox-desc" class="text-xs text-slate-300"></p>
+        <button
+          type="button"
+          id="lightbox-inquire-btn"
+          data-open-quote-modal
+          class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs shadow-lg mt-2 cursor-pointer transition-all active:scale-95"
+        >
+          <span>Get Quote for this Promotion</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  import { getActivePromotions, type PromotionRecord } from '../lib/supabase';
+
+  // Client-Side Carousel Controls & Live Supabase Sync
+  function initPromotionsCarousel() {
+    const carousel = document.getElementById('promo-carousel-container');
+    const prevBtn = document.getElementById('promo-prev-btn');
+    const nextBtn = document.getElementById('promo-next-btn');
+
+    // Lightbox Elements
+    const lightbox = document.getElementById('promo-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const closeLightbox = document.getElementById('close-lightbox');
+    const lightboxInquireBtn = document.getElementById('lightbox-inquire-btn');
+
+    // Arrow Navigation
+    if (prevBtn && carousel) {
+      prevBtn.onclick = () => {
+        carousel.scrollBy({ left: -310, behavior: 'smooth' });
+      };
+    }
+    if (nextBtn && carousel) {
+      nextBtn.onclick = () => {
+        carousel.scrollBy({ left: 310, behavior: 'smooth' });
+      };
+    }
+
+    // Attach Lightbox Listeners
+    function attachLightboxHandlers() {
+      document.querySelectorAll('.promo-zoom-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const src = btn.getAttribute('data-lightbox-src');
+          const title = btn.getAttribute('data-lightbox-title');
+          const desc = btn.getAttribute('data-lightbox-desc');
+          if (lightbox && lightboxImg) {
+            lightboxImg.src = src || '';
+            if (lightboxTitle) lightboxTitle.textContent = title || '';
+            if (lightboxDesc) lightboxDesc.textContent = desc || '';
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+          }
+        });
+      });
+    }
+
+    if (closeLightbox && lightbox) {
+      closeLightbox.onclick = () => {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+      };
+      lightbox.onclick = (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+        }
+      };
+    }
+
+    if (lightboxInquireBtn && lightbox) {
+      lightboxInquireBtn.onclick = () => {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+      };
+    }
+
+    function escapeHtml(str: string): string {
+      const p = document.createElement('p');
+      p.textContent = str || '';
+      return p.innerHTML;
+    }
+
+    // Live Sync with Supabase (up to 10 active posters)
+    async function syncLivePromotions() {
+      try {
+        const livePromos = await getActivePromotions();
+        const navArrows = document.getElementById('promo-nav-arrows');
+
+        if (livePromos && livePromos.length > 0 && carousel) {
+          if (navArrows) navArrows.classList.remove('hidden');
+          const newHtml = livePromos.map((promo: PromotionRecord) => `
+            <article class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
+              <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
+                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)}" loading="eager" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
+                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${escapeHtml(promo.tag || 'Offer')}</span>
+                  <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-slate-200 border border-white/10">⏳ ${escapeHtml(promo.valid_till || 'Active')}</span>
+                </div>
+                <button type="button" data-lightbox-src="${escapeHtml(promo.image_url)}" data-lightbox-title="${escapeHtml(promo.title)}" data-lightbox-tag="${escapeHtml(promo.tag || '')}" data-lightbox-desc="${escapeHtml(promo.description || '')}" class="promo-zoom-btn absolute bottom-24 right-3.5 w-9 h-9 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer" title="View full poster" aria-label="View Full Poster">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
+                </button>
+                <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 space-y-2 text-left">
+                  <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">${escapeHtml(promo.cta_category || 'Equipment Offer')}</span>
+                  <h3 class="text-base font-bold text-white leading-snug line-clamp-2 min-h-11">${escapeHtml(promo.title)}</h3>
+                  <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-8">${escapeHtml(promo.description)}</p>
+                  <div class="pt-2">
+                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
+                      <span>Inquire for Branch Price</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `).join('');
+
+          // Only update DOM if content actually changed to avoid tearing loaded images
+          if (carousel.innerHTML !== newHtml) {
+            carousel.innerHTML = newHtml;
+          }
+
+          // Re-attach handlers to new elements
+          attachLightboxHandlers();
+        } else if (carousel && livePromos && livePromos.length === 0) {
+          if (navArrows) navArrows.classList.add('hidden');
+          carousel.innerHTML = `
+            <div id="promo-empty-state" class="w-full p-8 sm:p-12 text-center rounded-2xl glass-card border border-slate-200/80 dark:border-slate-800/80 my-2">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1">New Equipment Deals Arriving Soon</h3>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-4">
+                Visit our branches in Al Khoudh & Ghala or contact our sales engineers directly for current stock pricing and custom automation bundles.
+              </p>
+              <a
+                href="#contact"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-semibold transition"
+              >
+                <span>Contact Sales Team</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </a>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.warn('Live promotions fetch skipped:', err);
+      }
+    }
+
+    attachLightboxHandlers();
+    syncLivePromotions();
+  }
+
+  // Initialize on load and on Astro view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPromotionsCarousel);
+  } else {
+    initPromotionsCarousel();
+  }
+</script>

@@ -1,0 +1,708 @@
+---
+// src/components/QuoteModal.astro - Clean, Accessible Quotation Modal for GPS Muscat
+// Designed for ease of use across all age groups (large legible text, simple flow, zero clutter)
+// Supports Web3Forms email submission + 1-Click pre-formatted WhatsApp quote.
+
+const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
+---
+
+<!-- Modal Root Overlay -->
+<div
+  id="quote-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="quote-modal-title"
+>
+  <!-- Backdrop Blur Overlay -->
+  <div
+    id="quote-modal-backdrop"
+    class="fixed inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Modal Dialog Container (Sleek, Comfortable Width & Large Typography) -->
+  <div
+    id="quote-modal-content"
+    class="relative w-full max-w-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden z-10 transition-all duration-300 transform scale-95 opacity-0 my-auto"
+  >
+    <!-- Modal Header -->
+    <div class="px-5 sm:px-8 pt-5 pb-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
+      <div>
+        <h2 id="quote-modal-title" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+          <span>Quick Quote</span>
+          <span class="text-xs font-normal text-slate-400 font-sans">(طلب تسعيرة)</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+          Fill in a few details for immediate counter pricing.
+        </p>
+      </div>
+
+      <!-- Prominent, Easy-to-Tap Close Button -->
+      <button
+        id="quote-modal-close"
+        type="button"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors cursor-pointer text-base sm:text-lg shrink-0"
+        aria-label="Close dialog"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Modal Form Body -->
+    <div class="max-h-[82vh] overflow-y-auto px-5 sm:px-8 py-4 sm:py-5 custom-scrollbar">
+      
+      <!-- Submission Alert Box -->
+      <div id="quote-form-alert" class="hidden mb-3 p-3 rounded-xl text-xs sm:text-sm font-medium" role="alert"></div>
+
+      <!-- Main Clean Form -->
+      <form id="quote-form" class="space-y-3 sm:space-y-3.5 text-left" novalidate>
+        <!-- Web3Forms Hidden Metadata -->
+        <input type="hidden" name="access_key" value={web3FormsKey} />
+        <input type="hidden" name="subject" value="New Equipment Quote Request - GPS Muscat" />
+        <input type="hidden" name="from_name" value="GPS Muscat Quick Quote" />
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off" />
+
+        <!-- 1. Full Name (Single Clean Field) -->
+        <div>
+          <label for="quote-name" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+            Your Name <span class="text-rose-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="quote-name"
+            name="full_name"
+            required
+            placeholder="e.g. Salim Al Harthy"
+            class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+
+        <!-- 2. Phone Number (Calls & WhatsApp) -->
+        <div>
+          <label for="quote-phone" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+            Phone Number (Calls & WhatsApp) <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative flex items-center">
+            <span class="absolute left-3.5 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 pointer-events-none select-none">
+              🇴🇲 +968
+            </span>
+            <input
+              type="tel"
+              id="quote-phone"
+              name="phone"
+              required
+              placeholder="9123 4567"
+              class="w-full h-11 pl-22 pr-3.5 text-xs sm:text-sm font-medium rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+          </div>
+        </div>
+
+        <!-- Optional Extra Contact Details (Simple Toggle to avoid clutter) -->
+        <div>
+          <button
+            type="button"
+            id="quote-toggle-extra-contact"
+            class="text-[11px] sm:text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
+          >
+            <span id="extra-contact-icon">+</span>
+            <span>Add alternative WhatsApp or Email (Optional)</span>
+          </button>
+          
+          <div id="quote-extra-contact-fields" class="hidden mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+            <div>
+              <label for="quote-whatsapp" class="block text-[11px] text-slate-500 dark:text-slate-400 mb-0.5">
+                Alternative WhatsApp
+              </label>
+              <input
+                type="tel"
+                id="quote-whatsapp"
+                name="whatsapp_number"
+                placeholder="+968 9xxx xxxx"
+                class="w-full h-10 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              />
+            </div>
+            <div>
+              <label for="quote-email" class="block text-[11px] text-slate-500 dark:text-slate-400 mb-0.5">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="quote-email"
+                name="email"
+                placeholder="name@example.com"
+                class="w-full h-10 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Location: Governorate + Area / Wilayat -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <!-- Governorate Dropdown -->
+          <div>
+            <label for="quote-region" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+              Governorate (المحافظة) <span class="text-rose-500">*</span>
+            </label>
+            <select
+              id="quote-region"
+              name="governorate"
+              required
+              class="w-full h-11 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            >
+              <option value="Muscat (مسقط)">Muscat (مسقط)</option>
+              <option value="Al Batinah South (جنوب الباطنة)">Al Batinah South (جنوب الباطنة)</option>
+              <option value="Al Batinah North (شمال الباطنة)">Al Batinah North (شمال الباطنة)</option>
+              <option value="Al Dakhiliyah (الداخلية)">Al Dakhiliyah (الداخلية)</option>
+              <option value="Al Sharqiyah South (جنوب الشرقية)">Al Sharqiyah South (جنوب الشرقية)</option>
+              <option value="Al Sharqiyah North (شمال الشرقية)">Al Sharqiyah North (شمال الشرقية)</option>
+              <option value="Al Dhahirah (الظاهرة)">Al Dhahirah (الظاهرة)</option>
+              <option value="Dhofar (ظفار)">Dhofar (ظفار)</option>
+              <option value="Al Buraimi (البريمي)">Al Buraimi (البريمي)</option>
+              <option value="Musandam (مسندم)">Musandam (مسندم)</option>
+              <option value="Al Wusta (الوسطى)">Al Wusta (الوسطى)</option>
+            </select>
+          </div>
+
+          <!-- Area / Landmark / Wilayat -->
+          <div>
+            <label for="quote-address1" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+              Area / Landmark / Wilayat <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="quote-address1"
+              name="address_line1"
+              required
+              placeholder="e.g. Al Khoudh, Seeb, Al Mouj"
+              class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+          </div>
+        </div>
+
+        <!-- 4. Equipment Needed -->
+        <div>
+          <label for="quote-category" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+            What equipment do you need? <span class="text-rose-500">*</span>
+          </label>
+          <select
+            id="quote-category"
+            name="category"
+            required
+            class="w-full h-11 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          >
+            <option value="Sliding Gate Motors (موتور بوابة سحاب)">🚪 Sliding Gate Motor (موتور بوابة سحاب)</option>
+            <option value="Swing Gate Motors (موتور درفتين)">🚪 Swing Gate Motor (موتور درفتين)</option>
+            <option value="Automatic Boom Barriers (حاجز مواقف)">🚧 Automatic Boom Barrier (حاجز مواقف)</option>
+            <option value="Access Control & Biometrics (تحكم بالدخول)">🔑 Access Control & Intercom (تحكم بالدخول)</option>
+            <option value="Electromagnetic Door Locks (أقفال إلكترونية)">🔒 Door Locks & Drop Bolts (أقفال إلكترونية)</option>
+            <option value="Glass Door Automation (أبواب زجاج أوتوماتيك)">🚪 Automatic Glass Door (أبواب زجاج)</option>
+            <option value="Remotes & Accessories (ريموتات وقطع غيار)">⚙️ Remotes & Spare Parts (ريموتات وقطع)</option>
+            <option value="General Technical Consultation">❓ Not Sure / Need Technical Sizing</option>
+          </select>
+        </div>
+
+        <!-- 5. Brief Notes -->
+        <div>
+          <label for="quote-message" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+            Brief Notes or Dimensions <span class="text-xs text-slate-400 font-normal">(Optional)</span>
+          </label>
+          <textarea
+            id="quote-message"
+            name="message"
+            rows="2"
+            placeholder="e.g. 5m sliding gate, 3 remotes, need installation"
+            class="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- 6. Preferred Branch (Simple 2-Pill Selection) -->
+        <div>
+          <label class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+            Select Closest Branch for Fast Contact:
+          </label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="branch-pill-label flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-cyan-500 bg-cyan-50/50 dark:bg-cyan-950/30 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold cursor-pointer transition-all">
+              <input type="radio" name="preferred_branch" value="Al Khoudh Branch" checked class="text-cyan-600 focus:ring-cyan-500" />
+              <span>📍 Al Khoudh</span>
+            </label>
+            <label class="branch-pill-label flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-semibold cursor-pointer transition-all">
+              <input type="radio" name="preferred_branch" value="Ghala Branch" class="text-cyan-600 focus:ring-cyan-500" />
+              <span>📍 Ghala</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 7. Action Buttons (Big, High-Contrast, 20:80 Clear + WhatsApp) -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+          
+          <!-- Primary Submit Button (Web3Forms - Commented out for now, kept for future use)
+          <button
+            type="submit"
+            id="quote-submit-btn"
+            class="w-full h-12 flex items-center justify-center gap-2 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white dark:text-slate-950 font-bold text-sm sm:text-base shadow-md transition-all active:scale-98 cursor-pointer disabled:opacity-60"
+          >
+            <span id="quote-btn-spinner" class="hidden w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+            <span id="quote-btn-text">Send Quotation Request</span>
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+          -->
+
+          <!-- Action Buttons: Clear (20%) + WhatsApp Direct (80%) -->
+          <div class="flex items-center gap-2">
+            <!-- Clear Form Button (20% width) -->
+            <button
+              type="button"
+              id="quote-clear-btn"
+              title="Clear all form fields"
+              class="w-1/5 min-w-[68px] h-11 flex items-center justify-center gap-1 px-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-600 dark:text-rose-400 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>Clear</span>
+            </button>
+
+            <!-- WhatsApp Direct Option (80% width) -->
+            <button
+              type="button"
+              id="quote-whatsapp-direct-btn"
+              class="flex-1 h-11 flex items-center justify-center gap-2 px-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
+            >
+              <span id="quote-wa-btn-spinner" class="hidden w-4 h-4 border-2 border-emerald-600 dark:border-emerald-400 border-t-transparent rounded-full animate-spin"></span>
+              <span id="quote-wa-btn-text">Send Quote via WhatsApp</span>
+              <img id="quote-wa-btn-logo" src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-5 h-5 object-contain" />
+            </button>
+          </div>
+
+          <p class="text-center text-[11px] text-slate-400">
+            Official GPS Muscat Supplier • Direct Counter Pricing
+          </p>
+        </div>
+
+      </form>
+
+      <!-- Clean Success Screen -->
+      <div id="quote-success-state" class="hidden text-center py-8 px-4 space-y-4">
+        <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-3xl font-bold">
+          ✓
+        </div>
+        <div class="space-y-1">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+            Thank You! Quotation Received
+          </h3>
+          <p id="quote-success-msg" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
+            Our technical team will call or message you shortly with the best pricing.
+          </p>
+        </div>
+
+        <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+          <button
+            type="button"
+            id="quote-success-close-btn"
+            class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-950 font-semibold text-xs sm:text-sm transition"
+          >
+            Done (Close)
+          </button>
+          <a
+            id="quote-success-wa-btn"
+            href="https://api.whatsapp.com/send?phone=96891214949"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-xs sm:text-sm shadow-md transition"
+          >
+            <img src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-4 h-4 object-contain" />
+            <span>Message on WhatsApp Now</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+  // Clean, Simple Controller for Quote Modal
+  (function initSimpleQuoteModal() {
+    const modal = document.getElementById('quote-modal');
+    const backdrop = document.getElementById('quote-modal-backdrop');
+    const content = document.getElementById('quote-modal-content');
+    const closeBtn = document.getElementById('quote-modal-close');
+    const form = document.getElementById('quote-form');
+    const submitBtn = document.getElementById('quote-submit-btn');
+    const btnSpinner = document.getElementById('quote-btn-spinner');
+    const btnText = document.getElementById('quote-btn-text');
+    const alertBox = document.getElementById('quote-form-alert');
+    const successState = document.getElementById('quote-success-state');
+    const successMsg = document.getElementById('quote-success-msg');
+    const successCloseBtn = document.getElementById('quote-success-close-btn');
+    const successWaBtn = document.getElementById('quote-success-wa-btn');
+    const directWaBtn = document.getElementById('quote-whatsapp-direct-btn');
+    const clearBtn = document.getElementById('quote-clear-btn');
+    const waBtnSpinner = document.getElementById('quote-wa-btn-spinner');
+    const waBtnText = document.getElementById('quote-wa-btn-text');
+    const waBtnLogo = document.getElementById('quote-wa-btn-logo');
+    const toggleExtraBtn = document.getElementById('quote-toggle-extra-contact');
+    const extraContactFields = document.getElementById('quote-extra-contact-fields');
+    const extraContactIcon = document.getElementById('extra-contact-icon');
+
+    const AL_KHOUDH_PHONE = '96891214949';
+    const GHALA_PHONE = '96897440010';
+
+    if (!modal) return;
+
+    // Toggle Extra Optional Contact Fields
+    if (toggleExtraBtn && extraContactFields) {
+      toggleExtraBtn.addEventListener('click', () => {
+        const isHidden = extraContactFields.classList.contains('hidden');
+        if (isHidden) {
+          extraContactFields.classList.remove('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '−';
+        } else {
+          extraContactFields.classList.add('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '+';
+        }
+      });
+    }
+
+    // Branch Pill Click Visual Toggle
+    const branchRadios = document.querySelectorAll('input[name="preferred_branch"]');
+    branchRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.querySelectorAll('.branch-pill-label').forEach(label => {
+          label.classList.remove('border-cyan-500', 'bg-cyan-50/50', 'dark:bg-cyan-950/30', 'text-slate-900', 'dark:text-white');
+          label.classList.add('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-800/50', 'text-slate-700', 'dark:text-slate-300');
+        });
+        const parentLabel = radio.closest('.branch-pill-label');
+        if (parentLabel) {
+          parentLabel.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-800/50', 'text-slate-700', 'dark:text-slate-300');
+          parentLabel.classList.add('border-cyan-500', 'bg-cyan-50/50', 'dark:bg-cyan-950/30', 'text-slate-900', 'dark:text-white');
+        }
+      });
+    });
+
+    // Open Modal
+    window.openQuoteModal = function(options = {}) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      requestAnimationFrame(() => {
+        if (content) {
+          content.classList.remove('scale-95', 'opacity-0');
+          content.classList.add('scale-100', 'opacity-100');
+        }
+      });
+
+      document.body.style.overflow = 'hidden';
+
+      if (options.category) {
+        const catSelect = document.getElementById('quote-category');
+        if (catSelect) {
+          for (let i = 0; i < catSelect.options.length; i++) {
+            if (catSelect.options[i].value.toLowerCase().includes(options.category.toLowerCase())) {
+              catSelect.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }
+
+      setTimeout(() => {
+        const firstInput = document.getElementById('quote-name');
+        if (firstInput) firstInput.focus();
+      }, 100);
+    };
+
+    // Close Modal
+    window.closeQuoteModal = function() {
+      if (content) {
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+      }
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }, 200);
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', window.closeQuoteModal);
+    if (backdrop) backdrop.addEventListener('click', window.closeQuoteModal);
+    if (successCloseBtn) successCloseBtn.addEventListener('click', window.closeQuoteModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        window.closeQuoteModal();
+      }
+    });
+
+    // Delegate Click from any Quote button
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-open-quote-modal], .open-quote-modal-btn');
+      if (trigger) {
+        e.preventDefault();
+        const category = trigger.getAttribute('data-quote-category') || '';
+        window.openQuoteModal({ category });
+      }
+    });
+
+    // Extract Form Data
+    function getCleanFormData() {
+      const fullName = document.getElementById('quote-name')?.value.trim() || '';
+      const phone = document.getElementById('quote-phone')?.value.trim() || '';
+      const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
+      const email = document.getElementById('quote-email')?.value.trim() || '';
+      const region = document.getElementById('quote-region')?.value || 'Muscat';
+      const address1 = document.getElementById('quote-address1')?.value.trim() || '';
+      const category = document.getElementById('quote-category')?.value || 'Gate Automation';
+      const message = document.getElementById('quote-message')?.value.trim() || '';
+      
+      const selectedBranchRadio = document.querySelector('input[name="preferred_branch"]:checked');
+      const branch = selectedBranchRadio ? selectedBranchRadio.value : 'Al Khoudh Branch';
+      const targetPhone = branch.includes('Ghala') ? GHALA_PHONE : AL_KHOUDH_PHONE;
+
+      const waText = 
+`*QUOTATION REQUEST - GPS MUSCAT*
+----------------------------------------
+*Name:* ${fullName}
+*Phone:* +968 ${phone}
+${altWhatsapp ? `*Alt WhatsApp:* +968 ${altWhatsapp}\n` : ''}${email ? `*Email:* ${email}\n` : ''}*Location:* ${region} - ${address1}
+*Equipment:* ${category}
+${message ? `*Notes:* ${message}\n` : ''}*Branch:* ${branch}
+----------------------------------------
+_Sent from gpsmuscat.com_`;
+
+      return {
+        fullName,
+        phone,
+        altWhatsapp,
+        email,
+        region,
+        address1,
+        category,
+        message,
+        branch,
+        targetPhone,
+        waText
+      };
+    }
+
+    // --- Form Draft Recovery (Auto-save to sessionStorage so users never lose input on accidental reload) ---
+    const DRAFT_KEY = 'gps_quote_draft_v1';
+
+    function saveQuoteDraft() {
+      try {
+        const fullName = document.getElementById('quote-name')?.value.trim() || '';
+        const phone = document.getElementById('quote-phone')?.value.trim() || '';
+        const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
+        const email = document.getElementById('quote-email')?.value.trim() || '';
+        const region = document.getElementById('quote-region')?.value || '';
+        const address1 = document.getElementById('quote-address1')?.value.trim() || '';
+        const category = document.getElementById('quote-category')?.value || '';
+        const message = document.getElementById('quote-message')?.value.trim() || '';
+        const selectedRadio = document.querySelector('input[name="preferred_branch"]:checked');
+        const branch = selectedRadio ? selectedRadio.value : 'Al Khoudh Branch';
+
+        if (fullName || phone || altWhatsapp || email || address1 || message) {
+          const draft = {
+            fullName,
+            phone,
+            altWhatsapp,
+            email,
+            region,
+            address1,
+            category,
+            message,
+            branch
+          };
+          sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        }
+      } catch (err) {}
+    }
+
+    function restoreQuoteDraft() {
+      try {
+        const raw = sessionStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (!draft) return;
+
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && val !== undefined && val !== '') el.value = val;
+        };
+
+        // Support new fullName as well as older legacy firstName/lastName
+        const restoredName = draft.fullName || [draft.title, draft.firstName, draft.lastName].filter(Boolean).join(' ');
+        setVal('quote-name', restoredName);
+        setVal('quote-phone', draft.phone);
+        setVal('quote-whatsapp', draft.altWhatsapp);
+        setVal('quote-email', draft.email);
+        setVal('quote-region', draft.region);
+        setVal('quote-address1', draft.address1);
+        setVal('quote-category', draft.category);
+        setVal('quote-message', draft.message);
+
+        // Auto-expand alternative contact toggle if previously filled
+        if ((draft.altWhatsapp || draft.email) && extraContactFields) {
+          extraContactFields.classList.remove('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '−';
+        }
+
+        // Restore selected branch pill
+        if (draft.branch) {
+          const radio = document.querySelector(`input[name="preferred_branch"][value="${draft.branch}"]`);
+          if (radio) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+          }
+        }
+      } catch (err) {}
+    }
+
+    function clearQuoteDraft() {
+      try {
+        sessionStorage.removeItem(DRAFT_KEY);
+      } catch (err) {}
+    }
+
+    // Restore any existing draft on load & listen for inputs
+    restoreQuoteDraft();
+    if (form) {
+      form.addEventListener('input', saveQuoteDraft);
+      form.addEventListener('change', saveQuoteDraft);
+    }
+
+    // Clear Form Button Click (Resets fields, draft, and collapses extra contacts)
+    if (clearBtn && form) {
+      clearBtn.addEventListener('click', () => {
+        form.reset();
+        clearQuoteDraft();
+        clearAlert();
+
+        if (extraContactFields && !extraContactFields.classList.contains('hidden')) {
+          extraContactFields.classList.add('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '+';
+        }
+
+        const alKhoudhRadio = document.querySelector('input[name="preferred_branch"][value="Al Khoudh Branch"]');
+        if (alKhoudhRadio) {
+          alKhoudhRadio.checked = true;
+          alKhoudhRadio.dispatchEvent(new Event('change'));
+        }
+
+        showAlert('All fields have been cleared.', 'success');
+        setTimeout(() => {
+          clearAlert();
+        }, 2000);
+      });
+    }
+
+    // Helper to generate reliable WhatsApp URL (Direct native app on mobile, WhatsApp Web on desktop)
+    function getWhatsAppUrl(phone, text = '') {
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const encodedText = text ? encodeURIComponent(text) : '';
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        return `whatsapp://send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+      } else {
+        return `https://web.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+      }
+    }
+
+    // Direct WhatsApp Button
+    if (directWaBtn) {
+      directWaBtn.addEventListener('click', () => {
+        const data = getCleanFormData();
+        if (!data.fullName || !data.phone) {
+          showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
+          return;
+        }
+
+        // Show instant visual feedback: "Redirecting to WhatsApp..."
+        if (waBtnSpinner) waBtnSpinner.classList.remove('hidden');
+        if (waBtnText) waBtnText.textContent = 'Redirecting to WhatsApp...';
+        if (waBtnLogo) waBtnLogo.classList.add('hidden');
+        directWaBtn.classList.add('pointer-events-none', 'opacity-85');
+
+        // Restore button state after 3.5s so returning to the tab resets cleanly
+        setTimeout(() => {
+          if (waBtnSpinner) waBtnSpinner.classList.add('hidden');
+          if (waBtnText) waBtnText.textContent = 'Send Quote via WhatsApp';
+          if (waBtnLogo) waBtnLogo.classList.remove('hidden');
+          directWaBtn.classList.remove('pointer-events-none', 'opacity-85');
+        }, 3500);
+
+        // Clear stored draft upon successful quotation submission
+        clearQuoteDraft();
+
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const cleanPhone = data.targetPhone.replace(/[^0-9]/g, '');
+        const encodedText = data.waText ? encodeURIComponent(data.waText) : '';
+
+        if (isMobile) {
+          // Launch native WhatsApp app directly on mobile, bypassing download webpage
+          const nativeUrl = `whatsapp://send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          const webFallbackUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          const start = Date.now();
+          window.location.href = nativeUrl;
+
+          setTimeout(() => {
+            if (document.hasFocus() && Date.now() - start < 2000) {
+              window.location.href = webFallbackUrl;
+            }
+          }, 1500);
+        } else {
+          const desktopUrl = `https://web.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          window.open(desktopUrl, '_blank', 'noopener,noreferrer');
+        }
+      });
+    }
+
+    // Form Submit Handler (Triggers WhatsApp quote flow)
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        directWaBtn?.click();
+      });
+    }
+
+    function showAlert(msg, type = 'error') {
+      if (!alertBox) return;
+      alertBox.classList.remove('hidden', 'bg-rose-500/10', 'text-rose-600', 'border-rose-500/20', 'bg-emerald-500/10', 'text-emerald-600', 'border-emerald-500/20');
+      if (type === 'error') {
+        alertBox.classList.add('bg-rose-500/10', 'text-rose-600', 'dark:text-rose-400', 'border', 'border-rose-500/20');
+      } else {
+        alertBox.classList.add('bg-emerald-500/10', 'text-emerald-600', 'dark:text-emerald-400', 'border', 'border-emerald-500/20');
+      }
+      alertBox.textContent = msg;
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function clearAlert() {
+      if (!alertBox) return;
+      alertBox.classList.add('hidden');
+      alertBox.textContent = '';
+    }
+  })();
+</script>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.3);
+    border-radius: 9999px;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(51, 65, 85, 0.5);
+  }
+</style>

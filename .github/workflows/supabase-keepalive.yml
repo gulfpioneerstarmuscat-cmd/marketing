@@ -1,0 +1,27 @@
+name: Supabase Free Tier Keep-Alive
+
+on:
+  schedule:
+    # Runs every 4 days at 04:00 UTC (well within the 7-day inactivity pause window)
+    - cron: '0 4 */4 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Keep-Alive API Request
+        run: |
+          echo "Pinging Supabase REST API to prevent free-tier inactivity pause..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: sb_publishable_lfLpUBuWWGXJvw7i5iN0yw_Z4lxjS9A" \
+            -H "Authorization: Bearer sb_publishable_lfLpUBuWWGXJvw7i5iN0yw_Z4lxjS9A" \
+            "https://ymbpjnpwjhtdswamengv.supabase.co/rest/v1/promotions?select=id&limit=1")
+          
+          echo "Response HTTP Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 206 ]; then
+            echo "✅ Supabase project is active and healthy!"
+          else
+            echo "⚠️ Received status code: $HTTP_STATUS"
+          fi

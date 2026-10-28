@@ -1,0 +1,1300 @@
+---
+// src/pages/admin.astro - Staff Promotions Management Portal (100% Supabase Powered)
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Staff Portal | GPS Muscat Promotions Manager";
+const pageDescription = "Internal staff portal for managing marketing promotions and story posters.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} hideFloatingWidget={true}>
+  
+  <div class="min-h-screen flex flex-col font-sans bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    
+    <!-- Top Administrative Header -->
+    <header class="border-b border-slate-200/80 dark:border-slate-800/80 glass-header sticky top-0 z-40 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        <!-- Far Left: Dynamic Dark/Light Company Logo -->
+        <a href="/" class="focus:outline-none flex items-center gap-2 py-1 transition-opacity hover:opacity-90" title="Return to Homepage">
+          <!-- Dark Mode Logo (White Vector) -->
+          <img
+            src="/assets/logo/GPSMUSCAT_Logo_white_500x60.svg"
+            alt="GPS Muscat"
+            class="h-6 sm:h-7 w-auto object-contain hidden dark:block"
+            loading="eager"
+            width="210"
+            height="26"
+          />
+          <!-- Light Mode Logo (Original Black & Blue Vector) -->
+          <img
+            src="/assets/logo/GPSMUSCAT_Logo_black_blue_on_white_500x60.svg"
+            alt="GPS Muscat"
+            class="h-6 sm:h-7 w-auto object-contain block dark:hidden"
+            loading="eager"
+            width="210"
+            height="26"
+          />
+        </a>
+
+        <!-- Desktop Navigation & Controls (Hidden on Mobile) -->
+        <div class="hidden md:flex items-center gap-3">
+          <!-- Staff Portal Badge -->
+          <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+            Staff Portal
+          </span>
+
+          <!-- Active User Badge -->
+          <span id="admin-user-badge" class="hidden inline-flex items-center gap-1.5 text-xs font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span id="admin-user-email"></span>
+          </span>
+
+          <!-- Public Site Link -->
+          <a
+            href="/"
+            class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-800 transition"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+            <span>Live Site</span>
+          </a>
+
+          <!-- Minimalist Theme Toggle Button -->
+          <button
+            id="admin-theme-toggle"
+            type="button"
+            class="flex items-center justify-center w-8 h-8 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-800 transition"
+            aria-label="Toggle Theme"
+            title="Toggle Theme"
+          >
+            <svg class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="w-4 h-4 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Log Out Button -->
+          <button
+            id="admin-logout-btn"
+            type="button"
+            class="hidden text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-500 px-3 py-1.5 rounded-lg border border-rose-500/30 hover:bg-rose-500/10 transition cursor-pointer"
+          >
+            Sign Out
+          </button>
+        </div>
+
+        <!-- Mobile Controls: Theme Toggle & Hamburger Icon (Phone Only) -->
+        <div class="flex md:hidden items-center gap-1.5">
+          <!-- Mobile Theme Toggle -->
+          <button
+            id="admin-mobile-theme-toggle"
+            type="button"
+            class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition"
+            aria-label="Toggle Theme"
+            title="Toggle Theme"
+          >
+            <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Hamburger Menu Toggle Button (Same as Main Header) -->
+          <button
+            id="admin-mobile-menu-toggle"
+            type="button"
+            class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none transition"
+            aria-controls="admin-mobile-menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation menu"
+          >
+            <svg id="admin-menu-icon-open" class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg id="admin-menu-icon-close" class="hidden w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Mobile Hamburger Drawer -->
+      <div id="admin-mobile-menu" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl px-4 sm:px-6 pt-3.5 pb-5 space-y-3 transition-all shadow-xl">
+        
+        <!-- 1. Label: Staff Portal -->
+        <div class="flex items-center justify-between pb-2.5 border-b border-slate-100 dark:border-slate-800/80">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">Staff Portal</span>
+          </div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20 font-semibold">
+            GPS Muscat
+          </span>
+        </div>
+
+        <!-- 2. Logged in as: User Email -->
+        <div id="admin-mobile-user-card" class="hidden p-3 rounded-xl bg-slate-100/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 space-y-1">
+          <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            Logged in as:
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+            <span id="admin-mobile-user-email" class="text-xs font-mono font-semibold text-slate-800 dark:text-slate-200 truncate">
+              gpsadmin@gpsmuscat.com
+            </span>
+          </div>
+        </div>
+
+        <!-- 3. Back to Marketing Site -->
+        <a
+          href="/"
+          class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100/90 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/70 dark:border-slate-700/60 transition active:scale-98"
+        >
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Back to Marketing Site</span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+
+        <!-- 4. Log out button -->
+        <button
+          id="admin-mobile-logout-btn"
+          type="button"
+          class="hidden w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:text-rose-700 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition active:scale-95 cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span>Log Out</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Authentication View (Centered Glassmorphic Login Card) -->
+    <section id="auth-section" class="flex-1 flex items-center justify-center p-4 sm:p-6 min-h-[calc(100vh-4rem)] relative">
+      
+      <!-- Subtle Decorative Background Glows -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-500/5 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div class="w-full max-w-[420px] mx-auto glass-card rounded-2xl p-7 sm:p-9 shadow-2xl relative overflow-hidden transition-all border border-slate-200/80 dark:border-slate-800/80">
+        
+        <!-- Ambient Card Corner Glow -->
+        <div class="absolute -top-16 -right-16 w-36 h-36 bg-cyan-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- Lock Icon & Header -->
+        <div class="text-center space-y-2 mb-6">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto shadow-sm">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Staff Authentication</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Enter authorized staff credentials to manage promotions and posters.
+          </p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="admin-login-form" class="space-y-4">
+          <!-- Username Input -->
+          <div>
+            <label for="admin-user" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+              Username
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <input
+                id="admin-user"
+                type="text"
+                required
+                autocomplete="username"
+                placeholder="admin"
+                class="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none transition"
+              />
+            </div>
+          </div>
+
+          <!-- Password Input with Show/Hide Toggle -->
+          <div>
+            <label for="admin-pass" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+              Password
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <input
+                id="admin-pass"
+                type="password"
+                required
+                autocomplete="current-password"
+                placeholder="••••••••••••"
+                class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none transition"
+              />
+              <button
+                type="button"
+                id="toggle-password-btn"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition"
+                title="Toggle Password Visibility"
+              >
+                <svg id="eye-icon-show" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg id="eye-icon-hide" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error Alert -->
+          <div id="auth-error" class="hidden text-xs text-rose-600 dark:text-rose-400 bg-rose-500/10 border border-rose-500/20 p-2.5 rounded-xl text-center font-medium"></div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer"
+          >
+            Access Management Dashboard
+          </button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- Dashboard View (Shown after authentication) -->
+    <main id="dashboard-section" class="hidden flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- Top Metrics & Capacity Status -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        
+        <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Live on Website</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+              <span id="stat-active-count">0</span>
+              <span class="text-xs font-semibold text-slate-400">/ 10 max</span>
+            </h3>
+            <p class="text-[11px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-medium">Deactivate to replace</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 flex items-center justify-center text-lg">
+            🏷️
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Total Stored</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+              <span id="stat-total-count">0</span>
+              <span class="text-xs font-semibold text-slate-400">/ 15 max</span>
+            </h3>
+            <p class="text-[11px] text-cyan-600 dark:text-cyan-400 mt-0.5 font-medium">Delete to free slot</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-lg">
+            📦
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-mono uppercase text-slate-500 dark:text-slate-400">Cloud Storage & DB</p>
+            <h3 id="stat-cloud-status" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Supabase Connected
+            </h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Bucket: 'promotions'</p>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center text-lg">
+            ⚡
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dashboard Layout Grid (Form on Left, Active List on Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Form: Add New Promotion -->
+        <div class="lg:col-span-5 glass-card rounded-2xl p-6 sm:p-7 space-y-6 border border-slate-200/80 dark:border-slate-800/80">
+          <div class="border-b border-slate-200/80 dark:border-slate-800/80 pb-4">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
+              <span>Publish New Promotion</span>
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Fill in the offer details and upload the 9:16 story poster.</p>
+          </div>
+
+          <form id="new-promo-form" class="space-y-4" novalidate>
+            <!-- Promo Title -->
+            <div>
+              <label for="promo-title" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Promotion Title *</label>
+              <input
+                id="promo-title"
+                type="text"
+                placeholder="e.g. Beninca 600kg Sliding Gate Motor Kit"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none transition"
+              />
+            </div>
+
+            <!-- Product Category & Tag -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="promo-category" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Category *</label>
+                <select
+                  id="promo-category"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs text-slate-900 dark:text-white outline-none"
+                >
+                  <option value="Gate Automation">Gate Automation (Motors)</option>
+                  <option value="Boom Barriers">Boom Barriers & Parking</option>
+                  <option value="Access Control">Access Control & Biometrics</option>
+                  <option value="Door Locks">Door Locks & Hardware</option>
+                  <option value="Glass Doors">Glass Door Automation</option>
+                  <option value="Accessories">Accessories & Support</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="promo-tag" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Offer Tag / Badge</label>
+                <input
+                  id="promo-tag"
+                  type="text"
+                  placeholder="e.g. Special Deal, Limited Kit"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- Validity Date -->
+            <div>
+              <label for="promo-validity" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Valid Till Date</label>
+              <input
+                id="promo-validity"
+                type="text"
+                placeholder="e.g. 30 Nov 2026 or Until Stock Last"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none"
+              />
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label for="promo-desc" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Offer Details / Kit Description</label>
+              <textarea
+                id="promo-desc"
+                rows="2"
+                placeholder="Key equipment specs, motor capacity, remotes included, or warranty details (optional)..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-800 focus:border-cyan-500 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 outline-none resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Image Poster Upload with Live Drag-and-Drop Dropzone -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  Poster Image (Vertical 9:16) *
+                </label>
+                <span class="text-[10px] font-mono text-cyan-600 dark:text-cyan-400">9:16 Ratio Required</span>
+              </div>
+
+              <!-- Interactive Dropzone -->
+              <div
+                id="promo-dropzone"
+                tabindex="0"
+                role="button"
+                aria-label="Upload poster image dropzone"
+                class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-cyan-500 rounded-2xl p-5 text-center cursor-pointer transition-all duration-200 bg-slate-100/60 dark:bg-slate-900/60 hover:bg-cyan-500/5 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+              >
+                <input
+                  id="promo-image-file"
+                  type="file"
+                  accept="image/png, image/jpeg, image/webp"
+                  class="hidden"
+                />
+                
+                <!-- Empty Dropzone Prompt -->
+                <div id="upload-prompt" class="space-y-2 py-3 pointer-events-none">
+                  <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto border border-cyan-500/20 group-hover:scale-105 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p id="dropzone-label" class="text-xs font-bold text-slate-800 dark:text-slate-200">
+                      Click to Browse or Drag & Drop Poster Here
+                    </p>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      JPG, PNG, WebP • Max 5MB • Story 9:16
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Active Loaded Preview -->
+                <div id="upload-preview-wrap" class="hidden flex flex-col items-center justify-center py-1 relative z-20">
+                  <div class="relative group">
+                    <img id="upload-preview-img" src="" alt="Poster Preview" class="h-48 w-auto max-w-full object-contain rounded-xl shadow-xl border border-slate-300 dark:border-slate-700 bg-slate-950" />
+                    <span class="absolute top-2 right-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500 text-white font-bold shadow">
+                      ✓ Ready
+                    </span>
+                  </div>
+                  
+                  <div class="mt-2.5 text-center space-y-1">
+                    <p id="upload-file-info" class="text-[11px] font-mono text-slate-600 dark:text-slate-300 truncate max-w-xs font-medium"></p>
+                    <button
+                      type="button"
+                      id="clear-image-btn"
+                      class="text-xs font-semibold text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 py-1 px-3 rounded-lg hover:bg-rose-500/10 transition cursor-pointer"
+                    >
+                      ✕ Remove / Change Image
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Storage Notice Hint -->
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+                <span>Direct upload to Supabase Cloud Storage (<strong class="text-slate-700 dark:text-slate-300">promotions</strong> bucket).</span>
+              </p>
+            </div>
+
+            <!-- Form Status / Feedback Alert Banner -->
+            <div id="promo-form-status" class="hidden p-3.5 rounded-xl text-xs font-medium text-center transition-all duration-200"></div>
+
+            <!-- Submit Button with Spinner -->
+            <button
+              id="submit-promo-btn"
+              type="submit"
+              class="w-full py-3 px-4 rounded-xl bg-linear-to-r from-sky-500 via-cyan-500 to-blue-600 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
+            >
+              <svg id="submit-btn-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+              </svg>
+              <span id="submit-btn-text">Upload & Publish to Supabase</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Side: Active Promotions List -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-800/80">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Live Supabase Promotions</span>
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Toggle visibility or click trash icon to permanently remove.</p>
+            </div>
+            
+            <button
+              id="refresh-promos-btn"
+              type="button"
+              class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition font-medium cursor-pointer"
+              title="Reload promotions from Supabase"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              <span>Refresh List</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Cards Container -->
+          <div id="promos-list" class="space-y-3">
+            <!-- Populated via client-side JavaScript -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Poster Lightbox Modal (For viewing 9:16 posters fullscreen) -->
+    <div id="poster-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="relative max-w-sm w-full glass-card rounded-2xl overflow-hidden p-3 border border-slate-700/80 shadow-2xl">
+        <button
+          id="close-poster-modal"
+          type="button"
+          class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-slate-800 transition"
+        >
+          ✕
+        </button>
+        <img id="modal-poster-img" src="" alt="Poster" class="w-full h-auto max-h-[80vh] object-contain rounded-xl" />
+        <div class="p-3 text-center">
+          <h4 id="modal-poster-title" class="text-sm font-bold text-white"></h4>
+          <p id="modal-poster-tag" class="text-xs text-cyan-400 font-mono mt-0.5"></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</BaseLayout>
+
+<script>
+  import { supabase, MAX_LIVE_PROMOTIONS, MAX_STORED_PROMOTIONS, uploadPosterImage, deletePosterImage, type PromotionRecord } from '../lib/supabase';
+  import { initialPromotions } from '../data/promotions';
+
+  // DOM Elements
+  const authSection = document.getElementById('auth-section');
+  const dashboardSection = document.getElementById('dashboard-section');
+  const loginForm = document.getElementById('admin-login-form');
+  const authError = document.getElementById('auth-error');
+  const logoutBtn = document.getElementById('admin-logout-btn');
+  const adminThemeToggle = document.getElementById('admin-theme-toggle');
+  const adminMobileThemeToggle = document.getElementById('admin-mobile-theme-toggle');
+  const adminMobileMenuToggle = document.getElementById('admin-mobile-menu-toggle');
+  const adminMobileMenu = document.getElementById('admin-mobile-menu');
+  const adminMenuIconOpen = document.getElementById('admin-menu-icon-open');
+  const adminMenuIconClose = document.getElementById('admin-menu-icon-close');
+  const adminMobileUserCard = document.getElementById('admin-mobile-user-card');
+  const adminMobileUserEmail = document.getElementById('admin-mobile-user-email');
+  const adminMobileLogoutBtn = document.getElementById('admin-mobile-logout-btn');
+
+  const togglePassBtn = document.getElementById('toggle-password-btn');
+  const adminPassInput = document.getElementById('admin-pass') as HTMLInputElement | null;
+  const adminUserInput = document.getElementById('admin-user') as HTMLInputElement | null;
+  const eyeIconShow = document.getElementById('eye-icon-show');
+  const eyeIconHide = document.getElementById('eye-icon-hide');
+  const adminUserBadge = document.getElementById('admin-user-badge');
+  const adminUserEmail = document.getElementById('admin-user-email');
+
+  const newPromoForm = document.getElementById('new-promo-form') as HTMLFormElement | null;
+  const promoDropzone = document.getElementById('promo-dropzone');
+  const promoImageInput = document.getElementById('promo-image-file') as HTMLInputElement | null;
+  const uploadPrompt = document.getElementById('upload-prompt');
+  const dropzoneLabel = document.getElementById('dropzone-label');
+  const uploadPreviewWrap = document.getElementById('upload-preview-wrap');
+  const uploadPreviewImg = document.getElementById('upload-preview-img') as HTMLImageElement | null;
+  const uploadFileInfo = document.getElementById('upload-file-info');
+  const clearImageBtn = document.getElementById('clear-image-btn');
+  const promoFormStatus = document.getElementById('promo-form-status');
+  const submitPromoBtn = document.getElementById('submit-promo-btn') as HTMLButtonElement | null;
+  const submitBtnText = document.getElementById('submit-btn-text');
+  const submitBtnIcon = document.getElementById('submit-btn-icon');
+
+  const promosListContainer = document.getElementById('promos-list');
+  const statActiveCount = document.getElementById('stat-active-count');
+  const statTotalCount = document.getElementById('stat-total-count');
+  const refreshPromosBtn = document.getElementById('refresh-promos-btn');
+
+  // Modal elements
+  const posterModal = document.getElementById('poster-modal');
+  const modalPosterImg = document.getElementById('modal-poster-img') as HTMLImageElement | null;
+  const modalPosterTitle = document.getElementById('modal-poster-title');
+  const modalPosterTag = document.getElementById('modal-poster-tag');
+  const closePosterModal = document.getElementById('close-poster-modal');
+
+  let selectedFileForUpload: File | null = null;
+  let cachedPromotions: PromotionRecord[] = [];
+
+  // Password Visibility Toggle
+  if (togglePassBtn && adminPassInput) {
+    togglePassBtn.addEventListener('click', () => {
+      const isPass = adminPassInput.type === 'password';
+      adminPassInput.type = isPass ? 'text' : 'password';
+      if (eyeIconShow && eyeIconHide) {
+        eyeIconShow.classList.toggle('hidden', isPass);
+        eyeIconHide.classList.toggle('hidden', !isPass);
+      }
+    });
+  }
+
+  // Theme Toggle for Admin (Desktop & Mobile)
+  function toggleAdminTheme() {
+    const isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  if (adminThemeToggle) adminThemeToggle.addEventListener('click', toggleAdminTheme);
+  if (adminMobileThemeToggle) adminMobileThemeToggle.addEventListener('click', toggleAdminTheme);
+
+  // Mobile Hamburger Menu Toggle
+  function closeAdminMobileMenu() {
+    if (adminMobileMenu && adminMobileMenuToggle && adminMenuIconOpen && adminMenuIconClose) {
+      adminMobileMenu.classList.add('hidden');
+      adminMobileMenuToggle.setAttribute('aria-expanded', 'false');
+      adminMenuIconOpen.classList.remove('hidden');
+      adminMenuIconClose.classList.add('hidden');
+    }
+  }
+
+  if (adminMobileMenuToggle && adminMobileMenu && adminMenuIconOpen && adminMenuIconClose) {
+    adminMobileMenuToggle.addEventListener('click', () => {
+      const isExpanded = adminMobileMenuToggle.getAttribute('aria-expanded') === 'true';
+      adminMobileMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      adminMobileMenu.classList.toggle('hidden');
+      adminMenuIconOpen.classList.toggle('hidden');
+      adminMenuIconClose.classList.toggle('hidden');
+    });
+  }
+
+  // Check Supabase Authentication Session
+  async function checkAuth() {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (session && !error) {
+        authSection?.classList.add('hidden');
+        dashboardSection?.classList.remove('hidden');
+        
+        // Desktop user badge & logout
+        logoutBtn?.classList.remove('hidden');
+        if (adminUserBadge && adminUserEmail) {
+          adminUserBadge.classList.remove('hidden');
+          adminUserEmail.textContent = session.user.email || 'gpsadmin@gpsmuscat.com';
+        }
+
+        // Mobile drawer user card & logout
+        if (adminMobileUserCard && adminMobileUserEmail) {
+          adminMobileUserCard.classList.remove('hidden');
+          adminMobileUserEmail.textContent = session.user.email || 'gpsadmin@gpsmuscat.com';
+        }
+        adminMobileLogoutBtn?.classList.remove('hidden');
+
+        await loadPromotionsFromSupabase();
+      } else {
+        authSection?.classList.remove('hidden');
+        dashboardSection?.classList.add('hidden');
+        
+        // Hide desktop controls
+        logoutBtn?.classList.add('hidden');
+        if (adminUserBadge) adminUserBadge.classList.add('hidden');
+
+        // Hide mobile controls
+        if (adminMobileUserCard) adminMobileUserCard.classList.add('hidden');
+        adminMobileLogoutBtn?.classList.add('hidden');
+      }
+    } catch (e) {
+      console.warn('Session check error:', e);
+    }
+  }
+
+  // Listen to Auth State changes
+  supabase.auth.onAuthStateChange((_event, session) => {
+    if (session) {
+      authSection?.classList.add('hidden');
+      dashboardSection?.classList.remove('hidden');
+      
+      // Desktop
+      logoutBtn?.classList.remove('hidden');
+      if (adminUserBadge && adminUserEmail) {
+        adminUserBadge.classList.remove('hidden');
+        adminUserEmail.textContent = session.user.email || 'gpsadmin@gpsmuscat.com';
+      }
+
+      // Mobile
+      if (adminMobileUserCard && adminMobileUserEmail) {
+        adminMobileUserCard.classList.remove('hidden');
+        adminMobileUserEmail.textContent = session.user.email || 'gpsadmin@gpsmuscat.com';
+      }
+      adminMobileLogoutBtn?.classList.remove('hidden');
+
+      loadPromotionsFromSupabase();
+    } else {
+      authSection?.classList.remove('hidden');
+      dashboardSection?.classList.add('hidden');
+      
+      // Desktop
+      logoutBtn?.classList.add('hidden');
+      if (adminUserBadge) adminUserBadge.classList.add('hidden');
+
+      // Mobile
+      if (adminMobileUserCard) adminMobileUserCard.classList.add('hidden');
+      adminMobileLogoutBtn?.classList.add('hidden');
+    }
+  });
+
+  // Handle Supabase Sign-In
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawUser = adminUserInput?.value.trim() || '';
+      const pass = adminPassInput?.value.trim() || '';
+
+      if (!rawUser || !pass) return;
+
+      // Normalize username: if user inputs 'gpsadmin' or 'admin', append domain
+      let email = rawUser;
+      if (!email.includes('@')) {
+        email = `${email}@gpsmuscat.com`;
+      }
+
+      if (authError) {
+        authError.classList.add('hidden');
+        authError.textContent = '';
+      }
+
+      const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verifying credentials...';
+      }
+
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password: pass
+        });
+
+        if (error) {
+          if (authError) {
+            authError.textContent = error.message.includes('Invalid login') 
+              ? 'Invalid username or password. Please try again.'
+              : error.message;
+            authError.classList.remove('hidden');
+          }
+        } else {
+          await checkAuth();
+        }
+      } catch (err: any) {
+        if (authError) {
+          authError.textContent = err.message || 'Authentication failed. Please check network connection.';
+          authError.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Access Management Dashboard';
+        }
+      }
+    });
+  }
+
+  // Handle Sign-Out (Desktop & Mobile)
+  async function handleAdminSignOut() {
+    await supabase.auth.signOut();
+    closeAdminMobileMenu();
+    checkAuth();
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', handleAdminSignOut);
+  }
+
+  if (adminMobileLogoutBtn) {
+    adminMobileLogoutBtn.addEventListener('click', handleAdminSignOut);
+  }
+
+  // Helper to format file sizes
+  function formatBytes(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    const kb = bytes / 1024;
+    if (kb < 1024) return kb.toFixed(1) + ' KB';
+    return (kb / 1024).toFixed(2) + ' MB';
+  }
+
+  // Common function to load and preview chosen file
+  function handlePosterFile(file: File) {
+    if (!file) return;
+
+    // Validate image format
+    if (!file.type.startsWith('image/')) {
+      if (promoFormStatus) {
+        promoFormStatus.innerHTML = `⚠️ <strong>Invalid file:</strong> Please choose an image file (JPG, PNG, or WebP). Received: <code>${file.type || file.name}</code>`;
+        promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+        promoFormStatus.classList.remove('hidden');
+      }
+      return;
+    }
+
+    // Check size cap (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      if (promoFormStatus) {
+        promoFormStatus.innerHTML = `⚠️ <strong>File too large:</strong> Selected file is ${formatBytes(file.size)}. Supabase free-tier bucket limit is 5 MB.`;
+        promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+        promoFormStatus.classList.remove('hidden');
+      }
+      return;
+    }
+
+    selectedFileForUpload = file;
+
+    // Clear any previous status
+    if (promoFormStatus) {
+      promoFormStatus.classList.add('hidden');
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (uploadPreviewImg && event.target?.result) {
+        uploadPreviewImg.src = event.target.result as string;
+        if (uploadFileInfo) {
+          uploadFileInfo.textContent = `${file.name} (${formatBytes(file.size)})`;
+        }
+        uploadPrompt?.classList.add('hidden');
+        uploadPreviewWrap?.classList.remove('hidden');
+        promoDropzone?.classList.remove('border-rose-500', 'ring-2', 'ring-rose-500/30');
+        promoDropzone?.classList.add('border-emerald-500/60');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Dropzone click -> trigger hidden file input
+  if (promoDropzone && promoImageInput) {
+    promoDropzone.addEventListener('click', (e) => {
+      // Don't trigger file chooser if user clicked the remove button
+      if ((e.target as HTMLElement).closest('#clear-image-btn')) return;
+      promoImageInput.click();
+    });
+
+    // Keyboard support
+    promoDropzone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        promoImageInput.click();
+      }
+    });
+
+    // Drag & Drop event handling
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      promoDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        promoDropzone.classList.add('border-cyan-500', 'bg-cyan-500/15', 'scale-[1.01]');
+        if (dropzoneLabel) dropzoneLabel.textContent = '📥 Release to load this poster image!';
+      });
+    });
+
+    ['dragleave', 'dragend'].forEach((eventName) => {
+      promoDropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        promoDropzone.classList.remove('border-cyan-500', 'bg-cyan-500/15', 'scale-[1.01]');
+        if (dropzoneLabel) dropzoneLabel.textContent = 'Click to Browse or Drag & Drop Poster Here';
+      });
+    });
+
+    promoDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      promoDropzone.classList.remove('border-cyan-500', 'bg-cyan-500/15', 'scale-[1.01]');
+      if (dropzoneLabel) dropzoneLabel.textContent = 'Click to Browse or Drag & Drop Poster Here';
+
+      const droppedFiles = e.dataTransfer?.files;
+      if (droppedFiles && droppedFiles.length > 0) {
+        handlePosterFile(droppedFiles[0]);
+      }
+    });
+  }
+
+  // Native file input change
+  if (promoImageInput) {
+    promoImageInput.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (file) {
+        handlePosterFile(file);
+      }
+    });
+  }
+
+  // Clear / Change Image Handler
+  if (clearImageBtn) {
+    clearImageBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectedFileForUpload = null;
+      if (promoImageInput) promoImageInput.value = '';
+      uploadPreviewWrap?.classList.add('hidden');
+      uploadPrompt?.classList.remove('hidden');
+      promoDropzone?.classList.remove('border-emerald-500/60');
+    });
+  }
+
+  // Modal Close
+  if (closePosterModal && posterModal) {
+    closePosterModal.addEventListener('click', () => {
+      posterModal.classList.add('hidden');
+    });
+    posterModal.addEventListener('click', (e) => {
+      if (e.target === posterModal) {
+        posterModal.classList.add('hidden');
+      }
+    });
+  }
+
+  // Load Promotions from Supabase Table
+  async function loadPromotionsFromSupabase() {
+    if (!promosListContainer) return;
+    promosListContainer.innerHTML = `
+      <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 animate-pulse">
+        Fetching live posters from Supabase...
+      </div>
+    `;
+
+    try {
+      const { data, error } = await supabase
+        .from('promotions')
+        .select('*')
+        .order('active', { ascending: false })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      cachedPromotions = data || [];
+      renderPromotionsList();
+    } catch (e: any) {
+      console.error('Error loading promotions from Supabase:', e);
+      promosListContainer.innerHTML = `
+        <div class="p-6 text-center rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs">
+          Failed to load promotions: ${e.message}. Please verify Supabase connection.
+        </div>
+      `;
+    }
+  }
+
+  // Render Promotions in Admin List with 10-live and 15-stored enforcement
+  function renderPromotionsList() {
+    const activeCount = cachedPromotions.filter(p => p.active).length;
+    const storedCount = cachedPromotions.length;
+
+    if (statActiveCount) statActiveCount.textContent = `${activeCount}`;
+    if (statTotalCount) statTotalCount.textContent = `${storedCount}`;
+    if (!promosListContainer) return;
+
+    promosListContainer.innerHTML = '';
+
+    // Empty state
+    if (cachedPromotions.length === 0) {
+      promosListContainer.innerHTML = `
+        <div class="p-8 text-center glass-card rounded-xl text-slate-500 dark:text-slate-400 text-xs border border-slate-200/80 dark:border-slate-800/80 space-y-2">
+          <div class="w-10 h-10 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <p class="font-semibold text-slate-700 dark:text-slate-200">No posters stored in Supabase yet</p>
+          <p class="text-[11px] max-w-sm mx-auto text-slate-500 dark:text-slate-400">Use the form on the left to upload your first 9:16 vertical poster image. It will upload directly into your Supabase Storage bucket.</p>
+        </div>
+      `;
+      return;
+    }
+
+    cachedPromotions.forEach((p) => {
+      const card = document.createElement('div');
+      card.className = "flex items-center justify-between p-4 rounded-xl glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/30 transition gap-4";
+      card.innerHTML = `
+        <div class="flex items-center gap-3.5 min-w-0">
+          <!-- Thumbnail with Zoom Trigger -->
+          <button
+            type="button"
+            data-zoom-src="${p.image_url}"
+            data-zoom-title="${p.title}"
+            data-zoom-tag="${p.tag || ''}"
+            class="zoom-trigger relative shrink-0 cursor-zoom-in"
+            title="Click to view full poster"
+          >
+            <img
+              src="${p.image_url}"
+              alt="${p.title}"
+              class="h-16 w-11 object-cover rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm transition hover:scale-105"
+            />
+            <span class="absolute inset-0 bg-cyan-950/40 rounded-lg opacity-0 hover:opacity-100 flex items-center justify-center text-white text-[10px] transition">
+              🔍
+            </span>
+          </button>
+
+          <div class="min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full ${p.active ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}">
+                ${p.tag || 'Offer'}
+              </span>
+              <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+                ${p.valid_till ? '⏳ ' + p.valid_till : 'Active'}
+              </span>
+              <span class="text-[10px] text-cyan-700 dark:text-cyan-400/80 font-mono hidden sm:inline">
+                ${p.cta_category || ''}
+              </span>
+            </div>
+            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate mt-1">${p.title}</h4>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">${p.description}</p>
+          </div>
+        </div>
+
+        <!-- Controls: Status Toggle Switch & Delete -->
+        <div class="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            data-toggle-id="${p.id}"
+            class="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold transition flex items-center gap-1.5 ${p.active ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'}"
+            title="${p.active ? 'Click to hide from website' : 'Click to display live on website'}"
+          >
+            <span class="w-1.5 h-1.5 rounded-full ${p.active ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
+            ${p.active ? 'Active' : 'Hidden'}
+          </button>
+          
+          <button
+            type="button"
+            data-delete-id="${p.id}"
+            data-image-url="${p.image_url}"
+            class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 transition cursor-pointer"
+            title="Delete Poster (frees 1 storage slot)"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+      promosListContainer.appendChild(card);
+    });
+
+    // Zoom Lightbox Handlers
+    promosListContainer.querySelectorAll('.zoom-trigger').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-zoom-src');
+        const title = btn.getAttribute('data-zoom-title');
+        const tag = btn.getAttribute('data-zoom-tag');
+        if (modalPosterImg && posterModal) {
+          modalPosterImg.src = src || '';
+          if (modalPosterTitle) modalPosterTitle.textContent = title || '';
+          if (modalPosterTag) modalPosterTag.textContent = tag || '';
+          posterModal.classList.remove('hidden');
+        }
+      });
+    });
+
+    // Active Toggle Handlers (Enforces 10-live cap)
+    promosListContainer.querySelectorAll('[data-toggle-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-toggle-id');
+        const item = cachedPromotions.find(x => x.id === id);
+        if (!item) return;
+
+        // If currently inactive and user wants to activate, check 10-live limit
+        const activeCount = cachedPromotions.filter(p => p.active).length;
+        if (!item.active && activeCount >= MAX_LIVE_PROMOTIONS) {
+          alert(`Live display limit reached (${activeCount}/${MAX_LIVE_PROMOTIONS} active).\n\nPlease deactivate or delete an active poster first before setting this one live.`);
+          return;
+        }
+
+        const newStatus = !item.active;
+        (btn as HTMLButtonElement).disabled = true;
+
+        try {
+          const { error } = await supabase
+            .from('promotions')
+            .update({ active: newStatus })
+            .eq('id', id);
+
+          if (error) throw error;
+          item.active = newStatus;
+          renderPromotionsList();
+        } catch (err: any) {
+          alert('Could not update status: ' + err.message);
+        } finally {
+          (btn as HTMLButtonElement).disabled = false;
+        }
+      });
+    });
+
+    // Delete Handlers (Frees 1 storage slot in 15 max)
+    promosListContainer.querySelectorAll('[data-delete-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-delete-id');
+        const imageUrl = btn.getAttribute('data-image-url') || '';
+        if (!id) return;
+
+        if (confirm('Are you sure you want to delete this poster permanently?\n\nThis will remove it from the website and free up 1 slot in your 15-poster storage.')) {
+          (btn as HTMLButtonElement).disabled = true;
+          try {
+            const { error } = await supabase
+              .from('promotions')
+              .delete()
+              .eq('id', id);
+
+            if (error) throw error;
+            if (imageUrl) await deletePosterImage(imageUrl);
+
+            cachedPromotions = cachedPromotions.filter(x => x.id !== id);
+            renderPromotionsList();
+          } catch (err: any) {
+            alert('Could not delete promotion: ' + err.message);
+          } finally {
+            (btn as HTMLButtonElement).disabled = false;
+          }
+        }
+      });
+    });
+  }
+
+  // Handle New Promo Form Submission (Enforces 15-stored cap)
+  // Handle New Promo Form Submission (Enforces 15-stored cap with full visual feedback)
+  if (newPromoForm) {
+    newPromoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const titleInput = document.getElementById('promo-title') as HTMLInputElement | null;
+      const categoryInput = document.getElementById('promo-category') as HTMLSelectElement | null;
+      const tagInput = document.getElementById('promo-tag') as HTMLInputElement | null;
+      const validityInput = document.getElementById('promo-validity') as HTMLInputElement | null;
+      const descInput = document.getElementById('promo-desc') as HTMLTextAreaElement | null;
+
+      const title = titleInput?.value.trim() || '';
+      const category = categoryInput?.value || 'Gate Automation';
+      const tag = tagInput?.value.trim() || 'Special Offer';
+      const validity = validityInput?.value.trim() || 'Until Stock Last';
+      const desc = descInput?.value.trim() || title; // Default to title if empty
+
+      // Check 15-stored hard cap
+      if (cachedPromotions.length >= MAX_STORED_PROMOTIONS) {
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = `⚠️ <strong>Storage Limit Reached:</strong> You currently have ${cachedPromotions.length}/${MAX_STORED_PROMOTIONS} posters stored. Please delete an older poster from the list on the right before uploading a new one.`;
+          promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+          promoFormStatus.classList.remove('hidden');
+        }
+        return;
+      }
+
+      // 1. Validate Poster Image is chosen
+      if (!selectedFileForUpload) {
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = `⚠️ <strong>Missing Poster Image:</strong> Please select or drag & drop a 9:16 vertical poster image file into the upload box above.`;
+          promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 animate-pulse';
+          promoFormStatus.classList.remove('hidden');
+        }
+        promoDropzone?.classList.add('border-rose-500', 'ring-2', 'ring-rose-500/30');
+        promoDropzone?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // 2. Validate Title
+      if (!title) {
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = `⚠️ <strong>Missing Promotion Title:</strong> Please provide a name or title for this promotion (e.g. Beninca Sliding Gate Motor Kit).`;
+          promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+          promoFormStatus.classList.remove('hidden');
+        }
+        titleInput?.focus();
+        titleInput?.classList.add('border-rose-500', 'ring-1', 'ring-rose-500');
+        return;
+      }
+
+      // Enter Loading State
+      if (submitPromoBtn) {
+        submitPromoBtn.disabled = true;
+        submitPromoBtn.classList.add('opacity-75', 'cursor-not-allowed');
+      }
+      if (submitBtnText) submitBtnText.textContent = 'Uploading to Cloud Storage...';
+      if (submitBtnIcon) {
+        submitBtnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>`;
+        submitBtnIcon.classList.add('animate-spin');
+      }
+
+      if (promoFormStatus) {
+        promoFormStatus.innerHTML = `⏳ <strong>Step 1 of 2:</strong> Uploading image file to Supabase Cloud Storage bucket (promotions)...`;
+        promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30';
+        promoFormStatus.classList.remove('hidden');
+      }
+
+      try {
+        // Step 1: Upload image file directly to Supabase Storage
+        const finalImageUrl = await uploadPosterImage(selectedFileForUpload);
+
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = `⏳ <strong>Step 2 of 2:</strong> Registering promotion record in Supabase database...`;
+        }
+
+        // Active status: active if under 10 live limit, otherwise saved as hidden
+        const activeCount = cachedPromotions.filter(p => p.active).length;
+        const willBeActive = activeCount < MAX_LIVE_PROMOTIONS;
+
+        // Step 2: Insert row in Supabase 'promotions' table
+        const { data, error } = await supabase.from('promotions').insert({
+          title,
+          description: desc,
+          image_url: finalImageUrl,
+          tag,
+          valid_till: validity,
+          cta_category: category,
+          active: willBeActive,
+          sort_order: cachedPromotions.length
+        }).select().single();
+
+        if (error) throw error;
+
+        // Reset Form & Dropzone State
+        newPromoForm.reset();
+        selectedFileForUpload = null;
+        if (promoImageInput) promoImageInput.value = '';
+        uploadPreviewWrap?.classList.add('hidden');
+        uploadPrompt?.classList.remove('hidden');
+        promoDropzone?.classList.remove('border-emerald-500/60', 'border-rose-500');
+
+        // Show Success Feedback
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = willBeActive
+            ? `✓ <strong>Success!</strong> Poster uploaded to Supabase Storage and published <strong>LIVE</strong> on the website!`
+            : `✓ <strong>Success!</strong> Poster uploaded to Supabase Storage and saved as <strong>Hidden</strong> (website limit of 10 live posters is currently full).`;
+          promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-md';
+          promoFormStatus.classList.remove('hidden');
+        }
+
+        // Refresh List from Supabase
+        await loadPromotionsFromSupabase();
+
+        // Auto-hide success message after 6 seconds
+        setTimeout(() => {
+          if (promoFormStatus && promoFormStatus.textContent?.includes('Success')) {
+            promoFormStatus.classList.add('hidden');
+          }
+        }, 6000);
+
+      } catch (err: any) {
+        console.error('Supabase upload error:', err);
+        if (promoFormStatus) {
+          promoFormStatus.innerHTML = `❌ <strong>Upload Failed:</strong> ${err.message || 'Error communicating with Supabase'}. Please check your connection.`;
+          promoFormStatus.className = 'p-3.5 rounded-xl text-xs font-semibold text-center bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+          promoFormStatus.classList.remove('hidden');
+        }
+      } finally {
+        if (submitPromoBtn) {
+          submitPromoBtn.disabled = false;
+          submitPromoBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        }
+        if (submitBtnText) submitBtnText.textContent = 'Upload & Publish to Supabase';
+        if (submitBtnIcon) {
+          submitBtnIcon.classList.remove('animate-spin');
+          submitBtnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>`;
+        }
+      }
+    });
+  }
+
+  // Refresh Promotions Button
+  if (refreshPromosBtn) {
+    refreshPromosBtn.addEventListener('click', () => {
+      loadPromotionsFromSupabase();
+    });
+  }
+
+  // Initialize Auth
+  checkAuth();
+</script>

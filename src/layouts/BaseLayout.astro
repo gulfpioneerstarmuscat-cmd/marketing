@@ -1,0 +1,279 @@
+---
+import '../styles/global.css';
+import QuoteModal from '../components/QuoteModal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  hideFloatingWidget?: boolean;
+}
+
+const {
+  title = "GPS Muscat | Gate Automation & Access Control Solutions in Oman",
+  description = "Premier supplier of automatic sliding & swing gate motors, boom barriers, access control systems, magnetic door locks, and security hardware in Muscat, Oman.",
+  image = "/assets/logo/GPSMUSCAT_Logo_white_500x60.svg",
+  hideFloatingWidget = false
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://www.gpsmuscat.com");
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "GPS Muscat (Gulf Pioneer Star)",
+  "description": "Leading technical supplier of gate automation, boom barriers, access control systems, and security accessories in Muscat, Oman.",
+  "url": "https://www.gpsmuscat.com",
+  "logo": "https://www.gpsmuscat.com/assets/logo/GPSMUSCAT_Logo_white_500x60.svg",
+  "telephone": "+96891214949",
+  "email": "gulfpioneerstarmuscat@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Muscat",
+    "addressCountry": "OM"
+  },
+  "department": [
+    {
+      "@type": "LocalBusiness",
+      "name": "GPS Muscat - Al Khoudh Branch",
+      "telephone": "+96891214949",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Al Khoudh, Muscat",
+        "addressCountry": "OM"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "GPS Muscat - Ghala Branch",
+      "telephone": "+96897440010",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ghala, Muscat",
+        "addressCountry": "OM"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "08:00",
+          "closes": "16:00"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo/GPS.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <!-- Theme Initialization Script (Runs synchronously to prevent theme flickering) -->
+    <script is:inline>
+      (function() {
+        try {
+          const stored = localStorage.getItem('theme');
+          const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+          const theme = stored ? stored : (darkQuery.matches ? 'dark' : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+
+          // If user hasn't set a manual override, adapt automatically when OS preference changes
+          darkQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+              if (e.matches) {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
+            }
+          });
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="gate automation Oman, sliding gate motor Muscat, boom barrier Muscat, swing gate motor, access control Oman, BFT Somfy Came Muscat, Beninca Muscat, Roger technology Oman" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Preload Critical Above-The-Fold Hero Visualizer Asset -->
+    <link rel="preload" as="image" href="/assets/images/hero_sliding_gate.jpg" fetchpriority="high" />
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  </head>
+  <body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-cyan-500 selection:text-white transition-colors duration-300">
+    <!-- Ambient Background Light Effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10 transition-opacity duration-500" aria-hidden="true">
+      <div class="absolute -top-48 -left-48 w-lg h-128 bg-cyan-500/10 dark:bg-cyan-600/15 rounded-full blur-[128px]"></div>
+      <div class="absolute top-1/4 -right-48 w-md h-112 bg-sky-500/10 dark:bg-sky-600/10 rounded-full blur-[128px]"></div>
+      <div class="absolute -bottom-48 left-1/3 w-xl h-144 bg-blue-500/10 dark:bg-blue-700/10 rounded-full blur-[140px]"></div>
+    </div>
+
+    <!-- Main Content Slot -->
+    <slot />
+
+    <!-- Floating WhatsApp Quick Connect Button (Routes to Branch Selector in Footer) -->
+    {!hideFloatingWidget && (
+      <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 group">
+        <!-- Tooltip -->
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-900 dark:bg-slate-800 text-slate-100 text-xs font-medium px-3 py-1.5 rounded-lg shadow-xl whitespace-nowrap border border-slate-700">
+          Contact Branches (Al Khoudh & Ghala)
+        </span>
+        <a
+          href="#contact"
+          aria-label="Contact Our Branches in Muscat"
+          class="flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 border border-emerald-500/30 shadow-xl hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95 p-3"
+        >
+          <img src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-full h-full object-contain" />
+        </a>
+      </div>
+    )}
+    <!-- Interactive Quotation Modal -->
+    <QuoteModal />
+
+    <!-- Clean Navigation Smooth Scroll & Always Reload to Top (No #hash in URL bar) -->
+    <script is:inline>
+      (function initCleanNavigation() {
+        // Force browser reload to always start at the top of the site (Hero)
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+
+        // Clean any existing hash on load and ensure top position
+        if (!window.location.pathname.startsWith('/admin')) {
+          if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
+          window.addEventListener('beforeunload', () => {
+            window.scrollTo(0, 0);
+          });
+        }
+
+        // Intercept internal anchor links for smooth scrolling without appending #hash to URL
+        document.addEventListener('click', (e) => {
+          const anchor = e.target.closest('a[href^="#"]');
+          if (!anchor) return;
+
+          const targetId = anchor.getAttribute('href');
+          if (!targetId || targetId === '#') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+
+          try {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              e.preventDefault();
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+
+              // Close mobile drawer menu if open
+              const mobileMenu = document.getElementById('mobile-menu');
+              const menuToggle = document.getElementById('mobile-menu-toggle');
+              const iconOpen = document.getElementById('menu-icon-open');
+              const iconClose = document.getElementById('menu-icon-close');
+              if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                menuToggle?.setAttribute('aria-expanded', 'false');
+                iconOpen?.classList.remove('hidden');
+                iconClose?.classList.add('hidden');
+              }
+            }
+          } catch (err) {}
+        });
+      })();
+    </script>
+
+    <!-- Universal WhatsApp Route Optimizer (Direct native app launch on mobile, WhatsApp Web on desktop) -->
+    <script is:inline>
+      (function optimizeWhatsAppLinks() {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        function setupLinks() {
+          document.querySelectorAll('a[href*="whatsapp.com"], a[href*="wa.me/"], a[href^="whatsapp://"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+              const phoneMatch = href.match(/(?:wa\.me\/|phone=)(\d+)/);
+              const textMatch = href.match(/text=([^&]+)/);
+              if (phoneMatch && phoneMatch[1]) {
+                const phone = phoneMatch[1];
+                const text = textMatch ? `&text=${textMatch[1]}` : '';
+                
+                if (isMobile) {
+                  // Direct native WhatsApp mobile scheme to bypass intermediary download web page
+                  const nativeUrl = `whatsapp://send?phone=${phone}${text}`;
+                  const fallbackUrl = `https://api.whatsapp.com/send?phone=${phone}${text}`;
+                  link.href = nativeUrl;
+                  link.removeAttribute('target');
+                  link.removeAttribute('rel');
+                  
+                  if (!link.dataset.waAttached) {
+                    link.dataset.waAttached = 'true';
+                    link.addEventListener('click', (e) => {
+                      e.preventDefault();
+                      const start = Date.now();
+                      window.location.href = nativeUrl;
+                      setTimeout(() => {
+                        if (document.hasFocus() && Date.now() - start < 2000) {
+                          window.location.href = fallbackUrl;
+                        }
+                      }, 1500);
+                    });
+                  }
+                } else {
+                  // Desktop WhatsApp Web
+                  link.href = `https://web.whatsapp.com/send?phone=${phone}${text}`;
+                  link.target = '_blank';
+                  link.rel = 'noopener noreferrer';
+                }
+              }
+            }
+          });
+        }
+
+        setupLinks();
+        if (document.readyState !== 'complete') {
+          window.addEventListener('DOMContentLoaded', setupLinks);
+        }
+      })();
+    </script>
+  </body>
+</html>

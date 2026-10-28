@@ -1,0 +1,83 @@
+---
+// src/components/BrandMarquee.astro - Infinite Brand Partner Logo Marquee
+import { partnerBrands } from '../data/brands';
+
+// Duplicate the array to create a seamless infinite looping ribbon
+const marqueeItems = [...partnerBrands, ...partnerBrands];
+---
+
+<section class="py-10 sm:py-14 border-t border-slate-200/70 dark:border-slate-800/70 bg-slate-100/40 dark:bg-slate-900/30 overflow-hidden transition-colors">
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8 text-center">
+    <!-- Eyebrow Pill with Exact Scroll Margin (Target for Brands) -->
+    <div id="brands" class="scroll-mt-21 sm:scroll-mt-24 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400 mb-2.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+      <span>Official Distribution & Direct Stock</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      Authorized European & Global <span class="bg-linear-to-r from-sky-600 to-cyan-500 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">Partner Brands</span>
+    </h2>
+    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl mx-auto">
+      Direct factory supply of certified gate automation, barriers, and electronic security hardware in Muscat.
+    </p>
+  </div>
+
+  <!-- Marquee Outer Wrapper with Gradient Fade Edges -->
+  <div class="relative w-full overflow-hidden mask-linear-fade">
+    
+    <!-- Left & Right Gradient Shadows for Seamless Overflow -->
+    <div class="absolute left-0 inset-y-0 w-16 sm:w-28 bg-linear-to-r from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 inset-y-0 w-16 sm:w-28 bg-linear-to-l from-slate-50 dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
+
+    <!-- Scrolling Track (Infinite Marquee with Pause on Hover) -->
+    <div class="flex gap-6 w-max animate-marquee hover:[animation-play-state:paused] py-2">
+      {marqueeItems.map((brand) => (
+        <div
+          class="relative flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl glass-card bg-linear-to-b from-white via-cyan-50/20 to-sky-50/30 dark:from-slate-900/90 dark:via-slate-900/80 dark:to-cyan-950/40 border border-slate-200/80 dark:border-cyan-500/25 hover:border-cyan-500/50 dark:hover:border-cyan-400/60 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-cyan-500/10 shrink-0 group min-w-[155px] sm:min-w-[185px] overflow-hidden"
+        >
+          <!-- Subtle Brand Gradient Hue Glow Overlay -->
+          <div class="absolute inset-0 bg-linear-to-br from-sky-500/5 via-cyan-500/5 to-blue-600/10 dark:from-sky-500/10 dark:via-cyan-500/10 dark:to-blue-600/20 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity"></div>
+
+          <!-- Brand Logo Graphic Container (Enlarged with Brand Blue Gradient Hue & High-Contrast Light Plaque in both modes) -->
+          <div class="relative z-10 h-13 sm:h-16 w-32 sm:w-40 flex items-center justify-center p-2 rounded-xl bg-linear-to-br from-white via-sky-50/80 to-cyan-50/90 dark:from-white dark:via-sky-50/95 dark:to-cyan-50/90 border border-slate-200/70 dark:border-white/20 shadow-xs group-hover:scale-105 transition-transform duration-300">
+            <img
+              src={brand.logo}
+              alt={brand.name}
+              class="max-h-9 sm:max-h-11 max-w-full object-contain"
+              loading="eager"
+              decoding="async"
+              width="160"
+              height="44"
+            />
+          </div>
+
+          <!-- Region / Origin only below the logo -->
+          <span class="relative z-10 mt-2.5 text-[11px] sm:text-xs font-mono font-bold tracking-wider text-slate-500 dark:text-cyan-400/90 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors uppercase">
+            {brand.origin}
+          </span>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+</style>

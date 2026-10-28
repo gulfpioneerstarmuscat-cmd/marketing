@@ -1,0 +1,271 @@
+---
+// src/components/Hero.astro - High-Impact Entrance & Automation Showcase
+
+// Single Source of Truth for the Hero Equipment Visualizer Tabs
+const heroTabs = {
+  sliding: {
+    category: "Sliding Gate Automation",
+    badge: "400kg – 2,000kg Motors",
+    image: "/assets/images/hero_sliding_gate.jpg",
+    alt: "Automatic Sliding Gate Motor System in Muscat",
+    link: "#gate-automation"
+  },
+  barriers: {
+    category: "Automatic Boom Barriers",
+    badge: "Up to 6m Boom Arms",
+    image: "/assets/images/hero_boom_barrier.jpg",
+    alt: "Automatic Vehicle Boom Barrier in Muscat",
+    link: "#boom-barriers"
+  },
+  access: {
+    category: "Biometrics & Access Control",
+    badge: "RFID & EM Locks",
+    image: "/assets/images/hero_access_control.jpg",
+    alt: "Biometric Scanners & RFID Access Control in Muscat",
+    link: "#access-control"
+  }
+};
+
+const initialTab = heroTabs.sliding;
+---
+
+<section class="relative pt-8 pb-12 sm:pt-12 sm:pb-14 lg:pt-16 lg:pb-16 overflow-hidden transition-colors">
+  
+  <!-- Subtle Ambient Glow Effects -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-112.5 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -top-32 left-1/4 w-120 h-120 bg-cyan-500/15 dark:bg-cyan-500/10 rounded-full blur-[140px]"></div>
+    <div class="absolute -top-20 right-1/4 w-112 h-112 bg-blue-500/10 dark:bg-sky-600/10 rounded-full blur-[130px]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Hero Grid: Left Content, Right Interactive Visualizer -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      
+      <!-- Left Column: Copy, Value Badges & Actions -->
+      <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-left">
+        
+        <!-- Eyebrow Pill with Exact Scroll Margin -->
+        <div id="home" class="scroll-mt-21 sm:scroll-mt-24 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+          <span class="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse"></span>
+          <span>Gulf Pioneer Star Muscat • Official Equipment Supplier</span>
+        </div>
+
+        <!-- Primary Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+          Commercial & Residential <br class="hidden sm:inline" />
+          <span class="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">
+            Gate Automation
+          </span> & <br class="hidden sm:inline" />
+          Access Control Systems.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+          Muscat's premier technical supplier of European sliding and swing gate motors, high-cycle parking boom barriers, electromagnetic locks, and biometric entrance hardware. Ready stock with same-day pickup at our Al Khoudh & Ghala branches.
+        </p>
+
+        <!-- Polished Balanced CTAs (Unison layout, no awkward wrapping or dangling links) -->
+        <div class="pt-1 flex flex-wrap items-center gap-3 sm:gap-3.5">
+          <!-- Primary: Products Grid -->
+          <a
+            href="#products"
+            class="inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-linear-to-r dark:from-sky-500 dark:via-cyan-500 dark:to-blue-600 dark:hover:from-sky-400 dark:hover:to-cyan-400 text-white dark:text-slate-950 font-bold text-xs sm:text-sm shadow-xl shadow-cyan-500/10 hover:shadow-cyan-500/25 transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+          >
+            <span>Explore Equipment Catalog</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </a>
+
+          <!-- Secondary: Instant Quote Modal Trigger -->
+          <button
+            type="button"
+            data-open-quote-modal
+            class="inline-flex items-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 text-xs sm:text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer shadow-xs"
+          >
+            <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+            <span>Get Equipment Quote</span>
+          </button>
+
+          <!-- Tertiary: Active Promotions Quick Jump -->
+          <a
+            href="#promotions"
+            class="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-slate-800 font-semibold text-xs sm:text-sm transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-xs"
+          >
+            <span class="text-xs">🔥</span>
+            <span>Active Offers</span>
+          </a>
+        </div>
+
+        <!-- Trust Features Row (Cleanly integrated with branch location link) -->
+        <div class="pt-3 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-300">
+          <div class="flex items-center gap-1.5">
+            <span class="w-4.5 h-4.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+            <span class="font-medium">Italian & European Motors</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-4.5 h-4.5 rounded-md bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center font-bold text-xs">✓</span>
+            <span class="font-medium">Muscat Ready Stock</span>
+          </div>
+          <a
+            href="#contact"
+            class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors group font-medium"
+          >
+            <span class="w-4.5 h-4.5 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition-transform">📍</span>
+            <span>Al Khoudh & Ghala Branches</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Equipment Visualizer -->
+      <div class="lg:col-span-5">
+        <div class="glass-card rounded-2xl p-5 sm:p-6 space-y-4 relative overflow-hidden border border-slate-200/80 dark:border-slate-800/80 shadow-2xl">
+          
+          <!-- Ambient Corner Glow -->
+          <div class="absolute -top-14 -right-14 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+          <!-- Top Terminal Header -->
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-800/80">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 ml-2">SPEC: GPS_OMAN_EQUIP</span>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold">
+              Live Stock
+            </span>
+          </div>
+
+          <!-- Interactive Tab Selector -->
+          <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-[11px] font-semibold text-center">
+            <button
+              type="button"
+              id="hero-tab-sliding"
+              class="hero-tab-btn py-1.5 px-2 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm font-semibold"
+              data-tab="sliding"
+            >
+              Sliding Gates
+            </button>
+            <button
+              type="button"
+              id="hero-tab-barriers"
+              class="hero-tab-btn py-1.5 px-2 rounded-lg transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              data-tab="barriers"
+            >
+              Boom Barriers
+            </button>
+            <button
+              type="button"
+              id="hero-tab-access"
+              class="hero-tab-btn py-1.5 px-2 rounded-lg transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              data-tab="access"
+            >
+              Access Control
+            </button>
+          </div>
+
+          <!-- Equipment Visual Display (Zero-Lag Stacked Layers) -->
+          <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 aspect-4/3 bg-slate-950 shadow-inner">
+            {Object.entries(heroTabs).map(([key, tab], idx) => (
+              <img
+                id={`hero-spec-img-${key}`}
+                src={tab.image}
+                alt={tab.alt}
+                loading="eager"
+                fetchpriority={idx === 0 ? "high" : "auto"}
+                decoding="async"
+                class={`hero-spec-layer absolute inset-0 w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
+              />
+            ))}
+            
+            <!-- Crisp Gradient Shadow for Information Contrast -->
+            <div class="absolute inset-0 bg-linear-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none z-20"></div>
+
+            <!-- Floating Equipment Badge & Link -->
+            <div class="absolute bottom-3.5 inset-x-3.5 flex items-center justify-between text-white pointer-events-none z-30">
+              <div>
+                <p id="hero-spec-category" class="text-xs sm:text-sm font-bold text-white drop-shadow-md">
+                  {initialTab.category}
+                </p>
+                <p id="hero-spec-badge" class="text-[10px] font-mono text-cyan-400 font-semibold drop-shadow-md">
+                  {initialTab.badge}
+                </p>
+              </div>
+              
+              <a
+                id="hero-spec-link"
+                href={initialTab.link}
+                class="pointer-events-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-md text-[11px] font-semibold text-white border border-white/20 shadow-md transition-all hover:scale-105 active:scale-95"
+              >
+                <span>View Details</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Status Ticker (Kept exactly as edited by user) -->
+          <div class="pt-3 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Al Khoudh Branch: Open 09:00 - 17:00 
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Ghala Branch: Open 08:00 - 16:00
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script is:inline define:vars={{ heroTabs }}>
+  // Interactive Hero Equipment Tab Switcher (Instant 0ms Cross-fade, No Loading Lag)
+  (function() {
+    const category = document.getElementById('hero-spec-category');
+    const badge = document.getElementById('hero-spec-badge');
+    const link = document.getElementById('hero-spec-link');
+    const tabBtns = document.querySelectorAll('.hero-tab-btn');
+    const layers = document.querySelectorAll('.hero-spec-layer');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabKey = btn.getAttribute('data-tab');
+        const data = heroTabs[tabKey];
+        if (!data) return;
+
+        // Update active tab button style
+        tabBtns.forEach(b => {
+          b.className = "hero-tab-btn py-1.5 px-2 rounded-lg transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+        });
+        btn.className = "hero-tab-btn py-1.5 px-2 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm font-semibold";
+
+        // Instantly cross-fade the stacked image layers
+        layers.forEach(layer => {
+          if (layer.id === `hero-spec-img-${tabKey}`) {
+            layer.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+            layer.classList.add('opacity-100', 'z-10');
+          } else {
+            layer.classList.remove('opacity-100', 'z-10');
+            layer.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+          }
+        });
+
+        // Update text labels and link
+        if (category) category.textContent = data.category;
+        if (badge) badge.textContent = data.badge;
+        if (link) link.href = data.link;
+      });
+    });
+  })();
+</script>
