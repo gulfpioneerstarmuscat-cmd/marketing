@@ -27,14 +27,14 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
     class="relative w-full max-w-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden z-10 transition-all duration-300 transform scale-95 opacity-0 my-auto"
   >
     <!-- Modal Header -->
-    <div class="px-6 sm:px-8 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-4">
+    <div class="px-5 sm:px-8 pt-5 pb-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
       <div>
-        <h2 id="quote-modal-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <span>Request a Quick Quote</span>
+        <h2 id="quote-modal-title" class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
+          <span>Quick Quote</span>
           <span class="text-xs font-normal text-slate-400 font-sans">(طلب تسعيرة)</span>
         </h2>
         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-          Fill in a few details and our Muscat team will prepare your price.
+          Fill in a few details for immediate counter pricing.
         </p>
       </div>
 
@@ -42,7 +42,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
       <button
         id="quote-modal-close"
         type="button"
-        class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors cursor-pointer text-lg"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-colors cursor-pointer text-base sm:text-lg shrink-0"
         aria-label="Close dialog"
       >
         ✕
@@ -50,65 +50,37 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
     </div>
 
     <!-- Modal Form Body -->
-    <div class="max-h-[80vh] overflow-y-auto px-6 sm:px-8 py-5 custom-scrollbar">
+    <div class="max-h-[82vh] overflow-y-auto px-5 sm:px-8 py-4 sm:py-5 custom-scrollbar">
       
       <!-- Submission Alert Box -->
-      <div id="quote-form-alert" class="hidden mb-4 p-3.5 rounded-xl text-xs sm:text-sm font-medium" role="alert"></div>
+      <div id="quote-form-alert" class="hidden mb-3 p-3 rounded-xl text-xs sm:text-sm font-medium" role="alert"></div>
 
       <!-- Main Clean Form -->
-      <form id="quote-form" class="space-y-4 text-left" novalidate>
+      <form id="quote-form" class="space-y-3 sm:space-y-3.5 text-left" novalidate>
         <!-- Web3Forms Hidden Metadata -->
         <input type="hidden" name="access_key" value={web3FormsKey} />
         <input type="hidden" name="subject" value="New Equipment Quote Request - GPS Muscat" />
         <input type="hidden" name="from_name" value="GPS Muscat Quick Quote" />
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off" />
 
-        <!-- 1. Name Row: Title + First Name + Last Name -->
+        <!-- 1. Full Name (Single Clean Field) -->
         <div>
-          <label class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          <label for="quote-name" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
             Your Name <span class="text-rose-500">*</span>
           </label>
-          <div class="grid grid-cols-12 gap-2 sm:gap-3">
-            <!-- Title / Pronoun -->
-            <div class="col-span-4 sm:col-span-3">
-              <select
-                id="quote-title"
-                name="title"
-                class="w-full h-11 px-3 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500"
-              >
-                <option value="">(Blank)</option>
-                <option value="Mr.">Mr.</option>
-                <option value="Mrs.">Mrs.</option>
-              </select>
-            </div>
-            <!-- First Name -->
-            <div class="col-span-4 sm:col-span-5">
-              <input
-                type="text"
-                id="quote-first-name"
-                name="first_name"
-                required
-                placeholder="First name"
-                class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-              />
-            </div>
-            <!-- Last Name -->
-            <div class="col-span-4 sm:col-span-4">
-              <input
-                type="text"
-                id="quote-last-name"
-                name="last_name"
-                required
-                placeholder="Last name"
-                class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-              />
-            </div>
-          </div>
+          <input
+            type="text"
+            id="quote-name"
+            name="full_name"
+            required
+            placeholder="e.g. Salim Al Harthy"
+            class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
         </div>
 
         <!-- 2. Phone Number (Calls & WhatsApp) -->
         <div>
-          <label for="quote-phone" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+          <label for="quote-phone" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
             Phone Number (Calls & WhatsApp) <span class="text-rose-500">*</span>
           </label>
           <div class="relative flex items-center">
@@ -121,7 +93,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
               name="phone"
               required
               placeholder="9123 4567"
-              class="w-full h-11 pl-22 pr-3.5 text-sm sm:text-base font-medium rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              class="w-full h-11 pl-22 pr-3.5 text-xs sm:text-sm font-medium rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
         </div>
@@ -131,16 +103,16 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
           <button
             type="button"
             id="quote-toggle-extra-contact"
-            class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
+            class="text-[11px] sm:text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <span id="extra-contact-icon">+</span>
             <span>Add alternative WhatsApp or Email (Optional)</span>
           </button>
           
-          <div id="quote-extra-contact-fields" class="hidden mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div id="quote-extra-contact-fields" class="hidden mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
             <div>
-              <label for="quote-whatsapp" class="block text-xs text-slate-500 dark:text-slate-400 mb-1">
-                Alternative WhatsApp (Optional)
+              <label for="quote-whatsapp" class="block text-[11px] text-slate-500 dark:text-slate-400 mb-0.5">
+                Alternative WhatsApp
               </label>
               <input
                 type="tel"
@@ -151,8 +123,8 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
               />
             </div>
             <div>
-              <label for="quote-email" class="block text-xs text-slate-500 dark:text-slate-400 mb-1">
-                Email Address (Optional)
+              <label for="quote-email" class="block text-[11px] text-slate-500 dark:text-slate-400 mb-0.5">
+                Email Address
               </label>
               <input
                 type="email"
@@ -165,11 +137,11 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
           </div>
         </div>
 
-        <!-- 3. Location: Governorate + Area -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+        <!-- 3. Location: Governorate + Area / Wilayat -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           <!-- Governorate Dropdown -->
           <div>
-            <label for="quote-region" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+            <label for="quote-region" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
               Governorate (المحافظة) <span class="text-rose-500">*</span>
             </label>
             <select
@@ -192,39 +164,25 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
             </select>
           </div>
 
-          <!-- Address Line 1: Area / Landmark -->
+          <!-- Area / Landmark / Wilayat -->
           <div>
-            <label for="quote-address1" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
-              Area / Street / Landmark <span class="text-rose-500">*</span>
+            <label for="quote-address1" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
+              Area / Landmark / Wilayat <span class="text-rose-500">*</span>
             </label>
             <input
               type="text"
               id="quote-address1"
               name="address_line1"
               required
-              placeholder="e.g. Al Khoudh, Al Mouj, or Way 2145"
+              placeholder="e.g. Al Khoudh, Seeb, Al Mouj"
               class="w-full h-11 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
         </div>
 
-        <!-- Address Line 2: Villa / Building (Clean & Optional) -->
-        <div>
-          <label for="quote-address2" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-            Villa / Building No. or Wilayat <span class="text-xs text-slate-400 font-normal">(Optional)</span>
-          </label>
-          <input
-            type="text"
-            id="quote-address2"
-            name="address_line2"
-            placeholder="e.g. Villa 24 or Seeb"
-            class="w-full h-10 px-3.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-          />
-        </div>
-
         <!-- 4. Equipment Needed -->
-        <div class="pt-1">
-          <label for="quote-category" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+        <div>
+          <label for="quote-category" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
             What equipment do you need? <span class="text-rose-500">*</span>
           </label>
           <select
@@ -246,37 +204,37 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
 
         <!-- 5. Brief Notes -->
         <div>
-          <label for="quote-message" class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
-            Brief Notes or Gate Dimensions <span class="text-xs text-slate-400 font-normal">(Optional)</span>
+          <label for="quote-message" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+            Brief Notes or Dimensions <span class="text-xs text-slate-400 font-normal">(Optional)</span>
           </label>
           <textarea
             id="quote-message"
             name="message"
             rows="2"
-            placeholder="e.g. 5-meter sliding gate, need 3 remotes and safety sensors."
-            class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none leading-relaxed"
+            placeholder="e.g. 5m sliding gate, 3 remotes, need installation"
+            class="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none leading-relaxed"
           ></textarea>
         </div>
 
         <!-- 6. Preferred Branch (Simple 2-Pill Selection) -->
-        <div class="pt-1">
-          <label class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">
             Select Closest Branch for Fast Contact:
           </label>
-          <div class="grid grid-cols-2 gap-2.5">
-            <label class="branch-pill-label flex items-center justify-center gap-2 p-2.5 rounded-xl border border-cyan-500 bg-cyan-50/50 dark:bg-cyan-950/30 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold cursor-pointer transition-all">
+          <div class="grid grid-cols-2 gap-2">
+            <label class="branch-pill-label flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-cyan-500 bg-cyan-50/50 dark:bg-cyan-950/30 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold cursor-pointer transition-all">
               <input type="radio" name="preferred_branch" value="Al Khoudh Branch" checked class="text-cyan-600 focus:ring-cyan-500" />
               <span>📍 Al Khoudh</span>
             </label>
-            <label class="branch-pill-label flex items-center justify-center gap-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-semibold cursor-pointer transition-all">
+            <label class="branch-pill-label flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-semibold cursor-pointer transition-all">
               <input type="radio" name="preferred_branch" value="Ghala Branch" class="text-cyan-600 focus:ring-cyan-500" />
               <span>📍 Ghala</span>
             </label>
           </div>
         </div>
 
-        <!-- 7. Action Buttons (Big, High-Contrast, Accessible for all ages) -->
-        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+        <!-- 7. Action Buttons (Big, High-Contrast, 20:80 Clear + WhatsApp) -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
           
           <!-- Primary Submit Button (Web3Forms - Commented out for now, kept for future use)
           <button
@@ -299,7 +257,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
               type="button"
               id="quote-clear-btn"
               title="Clear all form fields"
-              class="w-1/5 min-w-[70px] h-11 flex items-center justify-center gap-1.5 px-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-600 dark:text-rose-400 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer"
+              class="w-1/5 min-w-[68px] h-11 flex items-center justify-center gap-1 px-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-600 dark:text-rose-400 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer"
             >
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -311,10 +269,10 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
             <button
               type="button"
               id="quote-whatsapp-direct-btn"
-              class="flex-1 h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
+              class="flex-1 h-11 flex items-center justify-center gap-2 px-3.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition-all active:scale-98 cursor-pointer"
             >
               <span id="quote-wa-btn-spinner" class="hidden w-4 h-4 border-2 border-emerald-600 dark:border-emerald-400 border-t-transparent rounded-full animate-spin"></span>
-              <span id="quote-wa-btn-text">Sent Quotation Through</span>
+              <span id="quote-wa-btn-text">Send Quote via WhatsApp</span>
               <img id="quote-wa-btn-logo" src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-5 h-5 object-contain" />
             </button>
           </div>
@@ -453,7 +411,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
       }
 
       setTimeout(() => {
-        const firstInput = document.getElementById('quote-first-name');
+        const firstInput = document.getElementById('quote-name');
         if (firstInput) firstInput.focus();
       }, 100);
     };
@@ -493,16 +451,12 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
 
     // Extract Form Data
     function getCleanFormData() {
-      const title = document.getElementById('quote-title')?.value || '';
-      const firstName = document.getElementById('quote-first-name')?.value.trim() || '';
-      const lastName = document.getElementById('quote-last-name')?.value.trim() || '';
-      const fullName = title ? `${title} ${firstName} ${lastName}` : `${firstName} ${lastName}`;
+      const fullName = document.getElementById('quote-name')?.value.trim() || '';
       const phone = document.getElementById('quote-phone')?.value.trim() || '';
       const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
       const email = document.getElementById('quote-email')?.value.trim() || '';
       const region = document.getElementById('quote-region')?.value || 'Muscat';
       const address1 = document.getElementById('quote-address1')?.value.trim() || '';
-      const address2 = document.getElementById('quote-address2')?.value.trim() || '';
       const category = document.getElementById('quote-category')?.value || 'Gate Automation';
       const message = document.getElementById('quote-message')?.value.trim() || '';
       
@@ -516,22 +470,18 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HE
 *Name:* ${fullName}
 *Phone:* +968 ${phone}
 ${altWhatsapp ? `*Alt WhatsApp:* +968 ${altWhatsapp}\n` : ''}${email ? `*Email:* ${email}\n` : ''}*Location:* ${region} - ${address1}
-${address2 ? `*Villa / Details:* ${address2}\n` : ''}*Equipment:* ${category}
+*Equipment:* ${category}
 ${message ? `*Notes:* ${message}\n` : ''}*Branch:* ${branch}
 ----------------------------------------
 _Sent from gpsmuscat.com_`;
 
       return {
-        title,
-        firstName,
-        lastName,
         fullName,
         phone,
         altWhatsapp,
         email,
         region,
         address1,
-        address2,
         category,
         message,
         branch,
@@ -545,31 +495,25 @@ _Sent from gpsmuscat.com_`;
 
     function saveQuoteDraft() {
       try {
-        const title = document.getElementById('quote-title')?.value || '';
-        const firstName = document.getElementById('quote-first-name')?.value.trim() || '';
-        const lastName = document.getElementById('quote-last-name')?.value.trim() || '';
+        const fullName = document.getElementById('quote-name')?.value.trim() || '';
         const phone = document.getElementById('quote-phone')?.value.trim() || '';
         const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
         const email = document.getElementById('quote-email')?.value.trim() || '';
         const region = document.getElementById('quote-region')?.value || '';
         const address1 = document.getElementById('quote-address1')?.value.trim() || '';
-        const address2 = document.getElementById('quote-address2')?.value.trim() || '';
         const category = document.getElementById('quote-category')?.value || '';
         const message = document.getElementById('quote-message')?.value.trim() || '';
         const selectedRadio = document.querySelector('input[name="preferred_branch"]:checked');
         const branch = selectedRadio ? selectedRadio.value : 'Al Khoudh Branch';
 
-        if (firstName || lastName || phone || altWhatsapp || email || address1 || address2 || message) {
+        if (fullName || phone || altWhatsapp || email || address1 || message) {
           const draft = {
-            title,
-            firstName,
-            lastName,
+            fullName,
             phone,
             altWhatsapp,
             email,
             region,
             address1,
-            address2,
             category,
             message,
             branch
@@ -591,15 +535,14 @@ _Sent from gpsmuscat.com_`;
           if (el && val !== undefined && val !== '') el.value = val;
         };
 
-        setVal('quote-title', draft.title);
-        setVal('quote-first-name', draft.firstName);
-        setVal('quote-last-name', draft.lastName);
+        // Support new fullName as well as older legacy firstName/lastName
+        const restoredName = draft.fullName || [draft.title, draft.firstName, draft.lastName].filter(Boolean).join(' ');
+        setVal('quote-name', restoredName);
         setVal('quote-phone', draft.phone);
         setVal('quote-whatsapp', draft.altWhatsapp);
         setVal('quote-email', draft.email);
         setVal('quote-region', draft.region);
         setVal('quote-address1', draft.address1);
-        setVal('quote-address2', draft.address2);
         setVal('quote-category', draft.category);
         setVal('quote-message', draft.message);
 
@@ -675,7 +618,7 @@ _Sent from gpsmuscat.com_`;
     if (directWaBtn) {
       directWaBtn.addEventListener('click', () => {
         const data = getCleanFormData();
-        if (!data.firstName || !data.phone) {
+        if (!data.fullName || !data.phone) {
           showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
           return;
         }
@@ -689,7 +632,7 @@ _Sent from gpsmuscat.com_`;
         // Restore button state after 3.5s so returning to the tab resets cleanly
         setTimeout(() => {
           if (waBtnSpinner) waBtnSpinner.classList.add('hidden');
-          if (waBtnText) waBtnText.textContent = 'Sent Quotation Through';
+          if (waBtnText) waBtnText.textContent = 'Send Quote via WhatsApp';
           if (waBtnLogo) waBtnLogo.classList.remove('hidden');
           directWaBtn.classList.remove('pointer-events-none', 'opacity-85');
         }, 3500);
@@ -735,8 +678,8 @@ _Sent from gpsmuscat.com_`;
         e.preventDefault();
         const data = getCleanFormData();
 
-        if (!data.firstName || !data.lastName) {
-          showAlert('Please enter your First and Last Name.', 'error');
+        if (!data.fullName) {
+          showAlert('Please enter your Name.', 'error');
           return;
         }
         if (!data.phone || data.phone.length < 7) {
