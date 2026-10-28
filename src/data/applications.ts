@@ -55,7 +55,7 @@ export const applicationScenarios: ApplicationScenario[] = [
     subtitle: "Heavy-Tonnage Gates & Perimeter Security",
     description: "Extra heavy-duty sliding motors for cantilevered or steel industrial gates, 6-meter boom barriers for trucks, inductive vehicle loops, and rugged weatherproof power supplies.",
     idealFor: [
-      "Ghala & Rusayl industrial warehouses",
+      "industrial warehouses",
       "Logistics hubs & freight yards",
       "Factory perimeters & utility sub-stations",
       "Vehicle fleet depots & container terminals"
