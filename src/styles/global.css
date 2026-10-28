@@ -90,7 +90,19 @@ html:not(.dark) ::-webkit-scrollbar-track {
   background: #0284c7;
 }
 
-/* Infinite Marquee Animation for Brands */
+/* Text Gradient Rendering Safety Fallback - Prevents text from being transparent if background clip fails */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1, h2, h3, h4, h5, h6, p, span {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Infinite Marquee Animation for Brands with GPU composition */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -104,6 +116,10 @@ html:not(.dark) ::-webkit-scrollbar-track {
   display: flex;
   width: max-content;
   animation: marquee 35s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .animate-marquee:hover {

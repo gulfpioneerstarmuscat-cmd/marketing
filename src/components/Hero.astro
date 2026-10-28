@@ -6,14 +6,14 @@ const heroTabs = {
   sliding: {
     category: "Sliding Gate Automation",
     badge: "400kg – 2,000kg Motors",
-    image: "/assets/images/BULL624SW (1200 x 900 px).svg",
+    image: "/assets/images/hero_sliding_gate.jpg",
     alt: "Automatic Sliding Gate Motor System in Muscat",
     link: "#gate-automation"
   },
   barriers: {
     category: "Automatic Boom Barriers",
     badge: "Up to 6m Boom Arms",
-    image: "/assets/images/giotto60 (1200 x 900 px).svg",
+    image: "/assets/images/hero_boom_barrier.jpg",
     alt: "Automatic Vehicle Boom Barrier in Muscat",
     link: "#boom-barriers"
   },
@@ -144,7 +144,7 @@ const initialTab = heroTabs.sliding;
             <button
               type="button"
               id="hero-tab-sliding"
-              class="hero-tab-btn py-1.5 px-2 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+              class="hero-tab-btn py-1.5 px-2 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm font-semibold"
               data-tab="sliding"
             >
               Sliding Gates
@@ -167,20 +167,25 @@ const initialTab = heroTabs.sliding;
             </button>
           </div>
 
-          <!-- Equipment Visual Display (Replaces internal text part) -->
+          <!-- Equipment Visual Display (Zero-Lag Stacked Layers) -->
           <div class="relative group rounded-xl overflow-hidden border border-slate-200/80 dark:border-slate-800 aspect-4/3 bg-slate-950 shadow-inner">
-            <img
-              id="hero-spec-img"
-              src={initialTab.image}
-              alt={initialTab.alt}
-              class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-            />
+            {Object.entries(heroTabs).map(([key, tab], idx) => (
+              <img
+                id={`hero-spec-img-${key}`}
+                src={tab.image}
+                alt={tab.alt}
+                loading="eager"
+                fetchpriority={idx === 0 ? "high" : "auto"}
+                decoding="async"
+                class={`hero-spec-layer absolute inset-0 w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
+              />
+            ))}
             
             <!-- Crisp Gradient Shadow for Information Contrast -->
-            <div class="absolute inset-0 bg-linear-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none z-20"></div>
 
             <!-- Floating Equipment Badge & Link -->
-            <div class="absolute bottom-3.5 inset-x-3.5 flex items-center justify-between text-white pointer-events-none">
+            <div class="absolute bottom-3.5 inset-x-3.5 flex items-center justify-between text-white pointer-events-none z-30">
               <div>
                 <p id="hero-spec-category" class="text-xs sm:text-sm font-bold text-white drop-shadow-md">
                   {initialTab.category}
@@ -225,13 +230,13 @@ const initialTab = heroTabs.sliding;
 </section>
 
 <script is:inline define:vars={{ heroTabs }}>
-  // Interactive Hero Equipment Tab Switcher (Updates Image & Specs)
+  // Interactive Hero Equipment Tab Switcher (Instant 0ms Cross-fade, No Loading Lag)
   (function() {
-    const img = document.getElementById('hero-spec-img');
     const category = document.getElementById('hero-spec-category');
     const badge = document.getElementById('hero-spec-badge');
     const link = document.getElementById('hero-spec-link');
     const tabBtns = document.querySelectorAll('.hero-tab-btn');
+    const layers = document.querySelectorAll('.hero-spec-layer');
 
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -245,18 +250,21 @@ const initialTab = heroTabs.sliding;
         });
         btn.className = "hero-tab-btn py-1.5 px-2 rounded-lg transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm font-semibold";
 
-        // Smooth image and label transition
-        if (img) {
-          img.style.opacity = '0.3';
-          setTimeout(() => {
-            img.src = data.image;
-            img.alt = data.alt;
-            if (category) category.textContent = data.category;
-            if (badge) badge.textContent = data.badge;
-            if (link) link.href = data.link;
-            img.style.opacity = '1';
-          }, 120);
-        }
+        // Instantly cross-fade the stacked image layers
+        layers.forEach(layer => {
+          if (layer.id === `hero-spec-img-${tabKey}`) {
+            layer.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+            layer.classList.add('opacity-100', 'z-10');
+          } else {
+            layer.classList.remove('opacity-100', 'z-10');
+            layer.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+          }
+        });
+
+        // Update text labels and link
+        if (category) category.textContent = data.category;
+        if (badge) badge.textContent = data.badge;
+        if (link) link.href = data.link;
       });
     });
   })();

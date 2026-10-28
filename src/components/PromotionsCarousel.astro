@@ -66,7 +66,7 @@ try {
       style="scrollbar-width: none; -ms-overflow-style: none;"
     >
       {activePromos.length > 0 ? (
-        activePromos.map((promo) => (
+        activePromos.map((promo, idx) => (
           <article
             class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10"
           >
@@ -75,7 +75,8 @@ try {
               <img
                 src={promo.image_url}
                 alt={promo.title}
-                loading="lazy"
+                loading={idx < 3 ? "eager" : "lazy"}
+                decoding="async"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               
@@ -113,10 +114,10 @@ try {
                 <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">
                   {promo.cta_category || 'Equipment Offer'}
                 </span>
-                <h3 class="text-base font-bold text-white leading-snug line-clamp-2">
+                <h3 class="text-base font-bold text-white leading-snug line-clamp-2 min-h-11">
                   {promo.title}
                 </h3>
-                <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-8">
                   {promo.description}
                 </p>
 
@@ -290,10 +291,10 @@ try {
 
         if (livePromos && livePromos.length > 0 && carousel) {
           if (navArrows) navArrows.classList.remove('hidden');
-          carousel.innerHTML = livePromos.map((promo: PromotionRecord) => `
+          const newHtml = livePromos.map((promo: PromotionRecord) => `
             <article class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
               <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
-                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)}" loading="eager" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                 <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
                   <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${escapeHtml(promo.tag || 'Offer')}</span>
@@ -304,8 +305,8 @@ try {
                 </button>
                 <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 space-y-2 text-left">
                   <span class="text-[11px] font-semibold text-cyan-400 block tracking-wide uppercase font-mono">${escapeHtml(promo.cta_category || 'Equipment Offer')}</span>
-                  <h3 class="text-base font-bold text-white leading-snug line-clamp-2">${escapeHtml(promo.title)}</h3>
-                  <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">${escapeHtml(promo.description)}</p>
+                  <h3 class="text-base font-bold text-white leading-snug line-clamp-2 min-h-11">${escapeHtml(promo.title)}</h3>
+                  <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-8">${escapeHtml(promo.description)}</p>
                   <div class="pt-2">
                     <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
                       <span>Inquire for Branch Price</span>
@@ -316,6 +317,11 @@ try {
               </div>
             </article>
           `).join('');
+
+          // Only update DOM if content actually changed to avoid tearing loaded images
+          if (carousel.innerHTML !== newHtml) {
+            carousel.innerHTML = newHtml;
+          }
 
           // Re-attach handlers to new elements
           attachLightboxHandlers();

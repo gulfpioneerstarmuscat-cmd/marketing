@@ -87,13 +87,24 @@ const localBusinessSchema = {
       (function() {
         try {
           const stored = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = stored ? stored : (prefersDark ? 'dark' : 'dark'); // Default to dark or stored
+          const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+          const theme = stored ? stored : (darkQuery.matches ? 'dark' : 'light');
           if (theme === 'dark') {
             document.documentElement.classList.add('dark');
           } else {
             document.documentElement.classList.remove('dark');
           }
+
+          // If user hasn't set a manual override, adapt automatically when OS preference changes
+          darkQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+              if (e.matches) {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
+            }
+          });
         } catch (e) {}
       })();
     </script>
@@ -122,6 +133,9 @@ const localBusinessSchema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Preload Critical Above-The-Fold Hero Visualizer Asset -->
+    <link rel="preload" as="image" href="/assets/images/hero_sliding_gate.jpg" fetchpriority="high" />
 
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />

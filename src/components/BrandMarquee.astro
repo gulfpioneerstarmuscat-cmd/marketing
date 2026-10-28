@@ -44,7 +44,10 @@ const marqueeItems = [...partnerBrands, ...partnerBrands];
               src={brand.logo}
               alt={brand.name}
               class="max-h-9 sm:max-h-11 max-w-full object-contain"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
+              width="160"
+              height="44"
             />
           </div>
 
@@ -72,5 +75,9 @@ const marqueeItems = [...partnerBrands, ...partnerBrands];
 
   .animate-marquee {
     animation: marquee 35s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
   }
 </style>
