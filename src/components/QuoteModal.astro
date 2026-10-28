@@ -519,6 +519,99 @@ _Sent from gpsmuscat.com_`;
       };
     }
 
+    // --- Form Draft Recovery (Auto-save to sessionStorage so users never lose input on accidental reload) ---
+    const DRAFT_KEY = 'gps_quote_draft_v1';
+
+    function saveQuoteDraft() {
+      try {
+        const title = document.getElementById('quote-title')?.value || '';
+        const firstName = document.getElementById('quote-first-name')?.value.trim() || '';
+        const lastName = document.getElementById('quote-last-name')?.value.trim() || '';
+        const phone = document.getElementById('quote-phone')?.value.trim() || '';
+        const altWhatsapp = document.getElementById('quote-whatsapp')?.value.trim() || '';
+        const email = document.getElementById('quote-email')?.value.trim() || '';
+        const region = document.getElementById('quote-region')?.value || '';
+        const address1 = document.getElementById('quote-address1')?.value.trim() || '';
+        const address2 = document.getElementById('quote-address2')?.value.trim() || '';
+        const category = document.getElementById('quote-category')?.value || '';
+        const message = document.getElementById('quote-message')?.value.trim() || '';
+        const selectedRadio = document.querySelector('input[name="preferred_branch"]:checked');
+        const branch = selectedRadio ? selectedRadio.value : 'Al Khoudh Branch';
+
+        if (firstName || lastName || phone || altWhatsapp || email || address1 || address2 || message) {
+          const draft = {
+            title,
+            firstName,
+            lastName,
+            phone,
+            altWhatsapp,
+            email,
+            region,
+            address1,
+            address2,
+            category,
+            message,
+            branch
+          };
+          sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        }
+      } catch (err) {}
+    }
+
+    function restoreQuoteDraft() {
+      try {
+        const raw = sessionStorage.getItem(DRAFT_KEY);
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (!draft) return;
+
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && val !== undefined && val !== '') el.value = val;
+        };
+
+        setVal('quote-title', draft.title);
+        setVal('quote-first-name', draft.firstName);
+        setVal('quote-last-name', draft.lastName);
+        setVal('quote-phone', draft.phone);
+        setVal('quote-whatsapp', draft.altWhatsapp);
+        setVal('quote-email', draft.email);
+        setVal('quote-region', draft.region);
+        setVal('quote-address1', draft.address1);
+        setVal('quote-address2', draft.address2);
+        setVal('quote-category', draft.category);
+        setVal('quote-message', draft.message);
+
+        // Auto-expand alternative contact toggle if previously filled
+        if ((draft.altWhatsapp || draft.email) && extraContactFields) {
+          extraContactFields.classList.remove('hidden');
+          if (extraContactIcon) extraContactIcon.textContent = '−';
+        }
+
+        // Restore selected branch pill
+        if (draft.branch) {
+          const radio = document.querySelector(`input[name="preferred_branch"][value="${draft.branch}"]`);
+          if (radio) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+          }
+        }
+      } catch (err) {}
+    }
+
+    function clearQuoteDraft() {
+      try {
+        sessionStorage.removeItem(DRAFT_KEY);
+      } catch (err) {}
+    }
+
+    // Restore any existing draft on load & listen for inputs
+    restoreQuoteDraft();
+    if (form) {
+      form.addEventListener('input', saveQuoteDraft);
+      form.addEventListener('change', saveQuoteDraft);
+    }
+
     // Helper to generate reliable WhatsApp URL (Direct native app on mobile, WhatsApp Web on desktop)
     function getWhatsAppUrl(phone, text = '') {
       const cleanPhone = phone.replace(/[^0-9]/g, '');
@@ -540,6 +633,9 @@ _Sent from gpsmuscat.com_`;
           showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
           return;
         }
+
+        // Clear stored draft upon successful quotation submission
+        clearQuoteDraft();
 
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const cleanPhone = data.targetPhone.replace(/[^0-9]/g, '');

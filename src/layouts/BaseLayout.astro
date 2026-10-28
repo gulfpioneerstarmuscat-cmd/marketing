@@ -156,6 +156,59 @@ const localBusinessSchema = {
     <!-- Interactive Quotation Modal -->
     <QuoteModal />
 
+    <!-- Clean Navigation Smooth Scroll & Always Reload to Top (No #hash in URL bar) -->
+    <script is:inline>
+      (function initCleanNavigation() {
+        // Force browser reload to always start at the top of the site (Hero)
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+
+        // Clean any existing hash on load and ensure top position
+        if (!window.location.pathname.startsWith('/admin')) {
+          if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
+          window.addEventListener('beforeunload', () => {
+            window.scrollTo(0, 0);
+          });
+        }
+
+        // Intercept internal anchor links for smooth scrolling without appending #hash to URL
+        document.addEventListener('click', (e) => {
+          const anchor = e.target.closest('a[href^="#"]');
+          if (!anchor) return;
+
+          const targetId = anchor.getAttribute('href');
+          if (!targetId || targetId === '#') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+
+          try {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              e.preventDefault();
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+
+              // Close mobile drawer menu if open
+              const mobileMenu = document.getElementById('mobile-menu');
+              const menuToggle = document.getElementById('mobile-menu-toggle');
+              const iconOpen = document.getElementById('menu-icon-open');
+              const iconClose = document.getElementById('menu-icon-close');
+              if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                menuToggle?.setAttribute('aria-expanded', 'false');
+                iconOpen?.classList.remove('hidden');
+                iconClose?.classList.add('hidden');
+              }
+            }
+          } catch (err) {}
+        });
+      })();
+    </script>
+
     <!-- Universal WhatsApp Route Optimizer (Direct native app launch on mobile, WhatsApp Web on desktop) -->
     <script is:inline>
       (function optimizeWhatsAppLinks() {
