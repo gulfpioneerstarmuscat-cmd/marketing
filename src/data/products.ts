@@ -17,7 +17,7 @@ export const productCategories: ProductCategory[] = [
     badge: "Gate Motors & Drives",
     title: "Gate Automation Systems",
     shortDesc: "High-torque sliding gate motors, underground systems, and swing gate actuators.",
-    longDesc: "GPS Muscat supplies heavy-duty sliding and swing gate automation motors engineered for Oman's high-temperature climate. Ranging from 600kg residential villa motors to 2500kg heavy commercial gate drives with oil-bath gearboxes.",
+    longDesc: "GPS Muscat supplies heavy-duty sliding and swing gate automation motors engineered for Oman's high-temperature climate. Ranging from 400kg residential villa motors to 2000kg heavy commercial gate drives",
     highlights: [
       "Sliding gate motors (400kg, 600kg, 800kg, 1000kg, 1500kg, 2000kg)",
       "Articulated & telescopic swing gate arm kits",
@@ -26,7 +26,7 @@ export const productCategories: ProductCategory[] = [
       "Wireless remotes, control boards, & safety photocells"
     ],
     specs: [
-      { label: "Capacity Range", value: "600kg to 2500kg" },
+      { label: "Capacity Range", value: "400kg to 2000kg" },
       { label: "Duty Cycle", value: "Residential to Intensive 24/7" },
       { label: "Voltage", value: "230V AC / 24V DC Low Voltage" },
       { label: "Operating Temp", value: "-20°C to +65°C Climate Rated" }
