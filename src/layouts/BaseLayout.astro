@@ -156,26 +156,57 @@ const localBusinessSchema = {
     <!-- Interactive Quotation Modal -->
     <QuoteModal />
 
-    <!-- Universal WhatsApp Route Optimizer (Avoids wa.me DNS timeouts and desktop protocol hangs) -->
+    <!-- Universal WhatsApp Route Optimizer (Direct native app launch on mobile, WhatsApp Web on desktop) -->
     <script is:inline>
       (function optimizeWhatsAppLinks() {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        document.querySelectorAll('a[href*="whatsapp.com"], a[href*="wa.me/"]').forEach(link => {
-          const href = link.getAttribute('href');
-          if (href) {
-            const phoneMatch = href.match(/(?:wa\.me\/|phone=)(\d+)/);
-            const textMatch = href.match(/text=([^&]+)/);
-            if (phoneMatch && phoneMatch[1]) {
-              const phone = phoneMatch[1];
-              const text = textMatch ? `&text=${textMatch[1]}` : '';
-              if (isMobile) {
-                link.href = `https://api.whatsapp.com/send?phone=${phone}${text}`;
-              } else {
-                link.href = `https://web.whatsapp.com/send?phone=${phone}${text}`;
+        
+        function setupLinks() {
+          document.querySelectorAll('a[href*="whatsapp.com"], a[href*="wa.me/"], a[href^="whatsapp://"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+              const phoneMatch = href.match(/(?:wa\.me\/|phone=)(\d+)/);
+              const textMatch = href.match(/text=([^&]+)/);
+              if (phoneMatch && phoneMatch[1]) {
+                const phone = phoneMatch[1];
+                const text = textMatch ? `&text=${textMatch[1]}` : '';
+                
+                if (isMobile) {
+                  // Direct native WhatsApp mobile scheme to bypass intermediary download web page
+                  const nativeUrl = `whatsapp://send?phone=${phone}${text}`;
+                  const fallbackUrl = `https://api.whatsapp.com/send?phone=${phone}${text}`;
+                  link.href = nativeUrl;
+                  link.removeAttribute('target');
+                  link.removeAttribute('rel');
+                  
+                  if (!link.dataset.waAttached) {
+                    link.dataset.waAttached = 'true';
+                    link.addEventListener('click', (e) => {
+                      e.preventDefault();
+                      const start = Date.now();
+                      window.location.href = nativeUrl;
+                      setTimeout(() => {
+                        if (document.hasFocus() && Date.now() - start < 2000) {
+                          window.location.href = fallbackUrl;
+                        }
+                      }, 1500);
+                    });
+                  }
+                } else {
+                  // Desktop WhatsApp Web
+                  link.href = `https://web.whatsapp.com/send?phone=${phone}${text}`;
+                  link.target = '_blank';
+                  link.rel = 'noopener noreferrer';
+                }
               }
             }
-          }
-        });
+          });
+        }
+
+        setupLinks();
+        if (document.readyState !== 'complete') {
+          window.addEventListener('DOMContentLoaded', setupLinks);
+        }
       })();
     </script>
   </body>

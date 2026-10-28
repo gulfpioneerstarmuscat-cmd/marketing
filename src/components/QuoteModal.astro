@@ -519,15 +519,14 @@ _Sent from gpsmuscat.com_`;
       };
     }
 
-    // Helper to generate reliable WhatsApp URL (prevents wa.me DNS timeouts & app protocol hangs)
+    // Helper to generate reliable WhatsApp URL (Direct native app on mobile, WhatsApp Web on desktop)
     function getWhatsAppUrl(phone, text = '') {
       const cleanPhone = phone.replace(/[^0-9]/g, '');
       const encodedText = text ? encodeURIComponent(text) : '';
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       
-      // On desktop, directly navigate to web.whatsapp.com so it asks to log in or opens chat directly!
       if (isMobile) {
-        return `https://api.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+        return `whatsapp://send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
       } else {
         return `https://web.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
       }
@@ -541,8 +540,27 @@ _Sent from gpsmuscat.com_`;
           showAlert('Please type your Name and Phone Number to start WhatsApp chat.', 'error');
           return;
         }
-        const waUrl = getWhatsAppUrl(data.targetPhone, data.waText);
-        window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const cleanPhone = data.targetPhone.replace(/[^0-9]/g, '');
+        const encodedText = data.waText ? encodeURIComponent(data.waText) : '';
+
+        if (isMobile) {
+          // Launch native WhatsApp app directly on mobile, bypassing download webpage
+          const nativeUrl = `whatsapp://send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          const webFallbackUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          const start = Date.now();
+          window.location.href = nativeUrl;
+
+          setTimeout(() => {
+            if (document.hasFocus() && Date.now() - start < 2000) {
+              window.location.href = webFallbackUrl;
+            }
+          }, 1500);
+        } else {
+          const desktopUrl = `https://web.whatsapp.com/send?phone=${cleanPhone}${encodedText ? `&text=${encodedText}` : ''}`;
+          window.open(desktopUrl, '_blank', 'noopener,noreferrer');
+        }
       });
     }
 
