@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.gpsmuscat.com/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.gpsmuscat.com/assets/images/hero_sliding_gate.jpg</image:loc>
+      <image:title>Automatic Sliding Gate Motors in Muscat Oman - GPS Muscat</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.gpsmuscat.com/assets/images/hero_boom_barrier.jpg</image:loc>
+      <image:title>Automatic Vehicle Boom Barriers in Muscat Oman - GPS Muscat</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.gpsmuscat.com/assets/images/hero_access_control.jpg</image:loc>
+      <image:title>Biometric and RFID Access Control Systems in Muscat Oman - GPS Muscat</image:title>
+    </image:image>
+  </url>
+</urlset>

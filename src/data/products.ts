@@ -15,15 +15,15 @@ export const productCategories: ProductCategory[] = [
   {
     id: "gate-automation",
     badge: "Gate Motors & Drives",
-    title: "Gate Automation Systems",
-    shortDesc: "High-torque sliding gate motors, underground systems, and swing gate actuators.",
-    longDesc: "GPS Muscat supplies heavy-duty sliding and swing gate automation motors engineered for Oman's high-temperature climate. Ranging from 400kg residential villa motors to 2000kg heavy commercial gate drives",
+    title: "Sliding & Swing Gate Automation Motors",
+    shortDesc: "Heavy-duty sliding gate motors, underground systems, and swing gate actuators in Muscat.",
+    longDesc: "GPS Muscat supplies high-performance sliding and swing gate automation motors engineered for Oman's high-temperature climate. Ranging from 400kg residential villa motors to 2,000kg commercial and industrial gate drives from leading Italian and European manufacturers (Beninca, BFT, CAME, Roger Technology, DEA, and RIB).",
     highlights: [
       "Sliding gate motors (400kg, 600kg, 800kg, 1000kg, 1500kg, 2000kg)",
-      "Articulated & telescopic swing gate arm kits",
+      "Articulated & telescopic swing gate arm kits for residential villas",
       "Underground concealed swing gate operators",
-      "Steel & nylon gear racks (M4 / M6 pitch)",
-      "Wireless remotes, control boards, & safety photocells"
+      "Heavy-duty steel & nylon gear racks (M4 / M6 pitch)",
+      "Multi-frequency wireless remotes, control boards, & safety photocells"
     ],
     specs: [
       { label: "Capacity Range", value: "400kg to 2000kg" },
@@ -36,9 +36,9 @@ export const productCategories: ProductCategory[] = [
   {
     id: "boom-barriers",
     badge: "Parking & Access",
-    title: "Automatic Boom Barriers",
+    title: "Automatic Vehicle Boom Barriers",
     shortDesc: "High-cycle automatic vehicle barriers with straight, folding, and LED boom arms.",
-    longDesc: "Rapid-opening automatic barrier systems for residential compounds, commercial building entrances, industrial parks, and security checkpoints across Muscat. Supports loop vehicle sensors and automatic RFID trigger.",
+    longDesc: "Rapid-opening automatic barrier systems for residential compounds, commercial building entrances, industrial logistics hubs, and security checkpoints across Muscat, Oman. Compatible with inductive loop vehicle sensors, RFID UHF long-range readers, and push-button stations from BFT, CAME, and Roger Technology.",
     highlights: [
       "Heavy-duty barrier cabinets with anti-corrosion coating",
       "Aluminum boom arms: 3m, 4m, 5m, and 6m lengths",
@@ -57,9 +57,9 @@ export const productCategories: ProductCategory[] = [
   {
     id: "access-control",
     badge: "RFID & Biometrics",
-    title: "Access Control & Keypads",
+    title: "Biometric & RFID Access Control Systems",
     shortDesc: "Standalone biometric scanners, RFID card readers, keypads, and GSM controllers.",
-    longDesc: "Integrated security controllers for doors, gates, and turnstiles. Choose from digital PIN keypads, waterproof standalone card readers, UHF long-range windshield tag readers, and smartphone GSM mobile openers.",
+    longDesc: "Integrated security controllers and smart entrance hardware for doors, gates, and turnstiles in Muscat. Choose from digital PIN keypads, waterproof standalone card readers, UHF long-range windshield tag readers, and smartphone GSM mobile openers from Hikvision and Smatec.",
     highlights: [
       "Waterproof standalone RFID keypads & metal enclosures (IP68)",
       "Optical & capacitive biometric fingerprint readers",
@@ -78,9 +78,9 @@ export const productCategories: ProductCategory[] = [
   {
     id: "door-locks",
     badge: "Locks & Hardware",
-    title: "Door Locks & Latches",
+    title: "Electromagnetic Locks & Architectural Hardware",
     shortDesc: "Electromagnetic (EM) locks, electric strike latches, drop bolts, and smart digital locks.",
-    longDesc: "Industrial-grade electronic locking hardware for aluminum, wooden, metal, and glass pedestrian gates and doors. Includes fail-safe and fail-secure options with high holding force.",
+    longDesc: "Industrial-grade electronic locking hardware for aluminum, wooden, metal, and glass pedestrian gates and doors across Muscat and Oman. Includes fail-safe and fail-secure options with high holding force.",
     highlights: [
       "Magnetic EM locks: 280kg (600lbs) and 500kg (1200lbs) holding force",
       "Electric rim strike locks for villa wicket entry gates",
@@ -99,9 +99,9 @@ export const productCategories: ProductCategory[] = [
   {
     id: "glass-door",
     badge: "Automatic Glass",
-    title: "Glass Door Automation",
+    title: "Automatic Sliding Glass Door Operators",
     shortDesc: "Motorized automatic sliding glass door drive operators, microwave radars, and safety beams.",
-    longDesc: "Whisper-quiet brushless drive mechanisms for automated frameless or framed glass entrances in commercial showrooms, banks, corporate headquarters, and retail outlets throughout Oman.",
+    longDesc: "Whisper-quiet brushless drive mechanisms for automated frameless or framed glass entrances in commercial showrooms, banks, corporate headquarters, and retail outlets throughout Muscat and Oman.",
     highlights: [
       "Sliding glass door drive units with heavy-duty aluminum tracks",
       "Microwave motion radar opening sensors (adjustable sensitivity)",
@@ -120,9 +120,9 @@ export const productCategories: ProductCategory[] = [
   {
     id: "accessories",
     badge: "Sensors & Power",
-    title: "Accessories & Support Hardware",
+    title: "Gate Automation Accessories & Remote Controls",
     shortDesc: "Photocells, flashing safety lamps, inductive loop sensors, power supplies, and remotes.",
-    longDesc: "All installation, replacement, and auxiliary support accessories needed by security contractors and technicians. Sourced from authentic manufacturers for maximum reliability.",
+    longDesc: "Full inventory of installation, replacement, and auxiliary support accessories for security contractors and technicians in Muscat. Genuine spare parts, multi-frequency remotes, safety photocells, and backup power units from AALE, Smatec, and European manufacturers.",
     highlights: [
       "Infrared safety beam photocells (reflector & through-beam up to 20m)",
       "Inductive loop vehicle detectors for barrier and gate auto-closing",

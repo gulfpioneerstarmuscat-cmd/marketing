@@ -27,10 +27,10 @@ try {
           <span>Limited-Time Equipment Deals</span>
         </div>
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Active Promotions & <span class="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">Special Bundles</span>
+          Equipment Offers & <span class="bg-linear-to-r from-sky-600 via-cyan-500 to-blue-600 dark:from-cyan-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent">Special Promotion Bundles</span>
         </h2>
         <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-2.5 leading-relaxed">
-          Explore our latest motor kits, power accessories, and biometric hardware offers. Available for direct walk-in pickup at Al Khoudh & Ghala.
+          Explore our latest gate motor kits, backup power accessories, and biometric hardware offers. Available for direct walk-in pickup at Al Khoudh & Ghala.
         </p>
       </div>
 
@@ -74,7 +74,7 @@ try {
             <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
               <img
                 src={promo.image_url}
-                alt={promo.title}
+                alt={`${promo.title} - Gate Automation & Access Control Offer in Muscat Oman`}
                 loading={idx < 3 ? "eager" : "lazy"}
                 decoding="async"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -125,6 +125,7 @@ try {
                 <div class="pt-2">
                   <a
                     href="#contact"
+                    title="Inquire for branch pricing at Al Khoudh or Ghala"
                     class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95"
                   >
                     <span>Inquire for Branch Price</span>
@@ -151,6 +152,7 @@ try {
           </p>
           <a
             href="#contact"
+            title="Contact GPS Muscat Technical Sales Engineers"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-semibold transition"
           >
             <span>Contact Sales Team</span>
@@ -187,7 +189,7 @@ try {
         ✕
       </button>
       
-      <img id="lightbox-img" src="" alt="Poster Full View" class="w-full h-auto max-h-[75vh] object-contain rounded-xl" />
+      <img id="lightbox-img" src="" alt="Promotion Poster Full View - GPS Muscat Oman" class="w-full h-auto max-h-[75vh] object-contain rounded-xl" />
       
       <div class="p-3 w-full text-center space-y-2">
         <h4 id="lightbox-title" class="text-sm font-bold text-white"></h4>
@@ -294,7 +296,7 @@ try {
           const newHtml = livePromos.map((promo: PromotionRecord) => `
             <article class="promo-card shrink-0 w-65 sm:w-72.5 snap-start group relative rounded-2xl overflow-hidden glass-card border border-slate-200/80 dark:border-slate-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10">
               <div class="relative aspect-9/16 w-full overflow-hidden bg-slate-950">
-                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)}" loading="eager" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src="${escapeHtml(promo.image_url)}" alt="${escapeHtml(promo.title)} - Gate Automation & Access Control Offer in Muscat Oman" loading="eager" decoding="async" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                 <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
                   <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-white shadow-sm">${escapeHtml(promo.tag || 'Offer')}</span>
@@ -308,7 +310,7 @@ try {
                   <h3 class="text-base font-bold text-white leading-snug line-clamp-2 min-h-11">${escapeHtml(promo.title)}</h3>
                   <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-8">${escapeHtml(promo.description)}</p>
                   <div class="pt-2">
-                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
+                    <a href="#contact" title="Inquire for branch price in Muscat" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-md transition-all active:scale-95">
                       <span>Inquire for Branch Price</span>
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -340,6 +342,7 @@ try {
               </p>
               <a
                 href="#contact"
+                title="Contact GPS Muscat Technical Sales Engineers"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-semibold transition"
               >
                 <span>Contact Sales Team</span>

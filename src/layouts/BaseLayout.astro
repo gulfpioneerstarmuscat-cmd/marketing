@@ -7,67 +7,232 @@ interface Props {
   description?: string;
   image?: string;
   hideFloatingWidget?: boolean;
+  noindex?: boolean;
 }
 
 const {
-  title = "GPS Muscat | Gate Automation & Access Control Solutions in Oman",
-  description = "Premier supplier of automatic sliding & swing gate motors, boom barriers, access control systems, magnetic door locks, and security hardware in Muscat, Oman.",
+  title = "GPS Muscat | Automatic Gate Motors, Boom Barriers & Access Control Oman",
+  description = "Premier technical supplier of automatic sliding & swing gate motors, vehicle boom barriers, biometric access control, EM locks & glass door systems in Muscat, Oman. Official Italian & European brands in Al Khoudh & Ghala.",
   image = "/assets/logo/GPSMUSCAT_Logo_white_500x60.svg",
-  hideFloatingWidget = false
+  hideFloatingWidget = false,
+  noindex = false
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, "https://www.gpsmuscat.com");
+const ogImageURL = new URL(image, "https://www.gpsmuscat.com");
 
-const localBusinessSchema = {
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "GPS Muscat (Gulf Pioneer Star)",
-  "description": "Leading technical supplier of gate automation, boom barriers, access control systems, and security accessories in Muscat, Oman.",
-  "url": "https://www.gpsmuscat.com",
-  "logo": "https://www.gpsmuscat.com/assets/logo/GPSMUSCAT_Logo_white_500x60.svg",
-  "telephone": "+96891214949",
-  "email": "gulfpioneerstarmuscat@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Muscat",
-    "addressCountry": "OM"
-  },
-  "department": [
+  "@graph": [
     {
-      "@type": "LocalBusiness",
-      "name": "GPS Muscat - Al Khoudh Branch",
-      "telephone": "+96891214949",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Al Khoudh, Muscat",
-        "addressCountry": "OM"
+      "@type": "WebSite",
+      "@id": "https://www.gpsmuscat.com/#website",
+      "url": "https://www.gpsmuscat.com",
+      "name": "GPS Muscat",
+      "description": "Premier Technical Supplier for Gate Automation, Vehicle Boom Barriers & Access Control in Muscat, Oman",
+      "publisher": {
+        "@id": "https://www.gpsmuscat.com/#organization"
       },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-          "opens": "09:00",
-          "closes": "17:00"
-        }
-      ]
+      "inLanguage": "en"
     },
     {
-      "@type": "LocalBusiness",
-      "name": "GPS Muscat - Ghala Branch",
-      "telephone": "+96897440010",
+      "@type": ["LocalBusiness", "HomeAndConstructionBusiness", "Store"],
+      "@id": "https://www.gpsmuscat.com/#organization",
+      "name": "GPS Muscat (Gulf Pioneer Star)",
+      "alternateName": [
+        "Gulf Pioneer Star Muscat",
+        "GPS Gate Automation Oman",
+        "GPS Muscat Gate Motors",
+        "GPS Muscat"
+      ],
+      "description": "Leading technical supplier of automatic sliding and swing gate motors, parking boom barriers, biometric access control, electromagnetic locks, and automatic glass door systems across Muscat, Oman.",
+      "url": "https://www.gpsmuscat.com",
+      "logo": "https://www.gpsmuscat.com/assets/logo/GPSMUSCAT_Logo_white_500x60.svg",
+      "image": "https://www.gpsmuscat.com/assets/images/hero_sliding_gate.jpg",
+      "telephone": "+96891214949",
+      "email": "gulfpioneerstarmuscat@gmail.com",
+      "priceRange": "$$",
+      "currenciesAccepted": "OMR",
+      "paymentAccepted": "Cash, Credit Card, Bank Transfer",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Ghala, Muscat",
+        "streetAddress": "Al Khoudh Commercial & Ghala Industrial Area",
+        "addressLocality": "Muscat",
+        "addressRegion": "Muscat Governorate",
+        "postalCode": "132",
         "addressCountry": "OM"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 23.614328,
+        "longitude": 58.172424
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Muscat" },
+        { "@type": "AdministrativeArea", "name": "Al Khoudh" },
+        { "@type": "AdministrativeArea", "name": "Ghala" },
+        { "@type": "AdministrativeArea", "name": "Al Khuwair" },
+        { "@type": "AdministrativeArea", "name": "Qurum" },
+        { "@type": "AdministrativeArea", "name": "Seeb" },
+        { "@type": "AdministrativeArea", "name": "Madinat Al Sultan Qaboos" },
+        { "@type": "AdministrativeArea", "name": "Bawshar" },
+        { "@type": "AdministrativeArea", "name": "Al Mouj" },
+        { "@type": "Country", "name": "Oman" }
+      ],
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
           "opens": "08:00",
-          "closes": "16:00"
+          "closes": "17:00"
+        }
+      ],
+      "department": [
+        {
+          "@type": "LocalBusiness",
+          "name": "GPS Muscat - Al Khoudh Branch",
+          "telephone": "+96891214949",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Al Khoudh, Seeb, Muscat",
+            "addressRegion": "Muscat Governorate",
+            "addressCountry": "OM"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 23.6231,
+            "longitude": 58.1982
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+              "opens": "09:00",
+              "closes": "17:00"
+            }
+          ]
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "GPS Muscat - Ghala Branch",
+          "telephone": "+96897440010",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ghala Industrial, Bawshar, Muscat",
+            "addressRegion": "Muscat Governorate",
+            "addressCountry": "OM"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 23.5794,
+            "longitude": 58.3719
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+              "opens": "08:00",
+              "closes": "16:00"
+            }
+          ]
         }
       ]
+    },
+    {
+      "@type": "Product",
+      "@id": "https://www.gpsmuscat.com/#gate-automation-systems",
+      "name": "Automatic Sliding & Swing Gate Motors",
+      "image": "https://www.gpsmuscat.com/assets/images/hero_sliding_gate.jpg",
+      "description": "Heavy-duty sliding and swing gate automation motors (400kg to 2,000kg capacity) engineered for Oman's extreme climate. Authorized Italian and European manufacturers with safety photocells, wireless rolling-code remotes, and steel racks.",
+      "category": "Gate Automation Systems",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.gpsmuscat.com/#gate-automation",
+        "priceCurrency": "OMR",
+        "price": "145.000",
+        "priceValidUntil": "2027-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://www.gpsmuscat.com/#organization"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Muscat, Oman"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://www.gpsmuscat.com/#automatic-vehicle-boom-barrier",
+      "name": "Automatic Vehicle Parking Boom Barrier Systems",
+      "image": "https://www.gpsmuscat.com/assets/images/hero_boom_barrier.jpg",
+      "description": "Continuous high-cycle automatic boom barrier gates with 3m to 6m aluminum boom arms, LED arm illumination, inductive loop detector integration, and long-range RFID access control in Muscat, Oman.",
+      "category": "Automatic Boom Barriers",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.gpsmuscat.com/#boom-barriers",
+        "priceCurrency": "OMR",
+        "price": "260.000",
+        "priceValidUntil": "2027-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://www.gpsmuscat.com/#organization"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Muscat, Oman"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://www.gpsmuscat.com/#access-control-systems",
+      "name": "Biometric & RFID Access Control Systems",
+      "image": "https://www.gpsmuscat.com/assets/images/hero_access_control.jpg",
+      "description": "Standalone weatherproof IP68 access keypads, optical/capacitive biometric fingerprint readers, facial recognition terminals, UHF long-range vehicle readers, and smartphone GSM mobile gate openers in Muscat, Oman.",
+      "category": "Access Control Systems",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.gpsmuscat.com/#access-control",
+        "priceCurrency": "OMR",
+        "price": "45.000",
+        "priceValidUntil": "2027-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://www.gpsmuscat.com/#organization"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Muscat, Oman"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://www.gpsmuscat.com/#electromagnetic-door-locks",
+      "name": "Electromagnetic Locks & Hardware",
+      "image": "https://www.gpsmuscat.com/assets/images/hero_access_control.jpg",
+      "description": "Industrial-grade electronic locking hardware including 280kg (600lbs) and 500kg (1200lbs) holding force magnetic EM locks, electric strike latches, and drop bolts for pedestrian gates and doors in Muscat, Oman.",
+      "category": "Door Locks & Hardware",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.gpsmuscat.com/#door-locks",
+        "priceCurrency": "OMR",
+        "price": "25.000",
+        "priceValidUntil": "2027-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://www.gpsmuscat.com/#organization"
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Muscat, Oman"
+        }
+      }
     }
   ]
 };
@@ -111,22 +276,35 @@ const localBusinessSchema = {
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="gate automation Oman, sliding gate motor Muscat, boom barrier Muscat, swing gate motor, access control Oman, BFT Somfy Came Muscat, Beninca Muscat, Roger technology Oman" />
+    <meta name="keywords" content="gate automation Oman, sliding gate motor Muscat, automatic boom barriers Oman, swing gate motor Muscat, access control Oman, biometric fingerprint scanner Muscat, electromagnetic door locks Oman, automatic glass doors Muscat, Italian gate motors Oman, Roger Technology, CAME, Beninca, BFT, Somfy, DEA, Hikvision, Smatec, Al Khoudh, Ghala, Seeb, Muscat" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en-OM" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href="https://www.gpsmuscat.com" />
+
+    <!-- Local Entity & Geographic Meta Tags -->
+    <meta name="geo.region" content="OM-MA" />
+    <meta name="geo.placename" content="Muscat" />
+    <meta name="geo.position" content="23.614328;58.172424" />
+    <meta name="ICBM" content="23.614328, 58.172424" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GPS Muscat" />
+    <meta property="og:locale" content="en_OM" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:alt" content="GPS Muscat - Gate Automation, Boom Barriers & Access Control Systems in Muscat, Oman" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, "https://www.gpsmuscat.com")} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content="GPS Muscat - Gate Automation & Access Control in Oman" />
 
     <!-- Google Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -136,8 +314,8 @@ const localBusinessSchema = {
     <!-- Preload Critical Above-The-Fold Hero Visualizer Asset -->
     <link rel="preload" as="image" href="/assets/images/hero_sliding_gate.jpg" fetchpriority="high" />
 
-    <!-- Structured Data JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+    <!-- Structured Data JSON-LD (LocalBusiness, WebSite, Products & Offers) -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-cyan-500 selection:text-white transition-colors duration-300">
     <!-- Ambient Background Light Effects -->
@@ -162,7 +340,7 @@ const localBusinessSchema = {
           aria-label="Contact Our Branches in Muscat"
           class="flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 border border-emerald-500/30 shadow-xl hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95 p-3"
         >
-          <img src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="WhatsApp" class="w-full h-full object-contain" />
+          <img src="/assets/logo/whatsapp-color-svgrepo-com.svg" alt="Chat with GPS Muscat on WhatsApp for Gate Automation Inquiries" class="w-full h-full object-contain" />
         </a>
       </div>
     )}

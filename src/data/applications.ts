@@ -13,39 +13,39 @@ export interface ApplicationScenario {
 export const applicationScenarios: ApplicationScenario[] = [
   {
     id: "residential-villas",
-    title: "Residential Villas & Compounds",
-    subtitle: "Convenience, Family Safety & Smartphone Access",
-    description: "Sliding and swing gate motors, long-range wireless remotes, anti-crush photocells, and smart video/app entry for private villas and residential developments in Muscat.",
+    title: "Residential Villas & Gated Communities",
+    subtitle: "Gate Automation, Safety Sensors & Smartphone Control",
+    description: "Sliding and swing gate motors, long-range wireless remotes, anti-crush safety photocells, and smart video/app entry for private villas in Seeb, Al Khuwair, Qurum, Madinat Al Sultan Qaboos, and Al Mouj Muscat.",
     idealFor: [
-      "Private villas & luxury residences",
-      "Gated residential communities",
-      "Perimeter pedestrian wicket gates",
-      "Private garage automation"
+      "Private luxury villas in Al Mouj & Qurum",
+      "Gated residential communities in Seeb & Bawshar",
+      "Perimeter pedestrian wicket gates with EM locks",
+      "Smart garage & sliding gate automation"
     ],
     recommendedGear: [
-      "600kg - 1000kg Sliding Motors",
-      "Articulated Swing Gate Arms",
-      "Waterproof Keypads & Remotes",
-      "Safety Infrared Photocells"
+      "400kg - 1000kg Sliding Gate Motors",
+      "Articulated & Telescopic Swing Arms",
+      "Waterproof IP68 Keypads & Remotes",
+      "Safety Infrared Anti-Crush Photocells"
     ],
     tag: "Residential"
   },
   {
     id: "commercial-properties",
     title: "Commercial & Office Properties",
-    subtitle: "High-Traffic Parking & Multi-Tenant Access",
-    description: "High-cycle boom barriers, employee RFID card access control, magnetic locks, push-to-exit buttons, and visitor management systems for commercial centers, clinics, and office complexes.",
+    subtitle: "High-Traffic Parking Barriers & Multi-Tenant Access",
+    description: "Continuous-duty automatic boom barriers, employee RFID card readers, biometric facial recognition terminals, and electromagnetic door locks for commercial centers, clinics, and office towers in Al Khuwair, Bawshar, and Muscat.",
     idealFor: [
-      "Commercial office buildings",
-      "Shopping plazas & retail parking",
-      "Hospitals, clinics & educational campuses",
-      "Bank branches & financial institutions"
+      "Commercial office buildings & corporate plazas",
+      "Shopping centers & retail customer parking",
+      "Hospitals, medical centers & university campuses",
+      "Bank headquarters & secure financial facilities"
     ],
     recommendedGear: [
-      "Rapid Boom Barriers (3m - 4m)",
-      "Standalone RFID Card Readers",
+      "High-Speed Boom Barriers (3m - 6m)",
+      "Standalone & Networked RFID Card Readers",
       "280kg / 500kg Magnetic EM Locks",
-      "Motorized Sliding Glass Operators"
+      "Automatic Sliding Glass Door Operators"
     ],
     tag: "Commercial"
   },
@@ -53,18 +53,18 @@ export const applicationScenarios: ApplicationScenario[] = [
     id: "industrial-sites",
     title: "Industrial & Logistics Sites",
     subtitle: "Heavy-Tonnage Gates & Perimeter Security",
-    description: "Extra heavy-duty sliding motors for cantilevered or steel industrial gates, 6-meter boom barriers for trucks, inductive vehicle loops, and rugged weatherproof power supplies.",
+    description: "Extra heavy-duty sliding gate motors up to 2,000kg for cantilevered or steel industrial gates, 6-meter truck boom barriers, inductive ground loops, and rugged weatherproof power supplies in Ghala Industrial and Rusayl.",
     idealFor: [
-      "industrial warehouses",
-      "Logistics hubs & freight yards",
+      "Industrial warehouses in Ghala & Rusayl",
+      "Logistics hubs, freight yards & cargo terminals",
       "Factory perimeters & utility sub-stations",
-      "Vehicle fleet depots & container terminals"
+      "Commercial fleet depots & container yards"
     ],
     recommendedGear: [
-      "1500kg - 2500kg Heavy Industrial Motors",
-      "6-Meter Aluminum Boom Arm Barriers",
+      "1500kg - 2000kg Industrial Gate Motors",
+      "6-Meter Heavy-Duty Aluminum Boom Barriers",
       "Inductive Ground Loop Vehicle Detectors",
-      "High-Power Regulated 24V Enclosures"
+      "Regulated 24V Enclosures with Battery Backup"
     ],
     tag: "Industrial"
   }
